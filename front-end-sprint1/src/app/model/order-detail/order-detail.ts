@@ -1,5 +1,5 @@
-import {Orders} from "./orders";
-import {Services} from "../service/services";
+import {Orders} from './orders';
+import {Services} from '../service/services';
 import {Unit} from '../service/unit';
 
 export interface OrderDetail {

@@ -1,5 +1,6 @@
 import {Address} from "../address/address";
-import {CustomerStatus} from "./customer-status";
+import {CustomerStatus} from './customer-status';
+import {Gender} from './gender';
 
 export interface Customer {
   customerId: number;
@@ -12,4 +13,5 @@ export interface Customer {
   phone: string;
   status: CustomerStatus;
   flag: number;
+  gender: Gender;
 }
