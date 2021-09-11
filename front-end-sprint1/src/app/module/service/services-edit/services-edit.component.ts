@@ -24,9 +24,6 @@ export class ServicesEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getData();
-    this.initForm();
-    this.getService();
   }
 
   getData() {
