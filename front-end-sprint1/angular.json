@@ -127,6 +127,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "angular-sprint1"
+    }
+  },
+  "defaultProject": "angular-sprint1",
+  "cli": {
+    "analytics": "f49a9bec-f5da-4f68-97fe-7c8afc68866a"
+  }
 }
