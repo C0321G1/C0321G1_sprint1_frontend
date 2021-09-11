@@ -16,4 +16,5 @@ export interface Employee {
   level: number;
   yearOfExp: number;
   flagDel: number;
+  image: string;
 }
