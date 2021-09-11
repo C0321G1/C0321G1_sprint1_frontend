@@ -3,9 +3,11 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {CustomerModule} from './module/customer/customer.module';
 import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
+
+import {GameModule} from './model/game/game.module';
+
 
 @NgModule({
   declarations: [
@@ -16,7 +18,7 @@ import { FooterComponent } from './layout/footer/footer.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    CustomerModule
+    GameModule
   ],
   providers: [],
   bootstrap: [AppComponent]
