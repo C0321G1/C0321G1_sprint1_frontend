@@ -1,4 +1,3 @@
-
 export interface Category {
   categoryId: number;
   startTime: string;
