@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from '@angular/forms';
+import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ServiceService} from '../../../service/service/service.service';
 import {ToastrService} from 'ngx-toastr';
 import {Services} from '../../../model/service/services';
 import {Router} from '@angular/router';
+import {Unit} from '../../../model/service/unit';
 
 @Component({
   selector: 'app-services-create',
@@ -13,7 +14,8 @@ import {Router} from '@angular/router';
 export class ServicesCreateComponent implements OnInit {
   createForm: FormGroup;
   servicesList: Services[] = [];
-  code = 'SV-0001';
+  unitList: Unit[] = [];
+  code = '';
   lastId: number;
 
   constructor(private service: ServiceService,
@@ -41,17 +43,20 @@ export class ServicesCreateComponent implements OnInit {
       }
 
     });
+    this.service.getAllUnit().subscribe(data => {
+      this.unitList = data;
+    });
   }
 
   getInit() {
     this.createForm = new FormGroup({
       id: new FormControl(),
       code: new FormControl(this.code),
-      name: new FormControl(),
-      price: new FormControl(),
-      quantity: new FormControl(),
-      unit: new FormControl(),
-      image: new FormControl()
+      name: new FormControl('', Validators.required),
+      price: new FormControl('', [Validators.required, Validators.min(1000)]),
+      quantity: new FormControl('', [Validators.required, this.validateInterger]),
+      unit: new FormControl('', Validators.required),
+      image: new FormControl('', Validators.required)
     });
   }
 
@@ -64,5 +69,9 @@ export class ServicesCreateComponent implements OnInit {
       this.toast.error('Tạo mới thất bại', 'Cảnh Báo');
     });
 
+  }
+
+  validateInterger(abstractControl: AbstractControl) {
+    return (abstractControl.value > 0 && abstractControl.value % 1 === 0) ? null : {checkInterger: true};
   }
 }

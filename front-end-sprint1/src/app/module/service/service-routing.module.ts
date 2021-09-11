@@ -6,20 +6,13 @@ import {ServicesEditComponent} from './services-edit/services-edit.component';
 
 const routes: Routes = [
   {
-    path: '',
-    children: [
-      {
-        path: 'create',
-        component: ServicesCreateComponent
-      },
-      {
-        path: 'edit/:id',
-        component: ServicesEditComponent
-      }
-    ]
+    path: 'create',
+    component: ServicesCreateComponent
+  },
+  {
+    path: 'edit/:id',
+    component: ServicesEditComponent
   }
-
-
 ];
 
 @NgModule({

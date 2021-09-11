@@ -4,6 +4,9 @@ import { ServicesCreateComponent } from './services-create/services-create.compo
 import { ServicesEditComponent } from './services-edit/services-edit.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
+import {ServiceRoutingModule} from './service-routing.module';
+import {HttpClientModule} from '@angular/common/http';
+import {ToastrModule} from 'ngx-toastr';
 
 
 
@@ -14,7 +17,10 @@ import {RouterModule} from '@angular/router';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+    ServiceRoutingModule,
+    HttpClientModule,
+    ToastrModule.forRoot()
   ]
 })
 export class ServiceModule { }
