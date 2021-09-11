@@ -5,6 +5,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {CustomerModule} from './module/customer/customer.module';
 import {ServiceModule} from './module/service/service.module';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {CommonModule} from "@angular/common";
+
 
 @NgModule({
   declarations: [
@@ -14,7 +17,9 @@ import {ServiceModule} from './module/service/service.module';
     BrowserModule,
     AppRoutingModule,
     CustomerModule,
-    ServiceModule
+    ServiceModule,
+    BrowserAnimationsModule,
+    CommonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
