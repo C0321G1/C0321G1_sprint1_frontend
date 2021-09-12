@@ -7,6 +7,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {GameRoutingModule} from './game-routing.module';
 import { GameListComponent } from './game-list/game-list.component';
 import { GameDeleteDialogComponent } from './game-delete-dialog/game-delete-dialog.component';
+import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
 
 @NgModule({
   declarations: [GameEditComponent, GameCreateComponent, GameListComponent, GameDeleteDialogComponent],
@@ -20,7 +21,8 @@ import { GameDeleteDialogComponent } from './game-delete-dialog/game-delete-dial
     CommonModule,
     RouterModule,
     ReactiveFormsModule,
-    GameRoutingModule
+    GameRoutingModule,
+    CKEditorModule
   ]
 })
 export class GameModule { }

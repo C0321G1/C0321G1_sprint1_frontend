@@ -2,14 +2,12 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Game} from '../../model/game/game';
-import {GameType} from '../../model/game/game-type';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GameService {
   public API_GAME = 'http://localhost:8080/game/api';
-  public API_GAME_TYPE = 'http://localhost:8080/gameType/api';
 
   constructor(private http: HttpClient) {
   }
@@ -17,10 +15,6 @@ export class GameService {
 // Creator: Thúy
   getAllGame(): Observable<Game[]> {
     return this.http.get<Game[]>(this.API_GAME);
-  }
-
-  getAllGameType(): Observable<GameType[]> {
-    return this.http.get<GameType[]>(this.API_GAME_TYPE);
   }
 
   deleteGame(id: number): Observable<any> {
