@@ -7,7 +7,7 @@
       <hr>
 
 
-      <form [formGroup]="createForm" (ngSubmit)="create()">
+      <form [formGroup]="createForm" >
 
         <div class="mt-4">
           <label class="style-span">Services Name (<span style="color: red">*</span>)</label>
@@ -37,7 +37,7 @@
           <label class="style-span">Unit (<span style="color: red">*</span>)</label>
           <select formControlName="unit" class="custom-select"
                   [ngClass]="createForm.controls.unit.valid? 'is-valid':'is-invalid'" id="inputGroupSelect01">
-            <option value="" selected>-- Choose Game Type --</option>
+            <option value="" selected>-- Choose unit --</option>
             <option *ngFor="let item of unitList" [ngValue]="item">{{item.name}}</option>
           </select>
           <div class="style-error" *ngIf="createForm.controls.unit.hasError('required') &&
@@ -76,10 +76,10 @@
         </div>
 
 <!--        <img style="border: 1px solid white;width: 100%" src="{{urlImage}}">-->
-        <div class="row mt-4" *ngIf="!isImage">
+        <div class="row mt-4" *ngIf="isImage">
           <div class="col-2"></div>
           <div class="col-8">
-            <img style="border: 1px solid white;width: 100%" src="{{urlImage}}">
+            <img style="border: 1px solid white;width: 100% ; height: 300px" src="{{urlImage}}">
           </div>
           <div class="col-2"></div>
         </div>
@@ -107,7 +107,7 @@
             <span style="font-family: Averta">Reset</span>
           </button>
 
-          <button *ngIf="!isImage" class="btn btn-warning">
+          <button *ngIf="!isImage"  class="btn btn-warning">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                  class="bi bi-pencil-square" viewBox="0 0 16 16">
               <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75
@@ -119,7 +119,7 @@
             </svg>
             <span (click)="loadImg()" style="font-family: Averta">Load Image</span>
           </button>
-          <button *ngIf="isImage" class="btn btn-warning">
+          <button *ngIf="isImage" class="btn btn-warning" [disabled]="createForm.invalid">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                  class="bi bi-pencil-square" viewBox="0 0 16 16">
               <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75
@@ -129,7 +129,7 @@
           1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1
           2.5v11z"/>
             </svg>
-            <span style="font-family: Averta" (click)="create()">Create</span>
+            <span style="font-family: Averta" (click)="create()" >Create</span>
           </button>
         </div>
       </form>

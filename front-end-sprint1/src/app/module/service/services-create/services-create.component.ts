@@ -80,6 +80,7 @@ export class ServicesCreateComponent implements OnInit {
     });
 
   }
+
   loadImg() {
     Swal.fire({
       title: 'Đang gửi dữ liệu',
@@ -97,17 +98,15 @@ export class ServicesCreateComponent implements OnInit {
           console.log(url);
           this.createForm.value.image = url;
           this.urlImage = url;
-          if (this.createForm.valid) {
-            this.isImage = true;
-            Swal.close();
-          }
+          this.isImage = true;
+          Swal.close();
         });
       })
     ).subscribe();
   }
 
   validateInterger(abstractControl: AbstractControl) {
-    return ( abstractControl.value > 0 && abstractControl.value % 1 === 0) ? null : {checkInterger: true};
+    return (abstractControl.value > 0 && abstractControl.value % 1 === 0) ? null : {checkInterger: true};
   }
 
   showPreview(event: any) {
