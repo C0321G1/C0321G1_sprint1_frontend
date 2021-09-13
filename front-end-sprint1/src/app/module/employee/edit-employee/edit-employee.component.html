@@ -1,0 +1,175 @@
+<!--edit employee-->
+<div style="background-image: url('assets/image/background.jpg');background-size: cover;background-repeat: no-repeat;height: 100%">
+  <div class="container py-5" style="border-radius: 5px">
+    <div style="padding: 15px 10%; background: rgba(0, 0, 0, 0.5);">
+      <h2 style="text-align: center;color: #FFC312; font-family: Averta">Edit Employee</h2>
+      <hr>
+      <div>
+        <div class="row mt-3">
+          <div class="col-6">
+            <label for="id" class="fontFamily">Employee ID</label>
+            <span style="color: red">(*)</span>
+            <input readonly="readonly" type="text" class="form-control" id="id" value="EMP0001" required>
+          </div>
+          <div class="col-6">
+            <label for="name" class="fontFamily">Full Name</label>
+            <span style="color: red">(*)</span>
+            <input type="text" class="form-control" id="name" value="Nguyễn Văn A" required>
+            <div class="fontError mt-1">Please input employee name.</div>
+          </div>
+        </div>
+
+        <div class="row mt-3">
+          <div class="col-6">
+            <label for="position" class="fontFamily">Position</label>
+            <span style="color: red">(*)</span>
+            <select  class="form-control" style="font-size: 18px" id="position">
+              <option selected>Choose position</option>
+              <option value="1">Thu ngân</option>
+              <option value="2">Kỹ thuật</option>
+              <option value="3">Quản trị</option>
+            </select>
+            <div class="fontError mt-1">Please choose position.</div>
+          </div>
+          <div class="col-6">
+            <label for="gender" class="fontFamily">Gender</label>
+            <span style="color: red">(*)</span>
+            <select  class="form-control" style="font-size: 18px" id="gender">
+              <option selected>Choose gender</option>
+              <option value="1">Nam</option>
+              <option value="0">Nữ</option>
+            </select>
+            <div class="fontError mt-1">Please input gender.</div>
+          </div>
+        </div>
+
+        <div class="row mt-3">
+          <div class="col-6">
+            <label for="dateOfBirth" class="fontFamily">Date Of Birth</label>
+            <span style="color: red">(*)</span>
+            <input type="date" class="form-control" id="dateOfBirth" value="" required>
+            <div class="fontError mt-1">Please choose date of birth.</div>
+          </div>
+          <div class="col-6">
+            <label for="starkWorkDate" class="fontFamily">Start Work Date</label>
+            <span style="color: red">(*)</span>
+            <input type="date" class="form-control" id="starkWorkDate" value="" required>
+            <div class="fontError mt-1">Please choose start work date.</div>
+          </div>
+        </div>
+
+        <div class="row mt-3">
+          <div class="col-6">
+            <label for="phone" class="fontFamily">Phone</label>
+            <span style="color: red">(*)</span>
+            <input type="text" class="form-control" id="phone" value="0977112233" required>
+            <div class="fontError mt-1">Please input phone.</div>
+          </div>
+          <div class="col-6">
+            <label for="email" class="fontFamily">Email</label>
+            <span style="color: red">(*)</span>
+            <input type="text" class="form-control" id="email" value="a@gmail.com" required>
+            <div class="fontError mt-1">Please input email.</div>
+          </div>
+        </div>
+
+        <div class="mt-3">
+          <label class="fontFamily">Address</label>
+          <span style="color: red">(*)</span>
+          <div class="row">
+            <div class="col-4">
+              <select class="form-control" style="font-size: 18px">
+                <option selected>Select a province</option>
+                <option value="1">Đà Nẵng</option>
+                <option value="2">Quảng Nam</option>
+              </select>
+              <div class="fontError mt-1">Please choose province.</div>
+            </div>
+            <div class="col-4">
+              <select class="form-control" style="font-size: 18px">
+                <option selected>Select a district</option>
+                <option value="1">Hải Châu</option>
+                <option value="2">Cẩm Lệ</option>
+              </select>
+              <div class="fontError mt-1">Please choose district.</div>
+            </div>
+            <div class="col-4">
+              <select class="form-control" style="font-size: 18px">
+                <option selected>Select a commune</option>
+                <option value="1">Hòa Khánh</option>
+                <option value="2">Hòa Xuân</option>
+              </select>
+              <div class="fontError mt-1">Please choose commune.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-3">
+          <div class="col-6">
+            <label for="password" class="fontFamily">New Password</label>
+            <span style="color: red">(*)</span>
+            <input type="password" class="form-control" id="password" value="123456" required>
+            <div class="fontError mt-1">Please input new password.</div>
+          </div>
+          <div class="col-6">
+            <label for="confirmPassword" class="fontFamily">Confirm Password</label>
+            <span style="color: red">(*)</span>
+            <input type="password" class="form-control" id="confirmPassword" value="123456" required>
+            <div class="fontError mt-1">Please input confirm password!</div>
+          </div>
+        </div>
+
+        <div class="row mt-3">
+          <div class="col-6">
+            <label for="level" class="fontFamily">Level</label>
+            <span style="color: red">(*)</span>
+            <input type="number" class="form-control" id="level" value="3" required>
+            <div class="fontError mt-1">Please input level.</div>
+          </div>
+          <div class="col-6">
+            <label for="yearOfExp" class="fontFamily">Year Of Experiences</label>
+            <span style="color: red">(*)</span>
+            <input type="number" class="form-control" id="yearOfExp" value="5" required>
+            <div class="fontError mt-1">Please input year of experiences</div>
+          </div>
+        </div>
+
+        <div class="mt-3">
+          <label class="fontFamily">Image</label>
+          <div class="input-group mb-3">
+            <div class="row">
+              <div class="col-7">
+                <div class="form-group">
+                  <input type="file" class="form-control-file text-danger">
+                </div>
+              </div>
+              <div class="col-5">
+                <img style="border: 1px solid white;width: 100%" src="https://cohet.vn/upload/data/images/do-hoa/background/anh-Free-Fire.jpg">
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <div class="text-center">
+          <button class="btn btn-warning fontButton">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-left" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z"/>
+            </svg>Back
+          </button>
+          <button class="btn btn-secondary mx-3 fontButton">
+            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+              <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
+              <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+            </svg>Reset
+          </button>
+          <button class="btn btn-warning fontButton">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bibi-pencil-square" viewBox="0 0 16 16">
+              <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.752.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.50 0 0.196-.12l6.813-6.814z"/>
+              <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 01-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 12.5v11z"/>
+            </svg>Edit
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
