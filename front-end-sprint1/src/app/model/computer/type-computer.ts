@@ -1,4 +1,4 @@
-export interface TypeComputer {
-  id: number;
-  nameType: string;
+export interface ComputerType {
+  computerTypeId: number;
+  name: string;
 }

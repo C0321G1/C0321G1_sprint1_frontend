@@ -1,0 +1,14 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">Confirmation Dialog</h5>
+    </div>
+    <div class="modal-body">
+      <p>Are you sure to delete <span style="color:red;">{{this.data?.nameComputer}}</span>?</p>
+    </div>
+    <div class="modal-footer">
+      <button id="cancel" type="button" class="btn btn-secondary mr-2" mat-dialog-close>cancel</button>
+      <button id="delete"  type="button" class="btn btn-danger ml-2" (click)="delete()">delete</button>
+    </div>
+  </div>
+</div>
