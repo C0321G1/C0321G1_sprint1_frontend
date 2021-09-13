@@ -13,6 +13,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {ToastrModule} from 'ngx-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
+
 @NgModule({
   declarations: [GameEditComponent, GameCreateComponent, GameListComponent, GameDeleteDialogComponent],
   exports: [
