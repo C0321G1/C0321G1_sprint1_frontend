@@ -13,16 +13,13 @@ export class GameService {
   }
 
 // Creator: Thúy
-  getAllGame(): Observable<Game[]> {
-    return this.http.get<Game[]>(this.API_GAME);
+  getAllGame(name: string, gameType: string): Observable<Game[]> {
+    return this.http.get<Game[]>(this.API_GAME + '?name=' + name + '&' + 'gameType=' + gameType);
   }
 
   deleteGame(id: number): Observable<any> {
-    return this.http.delete(this.API_GAME + '/' + id);
-  }
-
-  search(name: string): Observable<Game[]> {
-    return this.http.get<Game[]>(this.API_GAME + '?name_like=' + name);
+    // @ts-ignore
+    return this.http.patch<any>(this.API_GAME + '/delete/' + id);
   }
 
   getById(id): Observable<any> {
