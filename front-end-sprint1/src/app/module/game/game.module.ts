@@ -7,7 +7,11 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {GameRoutingModule} from './game-routing.module';
 import { GameListComponent } from './game-list/game-list.component';
 import { GameDeleteDialogComponent } from './game-delete-dialog/game-delete-dialog.component';
-import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
+import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
+import {HttpClientModule} from '@angular/common/http';
+import {MatDialogModule} from '@angular/material/dialog';
+import {ToastrModule} from 'ngx-toastr';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [GameEditComponent, GameCreateComponent, GameListComponent, GameDeleteDialogComponent],
@@ -22,7 +26,11 @@ import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
     RouterModule,
     ReactiveFormsModule,
     GameRoutingModule,
-    CKEditorModule
+    CKEditorModule,
+    HttpClientModule,
+    MatDialogModule,
+    ToastrModule.forRoot(),
+    BrowserAnimationsModule
   ]
 })
 export class GameModule { }
