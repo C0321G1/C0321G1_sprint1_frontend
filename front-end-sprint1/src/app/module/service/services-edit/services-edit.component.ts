@@ -29,7 +29,11 @@ export class ServicesEditComponent implements OnInit {
               private route: Router,
               private toast: ToastrService,
               @Inject(AngularFireStorage) private storage: AngularFireStorage) {
-    this.id = this.activatedRoute.snapshot.params.id;
+    this.activatedRoute.paramMap.subscribe(p => {
+      this.id = +p.get('id');
+    });
+    // this.id = this.activatedRoute.snapshot.params.id;
+    // console.log(this.id);
   }
 
   ngOnInit(): void {
@@ -49,7 +53,7 @@ export class ServicesEditComponent implements OnInit {
       id: new FormControl(),
       code: new FormControl(''),
       name: new FormControl('', Validators.required),
-      price: new FormControl('', [Validators.required, Validators.min(1000), Validators.pattern('^\\d+$')]),
+      prices: new FormControl('', [Validators.required, Validators.min(1000), Validators.pattern('^\\d+$')]),
       quantity: new FormControl('', [Validators.required, this.validateInterger]),
       unit: new FormControl('', Validators.required),
       image: new FormControl('', Validators.required)
@@ -58,7 +62,9 @@ export class ServicesEditComponent implements OnInit {
 
   getService() {
     this.service.findById(this.id).subscribe(data => {
-      this.editForm.setValue(data);
+      console.log(data);
+      this.editForm.patchValue(data);
+      this.urlImage = data.image;
     });
   }
 
@@ -68,41 +74,16 @@ export class ServicesEditComponent implements OnInit {
   }
 
   edit() {
-    Swal.fire({
-      title: 'Loading .....',
-      text: 'Please waiting ...',
-      imageUrl: '../../../../../assets/image/spin.gif',
-      imageWidth: '100px',
-      showConfirmButton: false,
+    this.services = this.editForm.value;
+    console.log(this.services);
+    this.service.update(this.id, this.services).subscribe(() => {
+      this.route.navigateByUrl('').then(s => {
+        this.showSuccess(),
+          Swal.close();
+      });
+    }, e => {
+      this.showError();
     });
-    const nameImg = this.getCurrentDateTime() + this.selectedImage?.name;
-    const fileRef = this.storage.ref(nameImg);
-    this.storage.upload(nameImg, this.selectedImage).snapshotChanges().pipe(
-      finalize(() => {
-        fileRef.getDownloadURL().subscribe((url) => {
-          console.log(url);
-
-          this.editForm.patchValue({image: url});
-          // Call API to create
-
-          this.services = this.editForm.value;
-          this.services.image = url;
-          console.log(this.services);
-          this.service.update(this.id, this.services).subscribe(() => {
-
-
-            this.route.navigateByUrl('').then(s => {
-              this.showSuccess(),
-                Swal.close();
-            });
-          }, e => {
-            this.showError();
-          });
-        });
-      })
-    ).subscribe();
-
-
   }
 
   validateInterger(abstractControl: AbstractControl) {
@@ -110,7 +91,7 @@ export class ServicesEditComponent implements OnInit {
   }
 
   compareFn(c1: any, c2: any): boolean {
-    return c1 && c2 ? c1.id === c2.id : c1 === c2;
+    return c1 && c2 ? c1.unitId === c2.unitId : c1 === c2;
   }
 
   getCurrentDateTime(): string {
@@ -118,11 +99,11 @@ export class ServicesEditComponent implements OnInit {
   }
 
   showSuccess() {
-    this.toast.success('Thêm mới thành công !', 'Thông báo : ');
+    this.toast.success('Chỉnh sửa thành công !', 'Thông báo : ');
   }
 
   showError() {
-    this.toast.error('Thêm mới thất bại !', 'Cảnh báo : ');
+    this.toast.error('Chỉnh sửa thất bại !', 'Cảnh báo : ');
   }
 
   get newsImageName() {

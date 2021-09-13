@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {MatSnackBar, MatSnackBarConfig} from "@angular/material/snack-bar";
-import {ToastrService} from "ngx-toastr";
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {ToastrService} from 'ngx-toastr';
+import {ServiceService} from '../../../service/service/service.service';
 
 class ServicesDeleteComponent {
 }
@@ -13,29 +13,35 @@ class ServicesDeleteComponent {
 })
 export class DeleteServicesComponent implements OnInit {
 
-  public code:String;
+  public code: string;
+  public id: number;
+
   constructor(public dialogRef: MatDialogRef<ServicesDeleteComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
               private toast: ToastrService,
-              private snackBar: MatSnackBar) { }
+              private serviceService: ServiceService) {
+  }
 
   ngOnInit(): void {
-    this.code=this.data.name;
+    this.code = this.data.name;
+    this.id = this.data.name;
+    console.log(this.id);
+
   }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
-  delete() {
-    // this.customerService.deleteCustomer(this.id).subscribe(dataDialog => {
-    this.dialogRef.close();
-    let config = new MatSnackBarConfig();
-    config.duration = 2000;
-    config.verticalPosition = "top";
-    config.panelClass= ["alert-red"];
-    this.toast.success('delete success fully','thong bao')
 
-    this.snackBar.open("Create new Customer success","OK", config);
-    // });
+  delete() {
+    this.serviceService.deleteServices(this.id).subscribe(dataDialog => {
+      this.dialogRef.close();
+      // let config = new MatSnackBarConfig();
+      // config.duration = 2000;
+      // config.verticalPosition = 'top';
+      // config.panelClass = ['alert-red'];
+      this.toast.success('delete success fully', 'thong bao');
+
+    });
   }
 }

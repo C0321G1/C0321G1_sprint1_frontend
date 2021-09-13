@@ -35,9 +35,9 @@
 
         <div class="mt-4">
           <label class="style-span">Unit (<span style="color: red">*</span>)</label>
-          <select formControlName="unit" class="custom-select"
+          <select formControlName="unit"  [compareWith]="compareFn" class="custom-select"
                   [ngClass]="editForm.controls.unit.valid? 'is-valid':'is-invalid'" id="inputGroupSelect01">
-            <option value="" selected>-- Choose Game Type --</option>
+<!--            <option value="" selected>&#45;&#45; Choose Game Type &#45;&#45;</option>-->
             <option *ngFor="let item of unitList" [ngValue]="item">{{item.name}}</option>
           </select>
           <div class="style-error" *ngIf="editForm.controls.unit.hasError('required') &&
@@ -47,14 +47,26 @@
 
         <div class="mt-4">
           <label class="style-span">Prices (VND) (<span style="color: red">*</span>)</label>
-          <input type="text" class="form-control" placeholder="Enter Prices " formControlName="prices"
-                 [ngClass]="editForm.controls.prices.valid? 'is-valid':'is-invalid'">
-          <small class="style-error" *ngIf="editForm.controls.prices.hasError('required') &&
-           editForm.controls.prices.touched"> Vui lòng nhập số lượng</small>
-          <small class="style-error" *ngIf="editForm.controls.prices.hasError('min') &&
-           editForm.controls.prices.touched"> Vui lòng nhập giá lớn hơn 1000</small>
-          <small class="style-error" *ngIf="editForm.controls.prices.hasError('pattern') &&
-           editForm.controls.prices.touched"> Vui lòng nhập số </small>
+          <input type="text" formControlName="prices" class="form-control" placeholder="Enter Prices ">
+<!--                 [ngClass]="editForm.controls.prices.valid? 'is-valid':'is-invalid'">-->
+<!--          <small class="style-error" *ngIf="editForm.controls.prices.hasError('required') &&-->
+<!--           editForm.controls.prices.touched"> Vui lòng nhập số lượng</small>-->
+<!--          <small class="style-error" *ngIf="editForm.controls.prices.hasError('min') &&-->
+<!--           editForm.controls.prices.touched"> Vui lòng nhập giá lớn hơn 1000</small>-->
+<!--          <small class="style-error" *ngIf="editForm.controls.prices.hasError('pattern') &&-->
+<!--           editForm.controls.prices.touched"> Vui lòng nhập số </small>-->
+          <div
+            *ngIf="!editForm.controls.prices?.valid && (editForm.controls.prices?.dirty || editForm.controls.prices?.touched)">
+            <div [hidden]="!editForm.controls.gaming.errors.required">
+              <p style="color: red">Gaming is required</p>
+            </div>
+            <div [hidden]="!editForm.controls.gaming.errors.min">
+              <p style="color: red">Gaming must be greater than or equal to 1000</p>
+            </div>
+            <div [hidden]="!editForm.controls.gaming.errors.pattern">
+              <p style="color: red">Gaming must be a integer</p>
+            </div>
+          </div>
 
         </div>
 
@@ -63,9 +75,9 @@
           <label class="style-span">Image (<span style="color: red">*</span>)</label>
           <div class="input-group ">
             <div class="custom-file">
-              <input formControlName="image" (change)="showPreview($event)" type="file" class="custom-file-input"
-                     id="validatedCustomFile" [ngClass]="newsImageName?.errors? 'is-invalid': 'is-valid'">
-              <label class="custom-file-label" for="validatedCustomFile">
+<!--              <input formControlName="image" (change)="showPreview($event)" type="file" class="custom-file-input"-->
+<!--                     id="validatedCustomFile" [ngClass]="newsImageName?.errors? 'is-invalid': 'is-valid'">-->
+              <label class="custom-file-label" >
                 {{newsImageName.value !== '' ? newsImageName.value : 'Choose file'}}</label>
             </div>
           </div>
@@ -77,7 +89,7 @@
             <div class="col-3"></div>
             <div class="col-6">
               <img style="border: 1px solid white;width: 100%"
-                   src="{{urlImage}}">
+                  [src]="urlImage" >
             </div>
             <div class="col-3"></div>
           </div>

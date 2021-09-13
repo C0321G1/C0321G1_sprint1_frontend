@@ -26,6 +26,8 @@ export class ServicesCreateComponent implements OnInit {
   urlImage: string;
   require: any;
   public isImage = false;
+  page: number;
+  name: string;
 
   constructor(private serviceService: ServiceService,
               private toast: ToastrService,
@@ -40,19 +42,20 @@ export class ServicesCreateComponent implements OnInit {
   }
 
   getData() {
-    this.serviceService.getAllServices().subscribe(data => {
+    this.serviceService.getAllServices(this.name, this.page).subscribe(data => {
       this.servicesList = data;
-      this.lastId = this.servicesList[this.servicesList.length - 1].serviceId;
-      if (this.lastId < 10) {
-        this.code = 'SV-000' + this.lastId;
-      } else if (this.lastId < 100) {
-        this.code = 'SV-00' + this.lastId;
-      } else if (this.lastId < 1000) {
-        this.code = 'SV-0' + this.lastId;
-      } else {
-        this.code = 'SV-' + this.lastId;
+      if (this.servicesList  && this.servicesList.length < 1) {
+        this.lastId = this.servicesList[this.servicesList.length - 1].servicesId;
+        if (this.lastId < 10) {
+          this.code = 'SV-000' + this.lastId;
+        } else if (this.lastId < 100) {
+          this.code = 'SV-00' + this.lastId;
+        } else if (this.lastId < 1000) {
+          this.code = 'SV-0' + this.lastId;
+        } else {
+          this.code = 'SV-' + this.lastId;
+        }
       }
-
     });
     this.serviceService.getAllUnit().subscribe(data => {
       this.unitList = data;
