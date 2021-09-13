@@ -1,7 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
-<<<<<<< HEAD
-=======
 * {
   font-family: Averta;
   /*background-color: #343a40;*/
@@ -133,4 +131,3 @@
   z-index: 1;
   border-radius: 8px 8px 0 0;
 }
->>>>>>> 1b21d85e6b8a31144bcb929af01ec75dff823054
