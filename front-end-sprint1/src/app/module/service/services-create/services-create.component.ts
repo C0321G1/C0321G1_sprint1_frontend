@@ -9,6 +9,7 @@ import {formatDate} from '@angular/common';
 import {finalize} from 'rxjs/operators';
 import {AngularFireStorage} from '@angular/fire/storage';
 import Swal from 'sweetalert2';
+import {ignoreDiagnostics} from '@angular/compiler-cli/src/ngtsc/typecheck/src/diagnostics';
 
 @Component({
   selector: 'app-services-create',
@@ -44,7 +45,7 @@ export class ServicesCreateComponent implements OnInit {
   getData() {
     this.serviceService.getAllServices(this.name, this.page).subscribe(data => {
       this.servicesList = data;
-      if (this.servicesList  && this.servicesList.length < 1) {
+      if (this.servicesList && this.servicesList.length < 1) {
         this.lastId = this.servicesList[this.servicesList.length - 1].servicesId;
         if (this.lastId < 10) {
           this.code = 'SV-000' + this.lastId;
@@ -114,6 +115,9 @@ export class ServicesCreateComponent implements OnInit {
 
   showPreview(event: any) {
     this.selectedImage = event.target.files[0];
+    if (this.selectedImage !== null) {
+      this.loadImg();
+    }
   }
 
   getCurrentDateTime(): string {

@@ -22,6 +22,7 @@ export class ServicesEditComponent implements OnInit {
   selectedImage: any = null;
   services: Services;
   urlImage: any;
+  isImage = false;
 
 
   constructor(private service: ServiceService,
@@ -68,9 +69,35 @@ export class ServicesEditComponent implements OnInit {
     });
   }
 
+  loadImg() {
+    Swal.fire({
+      title: 'Đang gửi dữ liệu',
+      text: 'Vui lòng chờ ...',
+      imageUrl: '../../../../../assets/image/spin.gif',
+      imageWidth: '100px',
+      showConfirmButton: false,
+      allowOutsideClick: false
+    });
+    const nameImg = this.getCurrentDateTime() + this.selectedImage?.name;
+    const fileRef = this.storage.ref(nameImg);
+    this.storage.upload(nameImg, this.selectedImage).snapshotChanges().pipe(
+      finalize(() => {
+        fileRef.getDownloadURL().subscribe((url) => {
+          console.log(url);
+          this.editForm.value.image = url;
+          this.urlImage = url;
+          this.isImage = true;
+          Swal.close();
+        });
+      })
+    ).subscribe();
+  }
+
   showPreview(event: any) {
     this.selectedImage = event.target.files[0];
-
+    if (this.selectedImage !== this.urlImage) {
+      this.loadImg();
+    }
   }
 
   edit() {
