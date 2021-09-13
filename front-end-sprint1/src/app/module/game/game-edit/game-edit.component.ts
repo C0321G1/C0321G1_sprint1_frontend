@@ -93,7 +93,7 @@ export class GameEditComponent implements OnInit {
     if (this.gameForm.valid) {
       this.gameService.updateGame(this.gameId,this.gameForm.value,).subscribe(data => {
         console.log(this.gameForm.value);
-        this.router.navigateByUrl('/game');
+        this.router.navigateByUrl('');
         this.toastr.success('Thanks!', 'Edit game successfully !');
       });
     }

@@ -81,7 +81,7 @@ export class GameCreateComponent implements OnInit {
     if (this.gameForm.valid) {
       this.gameForm.value.image = this.image;
       this.gameService.saveGame(this.gameForm.value).subscribe(data => {
-        this.router.navigateByUrl('/game');
+        this.router.navigateByUrl('');
         this.toastr.success('Thanks!', 'Create new game successfully !');
       });
     }
