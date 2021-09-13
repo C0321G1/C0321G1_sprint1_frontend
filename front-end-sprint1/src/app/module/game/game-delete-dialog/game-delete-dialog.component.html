@@ -1,1 +1,15 @@
-<p>game-delete-dialog works!</p>
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">Delete game</h5>
+    </div>
+    <div class="modal-body">
+      <p>Delete game <span style="color:red;">{{name}}</span>, Are you sure?</p>
+      <p style="color: red">(*) Note: This action cannot be undone!</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="cancel()">Close</button>
+      <button type="button" class="btn btn-primary" (click)="delete()">Delete</button>
+    </div>
+  </div>
+</div>

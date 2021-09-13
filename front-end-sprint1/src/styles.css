@@ -1,1 +1,133 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+* {
+  font-family: Averta;
+  /*background-color: #343a40;*/
+}
+
+.detailButton:hover {
+  transition: none;
+}
+
+.zoom img {
+  display: block;
+  transition: all .3s ease;
+}
+
+.zoom img:hover {
+  transform: scale(1.5);
+}
+
+.zoom p {
+  display: block;
+  overflow: hidden;
+}
+
+.thumbnail {
+  overflow: hidden;
+}
+
+.thumbnail img {
+  width: 100%;
+  height: 100%;
+  transition-duration: 0.3s;
+}
+
+.thumbnail img:hover {
+  transform: scale(1.2);
+}
+
+@media only screen and (min-width: 751px) and (max-width: 860px) {
+  .imgrp {
+    width: 60px;
+  }
+}
+
+@media only screen and (min-width: 651px) and (max-width: 750px) {
+  .imgrp {
+    width: 60px;
+  }
+}
+
+@media only screen and (min-width: 551px) and (max-width: 650px) {
+  .imgrp {
+    width: 50px;
+  }
+}
+
+@media only screen and (min-width: 451px) and (max-width: 550px) {
+  .imgrp {
+    width: 45px;
+  }
+}
+
+@media only screen and (min-width: 350px) and (max-width: 450px) {
+  .imgrp {
+    width: 45px;
+  }
+}
+
+/*body {*/
+/*    text-align: center;*/
+/*    display: flex;*/
+/*    height: 100vh;*/
+/*    width: 100%;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    padding: 0 20px;*/
+/*    font-family: "Baloo Tammudu 2";*/
+/*}*/
+
+.nav{
+  display: inline-flex;
+  position: relative;
+  overflow: hidden;
+  max-width: 100%;
+  background-color: white;
+  padding: 0 20px;
+  border-radius: 40px;
+  box-shadow: 0 10px 40px rgba(150, 174, 178, 0.8);
+}
+
+.nav-item{
+  color: #83818c;
+  padding: 0;
+  text-decoration: none;
+  transition:  0.3s;
+  margin: 0 7px;
+  z-index: 1;
+  position: relative;
+}
+
+.nav-item:before{
+  content: '';
+  position: absolute;
+  bottom: -7px;
+  left: 0px;
+  width: 100%;
+  height: 5px;
+  background-color: #dfe2ea;
+  border-radius: 8px 8px 0 0;
+  opacity: 0;
+  transition: 0.3s;
+}
+
+.nav-item:not(.is_active):hover:before{
+  opacity: 1;
+  bottom:0;
+}
+
+.nav-item:not(.is-active):hover{
+  color: #333;
+}
+
+.nav-indicator{
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 4px;
+  transition: 0.4s;
+  height: 5px;
+  z-index: 1;
+  border-radius: 8px 8px 0 0;
+}
