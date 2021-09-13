@@ -12,10 +12,11 @@ export class ServiceService {
 
   constructor(private http: HttpClient) {
   }
-
+  //phap
   getAllServices(name: string,page: number): Observable<any> {
     return this.http.get<any>(this.API + '/services?name='+name+'&page='+page);
   }
+  //phap
   searchNameCode( code: string ,name: string, prices: string, page: number): Observable<any>{
     return this.http.get<any>(this.API+'/services/searchNameCodePrices?code=' + code + '&name=' + name
       + '&prices=' + prices + '&page=' + page);
@@ -25,7 +26,8 @@ export class ServiceService {
   }
   //Phap-services
   deleteServices(id: number) {
-    return this.http.get<Services>(this.API + '/services' + '/' + id);
+    // @ts-ignore
+    return this.http.patch<>(this.API + '/services/delete/' + id);
   }
   findById(id: number) {
     return this.http.get<Services>(this.API + '/services' + '/' + id);

@@ -17,6 +17,7 @@ export class ServicesListComponent implements OnInit {
   public p = 0;
   public code='';
   public prices='';
+  public pageTotal: number;
   public totalPage;
   ps: Array<any> = [];
 
@@ -40,6 +41,7 @@ export class ServicesListComponent implements OnInit {
         this.p=0;
       }
       this.ps = new Array<any>(value.totalpages);
+      console.log(this.ps.length)
     }, error => {
       console.log(error);
     });
@@ -54,7 +56,6 @@ searchNameCodePrices(){
         this.servicesPage=value.content;
         this.p=0
       }
-      console.log(value.http)
       this.ps = new Array<any>(value.totalpages);
     },error => {
       console.log(error);
@@ -90,20 +91,20 @@ searchNameCodePrices(){
   }
 
 
-  openDialog(id: any): void {
+  openDialog(id : any): void {
     console.log(id);
-    // this.customerService.findById(id).subscribe(dataDialog => {
+    this.serviceService.findById(id).subscribe(dataDialog => {
+      console.log(id);
     const dialogRef = this.dialog.open(DeleteServicesComponent, {
       width: '500px',
-      data: {name: "DV-0000"},
+      data: {name: dataDialog},
       disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.toast.success('delete success fully', 'thong bao')
       this.ngOnInit();
     });
-    // });
+    });
   }
 }

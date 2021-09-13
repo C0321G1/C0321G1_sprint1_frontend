@@ -1,7 +1,7 @@
 import {Unit} from './unit';
 
 export interface Services {
-  serviceId: number;
+  servicesId: number;
   code: string;
   name: string;
   prices: number;
