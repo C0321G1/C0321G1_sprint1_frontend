@@ -13,14 +13,20 @@ export class ServiceService {
   constructor(private http: HttpClient) {
   }
 
-  getAllServices(): Observable<Services[]> {
-    return this.http.get<Services[]>(this.API + '/services');
+  getAllServices(name: string,page: number): Observable<any> {
+    return this.http.get<any>(this.API + '/services?name='+name+'&page='+page);
   }
-
+  searchNameCode( code: string ,name: string, prices: string, page: number): Observable<any>{
+    return this.http.get<any>(this.API+'/services/searchNameCodePrices?code=' + code + '&name=' + name
+      + '&prices=' + prices + '&page=' + page);
+  }
   getAllUnit(): Observable<Unit[]> {
     return this.http.get<Unit[]>(this.API + '/units');
   }
-
+  //Phap-services
+  deleteServices(id: number) {
+    return this.http.get<Services>(this.API + '/services' + '/' + id);
+  }
   findById(id: number) {
     return this.http.get<Services>(this.API + '/services' + '/' + id);
   }

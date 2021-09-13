@@ -24,29 +24,29 @@ export class ServicesCreateComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getData();
+    // this.getData();
     this.getInit();
   }
 
-  getData() {
-    this.service.getAllServices().subscribe(data => {
-      this.servicesList = data;
-      this.lastId = this.servicesList[this.servicesList.length - 1].serviceId;
-      if (this.lastId < 10) {
-        this.code = 'SV-000' + this.lastId;
-      } else if (this.lastId < 100) {
-        this.code = 'SV-00' + this.lastId;
-      } else if (this.lastId < 1000) {
-        this.code = 'SV-0' + this.lastId;
-      } else {
-        this.code = 'SV-' + this.lastId;
-      }
-
-    });
-    this.service.getAllUnit().subscribe(data => {
-      this.unitList = data;
-    });
-  }
+  // getData() {
+  //   this.service.getAllServices().subscribe(data => {
+  //     this.servicesList = data;
+  //     this.lastId = this.servicesList[this.servicesList.length - 1].serviceId;
+  //     if (this.lastId < 10) {
+  //       this.code = 'SV-000' + this.lastId;
+  //     } else if (this.lastId < 100) {
+  //       this.code = 'SV-00' + this.lastId;
+  //     } else if (this.lastId < 1000) {
+  //       this.code = 'SV-0' + this.lastId;
+  //     } else {
+  //       this.code = 'SV-' + this.lastId;
+  //     }
+  //
+  //   });
+  //   this.service.getAllUnit().subscribe(data => {
+  //     this.unitList = data;
+  //   });
+  // }
 
   getInit() {
     this.createForm = new FormGroup({
