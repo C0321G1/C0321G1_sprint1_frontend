@@ -48,7 +48,7 @@ export class ServicesEditComponent implements OnInit {
       this.unitList = data;
     });
   }
-
+// Khanh create
   initForm() {
     this.editForm = new FormGroup({
       id: new FormControl(),
