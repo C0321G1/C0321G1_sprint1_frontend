@@ -1,12 +1,16 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
 import {CustomerModule} from './module/customer/customer.module';
 import {ServiceModule} from './module/service/service.module';
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {CommonModule} from "@angular/common";
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {CommonModule} from '@angular/common';
+import {environment} from '../environments/environment';
+import {AngularFireModule} from '@angular/fire';
+import {AngularFireStorageModule} from '@angular/fire/storage';
+import {HttpClientModule} from '@angular/common/http';
 
 
 @NgModule({
@@ -17,11 +21,15 @@ import {CommonModule} from "@angular/common";
     BrowserModule,
     AppRoutingModule,
     CustomerModule,
+    HttpClientModule,
     ServiceModule,
     BrowserAnimationsModule,
-    CommonModule
+    CommonModule,
+    AngularFireStorageModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig)
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

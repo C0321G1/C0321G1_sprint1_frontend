@@ -9,89 +9,82 @@
 
       <form [formGroup]="createForm" (ngSubmit)="create()">
 
-        <div class="row mt-3">
-          <div class="col-6">
-            <label class="style-span">Services ID (<span style="color: red">*</span>)</label>
-            <input type="text" class="form-control" [ngClass]="createForm.controls.code.valid? 'is-valid':'is-invalid'"
-                   readonly formControlName="code">
-          </div>
-
-          <div class="col-6">
-            <label class="style-span">Services Name (<span style="color: red">*</span>)</label>
-            <input type="text" class="form-control" placeholder="Enter Services Name "
-                   [ngClass]="createForm.controls.name.valid? 'is-valid':'is-invalid'"
-                   formControlName="name">
-            <div class="style-error" *ngIf="createForm.controls.name.hasError('required') &&
+        <div class="mt-4">
+          <label class="style-span">Services Name (<span style="color: red">*</span>)</label>
+          <input type="text" class="form-control" placeholder="Enter Services Name "
+                 [ngClass]="createForm.controls.name.valid? 'is-valid':'is-invalid'"
+                 formControlName="name">
+          <div class="style-error" *ngIf="createForm.controls.name.hasError('required') &&
            createForm.controls.name.touched"> Vui lòng nhập tên dịch vụ
-            </div>
           </div>
         </div>
 
-        <div class="row mt-4">
-          <div class="col-6">
-            <label class="style-span">Quantity (<span style="color: red">*</span>)</label>
-            <input type="text" class="form-control" placeholder="Enter Quantity" formControlName="quantity"
-                   [ngClass]="createForm.controls.quantity.valid? 'is-valid':'is-invalid'">
-            <small class="style-error" *ngIf="createForm.controls.quantity.hasError('required') &&
+
+        <div class="mt-4">
+          <label class="style-span">Quantity (<span style="color: red">*</span>)</label>
+          <input type="text" class="form-control" placeholder="Enter Quantity" formControlName="quantity"
+                 [ngClass]="createForm.controls.quantity.valid? 'is-valid':'is-invalid'">
+          <div class="style-error" *ngIf="createForm.controls.quantity.hasError('required') &&
            createForm.controls.quantity.touched"> Vui lòng nhập số lượng
-            </small>
-            <small class="style-error" *ngIf="createForm.controls.quantity.hasError('checkInterger') &&
-           createForm.controls.quantity.touched"> Vui lòng nhập số lượng là số nguyên dương
-            </small>
-
           </div>
-
-          <div class="col-6">
-            <label class="style-span">Unit (<span style="color: red">*</span>)</label>
-            <select class="form-control " formControlName="unit">
-              <option value="" selected> -- Vui lòng chọn --</option>
-              <option *ngFor="let unit of unitList" [ngValue]="unit">{{unit.name}}</option>
-            </select>
-            <div class="style-error" *ngIf="createForm.controls.unit.hasError('required') &&
-           createForm.controls.unit.touched"> Vui lòng chọn đơn vị
-            </div>
-
+          <div [hidden]="createForm.controls.quantity.errors.required" class="style-error" *ngIf="createForm.controls.quantity.hasError('checkInterger') &&
+           createForm.controls.quantity.touched "> Vui lòng nhập số lượng là số nguyên dương
           </div>
         </div>
 
 
-        <div class=" row mt-4">
-          <div class="col-6">
-            <label class="style-span">Prices (VND) (<span style="color: red">*</span>)</label>
-            <input type="text" class="form-control" placeholder="Enter Prices " formControlName="price"
-                   [ngClass]="createForm.controls.price.valid? 'is-valid':'is-invalid'">
-            <small class="style-error" *ngIf="createForm.controls.price.hasError('required') &&
-           createForm.controls.price.touched"> Vui lòng nhập số lượng</small>
-            <small class="style-error" *ngIf="createForm.controls.price.hasError('min') &&
-           createForm.controls.price.touched"> Vui lòng nhập giá lớn hơn 1000</small>
+        <div class="mt-4">
+          <label class="style-span">Unit (<span style="color: red">*</span>)</label>
+          <select formControlName="unit" class="custom-select"
+                  [ngClass]="createForm.controls.unit.valid? 'is-valid':'is-invalid'" id="inputGroupSelect01">
+            <option value="" selected>-- Choose Game Type --</option>
+            <option *ngFor="let item of unitList" [ngValue]="item">{{item.name}}</option>
+          </select>
+          <div class="style-error" *ngIf="createForm.controls.unit.hasError('required') &&
+           createForm.controls.unit.touched"> Vui lòng chọn đơn vị
           </div>
-          <div class="col-6">
-            <label class="style-span">Image (<span style="color: red">*</span>)</label>
-            <div class="input-group ">
-              <div class="custom-file">
-                <input type="file" class="custom-file-input form-control"
-                       [ngClass]="createForm.controls.image.valid? 'is-valid':'is-invalid'">
-                <label class="custom-file-label">Choose file</label>
-              </div>
-            </div>
-            <small class="style-error" *ngIf="createForm.controls.image.hasError('required') &&
-           createForm.controls.price.touched"> Vui lòng chọn ảnh </small>
-          </div>
+        </div>
+
+
+        <div class="mt-4">
+          <label class="style-span">Prices (VND) (<span style="color: red">*</span>)</label>
+          <input type="text" class="form-control" placeholder="Enter Prices " formControlName="prices"
+                 [ngClass]="createForm.controls.prices.valid? 'is-valid':'is-invalid'">
+          <small class="style-error" *ngIf="createForm.controls.prices.hasError('required') &&
+           createForm.controls.prices.touched"> Vui lòng nhập số lượng</small>
+          <small class="style-error" *ngIf="createForm.controls.prices.hasError('min') &&
+           createForm.controls.prices.touched"> Vui lòng nhập giá lớn hơn 1000</small>
+          <small class="style-error" *ngIf="createForm.controls.prices.hasError('pattern') &&
+           createForm.controls.prices.touched"> Vui lòng nhập giá số</small>
+          <!--          <div [hidden]="!createForm.controls.prices.errors.pattern">-->
+          <!--            <p style="color: red">Gaming must be number</p>-->
+          <!--          </div>-->
 
         </div>
 
 
         <div class="mt-4">
-          <div class="row mt-4">
-            <div class="col-3"></div>
-            <div class="col-6">
-              <img style="border: 1px solid white;width: 100%"
-                   src="">
+          <label class="style-span">Image (<span style="color: red">*</span>)</label>
+          <div class="input-group ">
+            <div class="custom-file">
+              <input formControlName="image" (change)="showPreview($event)" type="file" class="custom-file-input"
+                     id="validatedCustomFile" [ngClass]="newsImageName?.errors? 'is-invalid': 'is-valid'">
+              <label class="custom-file-label" for="validatedCustomFile">
+                {{newsImageName.value !== '' ? newsImageName.value : 'Choose file'}}</label>
             </div>
-            <div class="col-3"></div>
           </div>
-
         </div>
+
+<!--        <img style="border: 1px solid white;width: 100%" src="{{urlImage}}">-->
+        <div class="row mt-4" *ngIf="!isImage">
+          <div class="col-2"></div>
+          <div class="col-8">
+            <img style="border: 1px solid white;width: 100%" src="{{urlImage}}">
+          </div>
+          <div class="col-2"></div>
+        </div>
+
+
         <hr>
         <div class="text-center">
           <button class="btn btn-warning" [routerLink]="''">
@@ -102,7 +95,8 @@
             </svg>
             <span style="font-family: Averta">Back</span>
           </button>
-          <button class="btn btn-secondary mx-3" type="reset">
+
+          <button (click)="reset()" type="reset" class="btn btn-secondary mx-3">
             <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor"
                  class="bi bi-arrow-repeat" viewBox="0 0 16 16">
               <path
@@ -112,20 +106,30 @@
             </svg>
             <span style="font-family: Averta">Reset</span>
           </button>
-          <button class="btn btn-warning" type="submit">
-            <svg xmlns
-                   ="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi
-        bi-pencil-square" viewBox="0 0 16 16">
-              <path d
-                      ="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75
-        2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.50 0 0
-        .196-.12l6.813-6.814z"/>
-              <path fill-rule
-                      ="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0
-        1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1
-        2.5v11z"/>
+
+          <button *ngIf="!isImage" class="btn btn-warning">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                 class="bi bi-pencil-square" viewBox="0 0 16 16">
+              <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75
+          2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.50 0 0
+          .196-.12l6.813-6.814z"/>
+              <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0
+          1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1
+          2.5v11z"/>
             </svg>
-            <span style="font-family: Averta">Create</span>
+            <span (click)="loadImg()" style="font-family: Averta">Load Image</span>
+          </button>
+          <button *ngIf="isImage" class="btn btn-warning">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                 class="bi bi-pencil-square" viewBox="0 0 16 16">
+              <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75
+          2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.50 0 0
+          .196-.12l6.813-6.814z"/>
+              <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0
+          1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1
+          2.5v11z"/>
+            </svg>
+            <span style="font-family: Averta" (click)="create()">Create</span>
           </button>
         </div>
       </form>

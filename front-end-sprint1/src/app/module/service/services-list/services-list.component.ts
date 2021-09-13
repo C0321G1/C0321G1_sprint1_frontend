@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {MatDialog} from "@angular/material/dialog";
-import {DeleteServicesComponent} from "../delete-services/delete-services.component";
-import {ToastrService} from "ngx-toastr";
+import {MatDialog} from '@angular/material/dialog';
+import {DeleteServicesComponent} from '../delete-services/delete-services.component';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-services-list',
@@ -20,13 +20,13 @@ export class ServicesListComponent implements OnInit {
     // this.customerService.findById(id).subscribe(dataDialog => {
     const dialogRef = this.dialog.open(DeleteServicesComponent, {
       width: '500px',
-      data: {name: "DV-0000"},
+      data: {name: 'DV-0000'},
       disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.toast.success('delete success fully','thong bao')
+      this.toast.success('delete success fully', 'thong bao');
       this.ngOnInit();
     });
     // });

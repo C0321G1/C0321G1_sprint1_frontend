@@ -9,9 +9,8 @@ import {HttpClientModule} from '@angular/common/http';
 import {ToastrModule} from 'ngx-toastr';
 import { DeleteServicesComponent } from './delete-services/delete-services.component';
 import { ServicesListComponent } from './services-list/services-list.component';
-import {MatDialogModule} from "@angular/material/dialog";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 @NgModule({

@@ -1,10 +1,14 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ServiceService} from '../../../service/service/service.service';
 import {ToastrService} from 'ngx-toastr';
 import {Services} from '../../../model/service/services';
 import {Router} from '@angular/router';
 import {Unit} from '../../../model/service/unit';
+import {formatDate} from '@angular/common';
+import {finalize} from 'rxjs/operators';
+import {AngularFireStorage} from '@angular/fire/storage';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-services-create',
@@ -15,12 +19,19 @@ export class ServicesCreateComponent implements OnInit {
   createForm: FormGroup;
   servicesList: Services[] = [];
   unitList: Unit[] = [];
-  code = '';
+  code = 'SV-0001';
   lastId: number;
+  selectedImage: any = null;
+  services: Services;
+  urlImage: string;
+  require: any;
+  public isImage = false;
 
-  constructor(private service: ServiceService,
+  constructor(private serviceService: ServiceService,
               private toast: ToastrService,
-              private router: Router) {
+              private router: Router,
+              @Inject(AngularFireStorage) private storage: AngularFireStorage,
+  ) {
   }
 
   ngOnInit(): void {
@@ -29,7 +40,7 @@ export class ServicesCreateComponent implements OnInit {
   }
 
   getData() {
-    this.service.getAllServices().subscribe(data => {
+    this.serviceService.getAllServices().subscribe(data => {
       this.servicesList = data;
       this.lastId = this.servicesList[this.servicesList.length - 1].serviceId;
       if (this.lastId < 10) {
@@ -43,7 +54,7 @@ export class ServicesCreateComponent implements OnInit {
       }
 
     });
-    this.service.getAllUnit().subscribe(data => {
+    this.serviceService.getAllUnit().subscribe(data => {
       this.unitList = data;
     });
   }
@@ -53,7 +64,7 @@ export class ServicesCreateComponent implements OnInit {
       id: new FormControl(),
       code: new FormControl(this.code),
       name: new FormControl('', Validators.required),
-      price: new FormControl('', [Validators.required, Validators.min(1000)]),
+      prices: new FormControl('', [Validators.required, Validators.min(1000), Validators.pattern('^\\d+$')]),
       quantity: new FormControl('', [Validators.required, this.validateInterger]),
       unit: new FormControl('', Validators.required),
       image: new FormControl('', Validators.required)
@@ -61,17 +72,66 @@ export class ServicesCreateComponent implements OnInit {
   }
 
   create() {
-    const service = this.createForm.value;
-    this.service.create(service).subscribe(() => {
+    console.log(this.createForm.value);
+    this.serviceService.create(this.createForm.value).subscribe(data => {
+      console.log(this.createForm.value);
       this.router.navigateByUrl('');
-      this.toast.success('Tạo mới dịch vụ thành công', 'Thông Báo');
-    }, error => {
-      this.toast.error('Tạo mới thất bại', 'Cảnh Báo');
+      this.showSuccess();
     });
 
   }
+  loadImg() {
+    Swal.fire({
+      title: 'Đang gửi dữ liệu',
+      text: 'Vui lòng chờ ...',
+      imageUrl: '../../../../../assets/image/spin.gif',
+      imageWidth: '100px',
+      showConfirmButton: false,
+      allowOutsideClick: false
+    });
+    const nameImg = this.getCurrentDateTime() + this.selectedImage?.name;
+    const fileRef = this.storage.ref(nameImg);
+    this.storage.upload(nameImg, this.selectedImage).snapshotChanges().pipe(
+      finalize(() => {
+        fileRef.getDownloadURL().subscribe((url) => {
+          console.log(url);
+          this.createForm.value.image = url;
+          this.urlImage = url;
+          if (this.createForm.valid) {
+            this.isImage = true;
+            Swal.close();
+          }
+        });
+      })
+    ).subscribe();
+  }
 
   validateInterger(abstractControl: AbstractControl) {
-    return (abstractControl.value > 0 && abstractControl.value % 1 === 0) ? null : {checkInterger: true};
+    return ( abstractControl.value > 0 && abstractControl.value % 1 === 0) ? null : {checkInterger: true};
+  }
+
+  showPreview(event: any) {
+    this.selectedImage = event.target.files[0];
+  }
+
+  getCurrentDateTime(): string {
+    return formatDate(new Date(), 'dd-MM-yyyyhhmmssa', 'en-US');
+  }
+
+  showSuccess() {
+    this.toast.success('Thêm mới thành công !', 'Thông báo : ');
+  }
+
+  showError() {
+    this.toast.error('Thêm mới thất bại !', 'Cảnh báo : ');
+  }
+
+  get newsImageName() {
+    return this.createForm.get('image');
+  }
+
+  reset() {
+    this.isImage = false;
+    this.urlImage = '';
   }
 }
