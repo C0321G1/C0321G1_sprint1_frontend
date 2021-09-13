@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {MatDialog} from "@angular/material/dialog";
-import {DeleteServicesComponent} from "../delete-services/delete-services.component";
-import {ToastrService} from "ngx-toastr";
-import {ServiceService} from "../../../service/service/service.service";
-import {Services} from "../../../model/service/services";
+import {MatDialog} from '@angular/material/dialog';
+import {DeleteServicesComponent} from '../delete-services/delete-services.component';
+import {ToastrService} from 'ngx-toastr';
+import {Services} from '../../../model/service/services';
+import {ServiceService} from '../../../service/service/service.service';
+
 
 @Component({
   selector: 'app-services-list',
@@ -15,8 +16,8 @@ export class ServicesListComponent implements OnInit {
   public name = '';
   public name2 = '';
   public p = 0;
-  public code='';
-  public prices='';
+  public code = '';
+  public prices = '';
   public totalPage;
   ps: Array<any> = [];
 
@@ -33,33 +34,37 @@ export class ServicesListComponent implements OnInit {
 
   getAllServicesList() {
     this.serviceService.getAllServices(this.name, this.p).subscribe(value => {
-      if (value==null){
-        this.servicesPage=[];
-      }else {
+
+      if (value == null) {
+        this.servicesPage = [];
+      } else {
         this.servicesPage = value.content;
-        this.p=0;
+        this.p = 0;
+        console.log(this.servicesPage);
       }
       this.ps = new Array<any>(value.totalpages);
     }, error => {
       console.log(error);
     });
   }
-searchNameCodePrices(){
+
+  searchNameCodePrices() {
     console.log(this.code);
     console.log(this.name2);
-    this.serviceService.searchNameCode(this.code,this.name2,this.prices,this.p).subscribe(value => {
-      if (value==null){
-        this.servicesPage=[];
-      }else {
-        this.servicesPage=value.content;
-        this.p=0
+    this.serviceService.searchNameCode(this.code, this.name2, this.prices, this.p).subscribe(value => {
+      if (value == null) {
+        this.servicesPage = [];
+      } else {
+        this.servicesPage = value.content;
+        this.p = 0;
       }
-      console.log(value.http)
+      console.log(value.http);
       this.ps = new Array<any>(value.totalpages);
-    },error => {
+    }, error => {
       console.log(error);
-    })
-}
+    });
+  }
+
   first() {
     this.p = 0;
   }
@@ -95,15 +100,16 @@ searchNameCodePrices(){
     // this.customerService.findById(id).subscribe(dataDialog => {
     const dialogRef = this.dialog.open(DeleteServicesComponent, {
       width: '500px',
-      data: {name: "DV-0000"},
+      data: {name: 'DV-0000'},
       disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.toast.success('delete success fully', 'thong bao')
+
+      this.toast.success('delete success fully', 'thong bao');
       this.ngOnInit();
     });
-    // });
+
   }
 }

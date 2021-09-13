@@ -75,7 +75,7 @@
           <td style="color: #fff028">{{service.unit.name}}</td>
           <td style="color: #fff028" align="center">{{service.prices}}</td>
           <td colspan="2" align="center">
-            <a class="btn btn-warning mr-3" [routerLink]="['services/edit',service.serviceId]">
+            <a class="btn btn-warning mr-3" [routerLink]="['/services/edit/',service.servicesId]">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                    class="bi bi-pencil-square" viewBox="0 0 16 16">
                 <path
@@ -85,7 +85,7 @@
               </svg>
               <span style="font-family: Averta"></span>
             </a>
-            <a (click)="openDialog(service.serviceId)" class="btn btn-danger" role="button">
+            <a (click)="openDialog(service.servicesId)" class="btn btn-danger" role="button">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                    class="bi bi-trash-fill" viewBox="0 0 16 16">
                 <path

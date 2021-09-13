@@ -1,8 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {MatSnackBar, MatSnackBarConfig} from "@angular/material/snack-bar";
-import {ToastrService} from "ngx-toastr";
-import {ServiceService} from "../../../service/service/service.service";
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {ToastrService} from 'ngx-toastr';
+import {ServiceService} from '../../../service/service/service.service';
 
 class ServicesDeleteComponent {
 }
@@ -14,17 +13,18 @@ class ServicesDeleteComponent {
 })
 export class DeleteServicesComponent implements OnInit {
 
-  public code:String;
-  public id: number ;
+  public code: string;
+  public id: number;
 
   constructor(public dialogRef: MatDialogRef<ServicesDeleteComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
               private toast: ToastrService,
-              private serviceService: ServiceService) { }
+              private serviceService: ServiceService) {
+  }
 
   ngOnInit(): void {
-    this.code=this.data.name;
-    this.id=this.data.name;
+    this.code = this.data.name;
+    this.id = this.data.name;
     console.log(this.id);
 
   }
@@ -32,15 +32,15 @@ export class DeleteServicesComponent implements OnInit {
   onNoClick(): void {
     this.dialogRef.close();
   }
-  //phap-services
+
   delete() {
     this.serviceService.deleteServices(this.id).subscribe(dataDialog => {
-    this.dialogRef.close();
-    let config = new MatSnackBarConfig();
-    config.duration = 2000;
-    config.verticalPosition = "top";
-    config.panelClass= ["alert-red"];
-    this.toast.success('delete success fully','thong bao')
+      this.dialogRef.close();
+      // let config = new MatSnackBarConfig();
+      // config.duration = 2000;
+      // config.verticalPosition = 'top';
+      // config.panelClass = ['alert-red'];
+      this.toast.success('delete success fully', 'thong bao');
 
     });
   }
