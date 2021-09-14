@@ -76,6 +76,7 @@
           <td style="color: #fff028" align="center">{{service.prices}}</td>
           <td colspan="2" align="center">
             <a class="btn btn-warning mr-3" [routerLink]="['services/edit/',service.servicesId]">
+
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                    class="bi bi-pencil-square" viewBox="0 0 16 16">
                 <path
@@ -115,6 +116,7 @@
         </a>
         <div class="float-right ">
           <ul class="pagination ">
+            <li class="page-item mr-1"><input type="text" style="width: 50px; height: 40px" [(ngModel)]="searchPageInput" ></li>
             <li class="page-item "><a class="page-link bg-dark" (click)="first()"  style="color: #fff028">First</a></li>
             <li class="page-item "><a class="page-link bg-dark " (click)="previous()" style="color: #fff028">Previous</a></li>
             <li class="page-item"><a class="page-link bg-dark "  style="color: #fff028">{{this.p+1}}</a></li>

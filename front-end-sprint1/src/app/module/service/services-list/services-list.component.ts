@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {MatDialog} from "@angular/material/dialog";
-import {DeleteServicesComponent} from "../delete-services/delete-services.component";
-import {ToastrService} from "ngx-toastr";
-import {ServiceService} from "../../../service/service/service.service";
-import {Services} from "../../../model/service/services";
+import {MatDialog} from '@angular/material/dialog';
+import {DeleteServicesComponent} from '../delete-services/delete-services.component';
+import {ToastrService} from 'ngx-toastr';
+import {Services} from '../../../model/service/services';
+import {ServiceService} from '../../../service/service/service.service';
+
 
 @Component({
   selector: 'app-services-list',
@@ -15,10 +16,11 @@ export class ServicesListComponent implements OnInit {
   public name = '';
   public name2 = '';
   public p = 0;
-  public code='';
-  public prices='';
+  public code = '';
+  public prices = '';
   public pageTotal: number;
   public totalPage;
+  searchPageInput: string;
   ps: Array<any> = [];
 
   constructor(private dialog: MatDialog,
@@ -34,11 +36,13 @@ export class ServicesListComponent implements OnInit {
 
   getAllServicesList() {
     this.serviceService.getAllServices(this.name, this.p).subscribe(value => {
-      if (value==null){
-        this.servicesPage=[];
-      }else {
+
+      if (value == null) {
+        this.servicesPage = [];
+      } else {
         this.servicesPage = value.content;
-        this.p=0;
+        this.p = 0;
+        console.log(this.servicesPage);
       }
       this.ps = new Array<any>(value.totalpages);
       console.log(this.ps.length)
@@ -46,21 +50,24 @@ export class ServicesListComponent implements OnInit {
       console.log(error);
     });
   }
-searchNameCodePrices(){
+
+  searchNameCodePrices() {
     console.log(this.code);
     console.log(this.name2);
-    this.serviceService.searchNameCode(this.code,this.name2,this.prices,this.p).subscribe(value => {
-      if (value==null){
-        this.servicesPage=[];
-      }else {
-        this.servicesPage=value.content;
-        this.p=0
+    this.serviceService.searchNameCode(this.code, this.name2, this.prices, this.p).subscribe(value => {
+      if (value == null) {
+        this.servicesPage = [];
+      } else {
+        this.servicesPage = value.content;
+        this.p = 0;
       }
+      console.log(value.http);
       this.ps = new Array<any>(value.totalpages);
-    },error => {
+    }, error => {
       console.log(error);
-    })
-}
+    });
+  }
+
   first() {
     this.p = 0;
   }
@@ -91,20 +98,20 @@ searchNameCodePrices(){
   }
 
 
-  openDialog(id : any): void {
+  openDialog(id: any): void {
     console.log(id);
     this.serviceService.findById(id).subscribe(dataDialog => {
       console.log(id);
-    const dialogRef = this.dialog.open(DeleteServicesComponent, {
-      width: '500px',
-      data: {name: dataDialog},
-      disableClose: true
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.ngOnInit();
-    });
+      const dialogRef = this.dialog.open(DeleteServicesComponent, {
+        width: '500px',
+        data: {name: dataDialog},
+        disableClose: true
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        this.ngOnInit();
+      });
     });
   }
+
+
 }
