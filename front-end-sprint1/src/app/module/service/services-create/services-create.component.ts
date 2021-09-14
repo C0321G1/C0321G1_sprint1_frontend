@@ -9,7 +9,7 @@ import {formatDate} from '@angular/common';
 import {finalize} from 'rxjs/operators';
 import {AngularFireStorage} from '@angular/fire/storage';
 import Swal from 'sweetalert2';
-import {ignoreDiagnostics} from '@angular/compiler-cli/src/ngtsc/typecheck/src/diagnostics';
+
 
 @Component({
   selector: 'app-services-create',
@@ -81,6 +81,8 @@ export class ServicesCreateComponent implements OnInit {
       console.log(this.createForm.value);
       this.router.navigateByUrl('');
       this.showSuccess();
+    }, error => {
+      this.showError();
     });
 
   }
