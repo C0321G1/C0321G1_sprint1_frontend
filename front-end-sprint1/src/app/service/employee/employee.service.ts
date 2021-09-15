@@ -27,6 +27,6 @@ export class EmployeeService {
   }
 
   edit(employee: any): Observable<Employee> {
-    return this.http.put<Employee>(this.API_URL, employee);
+    return this.http.patch<Employee>(this.API_URL, employee);
   }
 }

@@ -12,7 +12,12 @@
             <input type="text" class="form-control" id="id" formControlName="code">
             <div class="fontError mt-1"
                  *ngIf="employeeForm.controls.code.hasError('required') &&
-                 employeeForm.controls.code.touched">Please input employee id.</div>
+                 employeeForm.controls.code.touched">Please input employee id.
+            </div>
+            <div class="fontError mt-1"
+                 *ngIf="employeeForm.controls.code.hasError('pattern') &&
+                 employeeForm.controls.code.touched">Please input right format EMP-XXXX, X is digit.
+            </div>
           </div>
           <div class="col-6">
             <label for="name" class="fontFamily">Full Name</label>
@@ -21,6 +26,14 @@
             <div class="fontError mt-1"
                  *ngIf="employeeForm.controls.fullName.hasError('required') &&
                  employeeForm.controls.fullName.touched">Please input employee name.</div>
+            <div class="fontError mt-1"
+                 *ngIf="employeeForm.controls.fullName.hasError('minlength') &&
+                 employeeForm.controls.fullName.touched">Please input full name, min 6 characters
+            </div>
+            <div class="fontError mt-1"
+                 *ngIf="employeeForm.controls.fullName.hasError('maxlength') &&
+                 employeeForm.controls.fullName.touched">Please input full name, max 50 characters
+            </div>
           </div>
         </div>
 
@@ -57,6 +70,9 @@
             <div class="fontError mt-1"
                  *ngIf="employeeForm.controls.dateOfBirth.hasError('required') &&
                  employeeForm.controls.dateOfBirth.touched">Please choose date of birth.</div>
+            <div class="fontError mt-1"
+                 *ngIf="employeeForm.controls.dateOfBirth.hasError('invalidAge') &&
+                 employeeForm.controls.dateOfBirth.touched">Please choose date of birth, enough 18 age.</div>
           </div>
           <div class="col-6">
             <label for="startWorkDate" class="fontFamily">Start Work Date</label>
@@ -65,6 +81,9 @@
             <div class="fontError mt-1"
                  *ngIf="employeeForm.controls.startWorkDate.hasError('required') &&
                  employeeForm.controls.startWorkDate.touched">Please choose start work date.</div>
+            <div class="fontError mt-1"
+                 *ngIf="employeeForm.controls.startWorkDate.hasError('inValidDate') &&
+                 employeeForm.controls.startWorkDate.touched">Please choose start work date, not past date.</div>
           </div>
         </div>
 
@@ -76,6 +95,9 @@
             <div class="fontError mt-1"
                  *ngIf="employeeForm.controls.phone.hasError('required') &&
                  employeeForm.controls.phone.touched">Please input phone.</div>
+            <div class="fontError mt-1"
+                 *ngIf="employeeForm.controls.phone.hasError('pattern') &&
+                 employeeForm.controls.phone.touched">Please input right format 0XXXXXXXXX, from 10 to 11 digit.</div>
           </div>
           <div class="col-6">
             <label for="email" class="fontFamily">Email</label>
@@ -84,6 +106,9 @@
             <div class="fontError mt-1"
                  *ngIf="employeeForm.controls.email.hasError('required') &&
                  employeeForm.controls.email.touched">Please input email.</div>
+            <div class="fontError mt-1"
+                 *ngIf="employeeForm.controls.email.hasError('email') &&
+                 employeeForm.controls.email.touched">Please input right format, a@b.c .</div>
           </div>
         </div>
 
@@ -123,18 +148,25 @@
           </div>
         </div>
 
-        <div class="row mt-3">
-          <div class="col-6">
-            <label for="password" class="fontFamily">New Password</label>
-            <span style="color: red">(*)</span>
-            <input type="password" class="form-control" id="password" value="" required>
-            <div class="fontError mt-1">Please input new password.</div>
-          </div>
-          <div class="col-6">
-            <label for="confirmPassword" class="fontFamily">Confirm Password</label>
-            <span style="color: red">(*)</span>
-            <input type="password" class="form-control" id="confirmPassword" value="" required>
-            <div class="fontError mt-1">Please input confirm password!</div>
+        <div formGroupName="account">
+          <div class="row mt-3">
+            <div class="col-6">
+              <label for="password" class="fontFamily">New Password</label>
+              <span style="color: red">(*)</span>
+              <input #newPassword type="text" class="form-control" id="password" (change)="checkPassword(newPassword.value, confirmPassword.value)" formControlName="password">
+              <div class="fontError mt-1"
+                   *ngIf="employeeForm.controls.account.get('password').hasError('required') &&
+                 employeeForm.controls.account.touched">Please input new password.</div>
+              <div class="fontError mt-1"
+                   *ngIf="employeeForm.controls.account.get('password').hasError('pattern') &&
+                 employeeForm.controls.account.touched">Please input min 6 character, include uppercase, lowercase, numbers and special characters.</div>
+            </div>
+            <div class="col-6">
+              <label for="confirmPassword" class="fontFamily">Confirm Password</label>
+              <span style="color: red">(*)</span>
+              <input #confirmPassword type="text" class="form-control" id="confirmPassword" (change)="checkPassword(newPassword.value, confirmPassword.value)">
+              <div class="fontError" *ngIf="msgConfirmPass">New password not match with confirm password</div>
+            </div>
           </div>
         </div>
 
@@ -146,6 +178,9 @@
             <div class="fontError mt-1"
                  *ngIf="employeeForm.controls.level.hasError('required') &&
                  employeeForm.controls.level.touched">Please input level.</div>
+            <div class="fontError mt-1"
+                 *ngIf="employeeForm.controls.level.hasError('invalidLevel') &&
+                 employeeForm.controls.level.touched">Please input level > 0.</div>
           </div>
           <div class="col-6">
             <label for="yearOfExp" class="fontFamily">Year Of Experiences</label>
@@ -154,6 +189,9 @@
             <div class="fontError mt-1"
                  *ngIf="employeeForm.controls.yearOfExp.hasError('required') &&
                  employeeForm.controls.yearOfExp.touched">Please input year of experiences</div>
+            <div class="fontError mt-1"
+                 *ngIf="employeeForm.controls.yearOfExp.hasError('invalidYearOfExp') &&
+                 employeeForm.controls.yearOfExp.touched">Please input year of experiences >=0.</div>
           </div>
         </div>
 
