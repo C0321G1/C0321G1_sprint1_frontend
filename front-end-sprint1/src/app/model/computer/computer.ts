@@ -6,9 +6,9 @@ export interface Computer {
   id: number;
   idComputer: string;
   location: string;
-  start_used_date: string;
+  startUsedDate: string;
   configuration: string;
-  warranty_period: string;
+  warrantyPeriod: string;
   flagDelete: number;
   typeComputer: TypeComputer;
   manufacturerComputer: ManufacturerComputer;
