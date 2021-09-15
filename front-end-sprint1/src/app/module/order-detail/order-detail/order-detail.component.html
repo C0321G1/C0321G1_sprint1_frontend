@@ -1,0 +1,76 @@
+<div class="content">
+  <div class="container col-11">
+    <h1 class="text-center mt-4 mb-4 font-weight-lighter">Danh sách Order</h1>
+    <div class="scheduler-border">
+      <fieldset class="scheduler-border">
+        <legend class="scheduler-border font-chu">Order</legend>
+        <form  [formGroup]="createForm" (ngSubmit)="createOrder()" >
+        <div class="search row d-flex mb-4 text-center">
+          <div class="col-auto">
+            <label>ServiceName:</label>
+            <select [ngModel]="changeType" class="custom-select" formGroupName="service">
+              <option *ngFor="let type of services" [ngValue]="type"> {{type.name}}</option>
+            </select>
+          </div>
+          <div class="col-auto">
+            <label>Unit:</label>
+            <label>
+              {{changeType.unit}}
+            </label>
+          </div>
+          <div class="col-auto">
+            <label>Quanlity:</label>
+            <label>
+              <input class="form-control" type="text" formGroupName="quantity">
+            </label>
+          </div>
+          <div class="col-auto">
+            <label>Prices:</label>
+            {{changeType.prices}}
+          </div>
+          <div class="col-auto">
+            <br>
+            <button  [disabled]="createForm.invalid" class="btn btn-warning mt-xl-2"><i class="far fa-window-close" ></i>Order</button>
+          </div>
+        </div>
+        </form>
+      </fieldset>
+    </div>
+    <fieldset class="scheduler-border">
+      <legend  class="scheduler-border font-chu">List-Order</legend>
+      <div class="table-wrapper-scroll-y my-custom-scrollbar">
+        <table class="table table-striped table-bordered bg-dark font-chu " >
+          <thead>
+          <tr class="table-danger">
+            <th scope="col">STT</th>
+            <th scope="col">Service Name</th>
+            <th scope="col">Quality</th>
+            <th scope="col">Unit</th>
+            <th scope="col">Prices</th>
+            <th scope="col">TotalPrices</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let order of orderList let i = index">
+            <td class="pl-1 pr-0 align-middle" >{{i+1}}</td>
+            <td class="pl-1 pr-0 align-middle">{{order.service.name}}</td>
+            <td class="pl-1 pr-0 align-middle">{{order.quantity}}</td>
+            <td class="pl-1 pr-0 align-middle">{{order.service.unit}}</td>
+            <td class="pl-1 pr-0 align-middle">{{order.prices}}</td>
+            <td class="pl-1 pr-0 align-middle">{{order.totalPrices}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-md-10 mt-2 d-flex justify-content-end">
+        <button class="btn mt-3 btn-warning mr-3" (click)="Finish()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-check" viewBox="0 0 16 16">
+            <path d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+          </svg>
+          <span style="font-family: Averta">Finish</span>
+        </button>
+      </div>
+    </fieldset>
+  </div>
+</div>

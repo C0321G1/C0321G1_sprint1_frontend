@@ -26,6 +26,7 @@
             "styles": [
               "src/styles.css",
               "node_modules/bootstrap/dist/css/bootstrap.css",
+              "node_modules/ngx-toastr/toastr.css",
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css"
             ],
             "scripts": [
@@ -127,6 +128,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "angular-sprint1"
+    }
+  },
+  "defaultProject": "angular-sprint1",
+  "cli": {
+    "analytics": "f49a9bec-f5da-4f68-97fe-7c8afc68866a"
+  }
 }
