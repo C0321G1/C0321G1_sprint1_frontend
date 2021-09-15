@@ -1,4 +1,4 @@
-import {Address} from "../address/address";
+import {Address} from '../address/address';
 import {CustomerStatus} from './customer-status';
 import {Gender} from './gender';
 
