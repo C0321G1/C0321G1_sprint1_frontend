@@ -1,13 +1,12 @@
-import {Orders} from './orders';
+import {Order} from './order';
 import {Services} from '../service/services';
-import {Unit} from '../service/unit';
+import {Unit} from "../service/unit";
+
 
 export interface OrderDetail {
   orderDetailId: number;
-  order: Orders;
+  order: Order;
   quantity: number;
-  prices: number;
   totalPrices: number;
   service: Services;
-  unit: Unit;
 }

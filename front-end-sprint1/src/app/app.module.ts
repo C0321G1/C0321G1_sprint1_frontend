@@ -11,6 +11,9 @@ import {environment} from '../environments/environment';
 import {AngularFireModule} from '@angular/fire';
 import {AngularFireStorageModule} from '@angular/fire/storage';
 import {HttpClientModule} from '@angular/common/http';
+import {OrderModule} from "./module/order/order.module";
+import {OrderDetailModule} from "./module/order-detail/order-detail.module";
+
 
 
 @NgModule({
@@ -23,6 +26,8 @@ import {HttpClientModule} from '@angular/common/http';
     CustomerModule,
     HttpClientModule,
     ServiceModule,
+    OrderModule,
+    OrderDetailModule,
     BrowserAnimationsModule,
     CommonModule,
     AngularFireStorageModule,
