@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { GameEditComponent } from './game-edit/game-edit.component';
 import { GameCreateComponent } from './game-create/game-create.component';
 import {RouterModule} from '@angular/router';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {GameRoutingModule} from './game-routing.module';
 import { GameListComponent } from './game-list/game-list.component';
 import { GameDeleteDialogComponent } from './game-delete-dialog/game-delete-dialog.component';
@@ -30,7 +30,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     HttpClientModule,
     MatDialogModule,
     ToastrModule.forRoot(),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    FormsModule
   ]
 })
 export class GameModule { }

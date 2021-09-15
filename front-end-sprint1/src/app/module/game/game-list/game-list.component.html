@@ -42,21 +42,21 @@
   </h3>
   <div class="row d-flex justify-content-center">
     <div class="zoom card bg-dark text-white w-25 h-100 mt-5">
-      <img src="assets/image/thuy/6_car.jpg" class="imgz card-img img-thumbnail" style="position: relative; z-index: 1"
+      <img src="{{top2}}" class="imgz card-img img-thumbnail" style="position: relative; z-index: 1"
            alt="...">
       <img class="imgrp rounded-circle"
            style=" position: absolute; z-index: 1; top: -40px; left: -10%; width: 35%"
            src="assets/image/thuy/hc2.png">
     </div>
     <div class="zoom card bg-dark text-white w-25 h-100">
-      <img src="assets/image/thuy/2_lmht.jpg" class="imgz card-img img-thumbnail" style="position: relative; z-index: 1"
+      <img src="{{top1}}" class="imgz card-img img-thumbnail" style="position: relative; z-index: 1"
            alt="...">
       <img class="imgrp rounded-circle"
            style=" position: absolute; z-index: 1; top: -40px; left: -10%; width: 35%"
            src="assets/image/thuy/hc1.png">
     </div>
     <div class="zoom card bg-dark text-white  w-25 h-100 mt-5">
-      <img src="assets/image/thuy/3_totalWar.jpg" class="imgz card-img img-thumbnail"
+      <img src="{{top3}}" class="imgz card-img img-thumbnail"
            style="position: relative; z-index: 1"
            alt="...">
       <img class="imgrp rounded-circle" style="position: absolute; z-index: 1; top: -40px; left: -10%; width: 35%"
@@ -83,52 +83,60 @@
   </h3>
 
   <div class="container">
-    <!--    <form class=" pb-2">-->
-    <!--      <div class="form-row">-->
-    <!--        <div class="form-group col-12 col-md-4 col-sm-6 col-lg-3">-->
-    <!--          <label for="exampleInputEmail1" class="mr-5 text-light">Game:</label>-->
-    <!--          <input type="text" style="width: 200px" class="form-control" id="exampleInputEmail1"-->
-    <!--                 aria-describedby="emailHelp"-->
-    <!--                 placeholder="Game name">-->
-    <!--        </div>-->
-    <!--        <div class="form-group col-12 col-md-4 col-sm-6 col-lg-3">-->
-    <!--          <label for="exampleFormControlSelect21" class="text-light">Game type:</label>-->
-    <!--          <select class="form-control" style="width: 200px" id="exampleFormControlSelect21">-->
-    <!--            <option value="" selected>&#45;&#45;Choose&#45;&#45;</option>-->
-    <!--            <option value="chai">Hành Động</option>-->
-    <!--            <option value="lon">Phiêu Lưu</option>-->
-    <!--            <option value="dia">Nhập Vai</option>-->
-    <!--            <option value="to">Mô Phỏng</option>-->
-    <!--            <option value="goi">Chiến Thuật</option>-->
-    <!--            <option value="goi">Thể Thao</option>-->
-    <!--            <option value="goi">Giải Đố</option>-->
-    <!--            <option value="goi">Thể loại khác...</option>-->
-    <!--          </select>-->
-    <!--        </div>-->
-    <!--        <div class="form-group col-12 col-md-4 col-sm-6 col-lg-3">-->
-    <!--          <button class="btn btn-warning mr-3" style="margin-top: 33px">-->
-    <!--            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"-->
-    <!--                 class="bi bi-search" viewBox="0 0 16 16">-->
-    <!--              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>-->
-    <!--            </svg>-->
-    <!--            <span>Search</span>-->
-    <!--          </button>-->
-    <!--        </div>-->
-
-    <!--      </div>-->
-    <!--    </form>-->
+    <form class=" pb-2" [formGroup]="gameSearch" (ngSubmit)="searchGame(0)">
+      <div class="form-row">
+        <div class="form-group col-12 col-md-4 col-sm-6 col-lg-3">
+          <label for="exampleInputEmail1" class="mr-5 text-light">Game:</label>
+          <input formControlName="nameGame" type="text" style="width: 200px" class="form-control"
+                 id="exampleInputEmail1"
+                 aria-describedby="emailHelp"
+                 placeholder="Game name">
+        </div>
+        <div class="form-group col-12 col-md-4 col-sm-6 col-lg-3">
+          <label for="exampleFormControlSelect21" class="text-light">Game type:</label>
+          <select formControlName="gameType" class="form-control" style="width: 200px" id="exampleFormControlSelect21">
+            <option *ngFor="let gameType of gameTypes" value="{{gameType.name}}">{{gameType.name}}</option>
+          </select>
+        </div>
+        <div class="form-group col-12 col-md-4 col-sm-6 col-lg-3">
+          <button class="btn btn-warning mr-3" style="margin-top: 33px">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                 class="bi bi-search" viewBox="0 0 16 16">
+              <path
+                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+            </svg>
+            <span>Search</span>
+          </button>
+        </div>
+      </div>
+    </form>
 
     <div class="row ">
-      <div class="card col-md-3 col-sm-6 col-12 bg-dark mb-3 thumbnail" style="width: 18rem;"
+      <div class="show card col-md-3 col-sm-6 col-12 bg-dark mb-3 thumbnail" style="width: 18rem;"
            *ngFor="let game of games">
         <a class="detailButton position-relative " href="#" role="button" data-toggle="modal"
            data-target="#detailModal">
           <img src="{{game.image}}" class="card-img-top" alt="...">
+          <div class="overlay">
+            <div class="text">
+              <button class="btn mt-3 btn-warning mr-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                  <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                  <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+                </svg>
+              </button>
+              <button class="btn mt-3 btn-danger mr-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-youtube" viewBox="0 0 16 16">
+                <path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.007 2.007 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.007 2.007 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31.4 31.4 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.007 2.007 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A99.788 99.788 0 0 1 7.858 2h.193zM6.4 5.209v4.818l4.157-2.408L6.4 5.209z"/>
+              </svg>
+              </button>
+            </div>
+          </div>
         </a>
         <div class="card-body">
           <h5 class="card-title text-light">{{game.name}}</h5>
           <p class="card-text text-light">Thể loại: {{game.gameType.name}}</p>
-<!--          <p class="card-text text-light">{{game.content}}</p>-->
+          <!--          <p class="card-text text-light">{{game.content}}</p>-->
           <p class="card-text text-light" [innerHTML]="game.content"></p>
           <button class="btn mt-3 btn-warning mr-2" [routerLink]="['/game-edit', game.gameId]">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi
@@ -155,20 +163,38 @@
         </div>
       </div>
     </div>
-    <button class="btn mt-3 btn-warning ml-4 mb-3" [routerLink]="'/game-create'">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi
+    <div>
+      <div class="float-left d-inline-block">
+        <button class="btn mt-3 btn-warning ml-4 mb-3" [routerLink]="'/game-create'">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi
                     bi-pencil-square" viewBox="0 0 16 16">
-        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75
+            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75
                     2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.50 0 0
                     .196-.12l6.813-6.814z"/>
-        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0
+            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0
                     1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1
                     2.5v11z"/>
-      </svg>
-      <span>Create</span>
-    </button>
+          </svg>
+          <span>Create</span>
+        </button>
+      </div>
+      <div class="float-right mt-3 d-inline-block">
+        <ul class="pagination ">
+          <li class="page-item mr-1"><input type="text" style="width: 50px; height: 40px" [(ngModel)]="searchPageInput"
+                                            (change)="searchPage()"></li>
+          <li class="page-item "><a class="page-link bg-dark text-warning" (click)="firstPage()">First</a></li>
+          <li class="page-item "><a class="page-link bg-dark text-warning" (click)="previousPage()">Previous</a></li>
+          <li class="page-item"><a class="page-link bg-dark text-warning">{{this.p + 1}}</a></li>
+          <li class="page-item"><p class="page-link bg-dark text-warning">/</p></li>
+          <li class="page-item"><a class="page-link bg-dark text-warning">{{this.ps.length}}</a></li>
+          <li class="page-item"><a class="page-link bg-dark text-warning" (click)="nextPage()">Next</a></li>
+          <li class="page-item "><a class="page-link bg-dark text-warning" (click)="lastPage()">Last</a></li>
+        </ul>
+      </div>
+    </div>
   </div>
 </div>
+
 
 <!--Modal hien thi trailer-->
 <div class="modal fade fontChu" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -187,10 +213,10 @@
       <!--        <div class="modal-body">-->
       <!--          <div class="row">-->
       <!--            <div class="col-12">-->
-                    <iframe width="100%" src="https://www.youtube.com/embed/hU8oGKzVAmQ"
-                            title="YouTube video player" frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen></iframe>
+      <iframe width="100%" src="https://www.youtube.com/embed/hU8oGKzVAmQ"
+              title="YouTube video player" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen></iframe>
       <!--            </div>-->
       <!--          </div>-->
       <!--        </div>-->
