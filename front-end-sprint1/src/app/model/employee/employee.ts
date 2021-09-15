@@ -1,5 +1,6 @@
 import {Address} from '../address/address';
 import {Gender} from '../customer/gender';
+import {Position} from './position';
 
 export interface Employee {
   employeeId: number;
