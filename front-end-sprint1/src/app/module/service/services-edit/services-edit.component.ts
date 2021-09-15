@@ -71,8 +71,8 @@ export class ServicesEditComponent implements OnInit {
 
   loadImg() {
     Swal.fire({
-      title: 'Đang gửi dữ liệu',
-      text: 'Vui lòng chờ ...',
+      title: 'Sending data',
+      text: 'Please wait ...',
       imageUrl: '../../../../../assets/image/spin.gif',
       imageWidth: '100px',
       showConfirmButton: false,
@@ -126,14 +126,18 @@ export class ServicesEditComponent implements OnInit {
   }
 
   showSuccess() {
-    this.toast.success('Chỉnh sửa thành công !', 'Thông báo : ');
+    this.toast.success('Editing is successful !', 'Notify : ');
   }
 
   showError() {
-    this.toast.error('Chỉnh sửa thất bại !', 'Cảnh báo : ');
+    this.toast.error('Edit failed !', 'Warning: ');
   }
 
   get newsImageName() {
     return this.editForm.get('image');
+  }
+
+  eedit($event: any) {
+    this.edit() ;
   }
 }

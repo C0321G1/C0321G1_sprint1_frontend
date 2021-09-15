@@ -9,28 +9,31 @@ import {Services} from '../../model/service/services';
 })
 export class ServiceService {
   private API = 'http://localhost:8080';
+
   constructor(public http: HttpClient) {
 
   }
 
+  //phap
   getAllServices(name: string, page: number): Observable<any> {
     return this.http.get<any>(this.API + '/services?name=' + name + '&page=' + page);
   }
 
+  //phap
   searchNameCode(code: string, name: string, prices: string, page: number): Observable<any> {
-    return this.http.get<any>(this.API + '/services/searchNameCodePrices?code=' + code + '&name=' + name
-      + '&prices=' + prices + '&page=' + page);
+    return this.http.get<any>(this.API + '/services/searchNameCodePrices?code=' + code + '&name=' + name);
 
   }
-
+// Khanh code
   getAllUnit(): Observable<Unit[]> {
     return this.http.get<Unit[]>(this.API + '/units');
   }
 
   deleteServices(id: number) {
-    return this.http.get<Services>(this.API + '/services' + '/' + id);
+    // @ts-ignore
+    return this.http.patch<>(this.API + '/services/delete/' + id);
   }
-
+// Khanh code
   findById(id: number) {
     return this.http.get<Services>(this.API + '/services' + '/' + id);
   }

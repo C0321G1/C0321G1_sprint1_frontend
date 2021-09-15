@@ -15,7 +15,7 @@
                  [ngClass]="createForm.controls.name.valid? 'is-valid':'is-invalid'"
                  formControlName="name">
           <div class="style-error" *ngIf="createForm.controls.name.hasError('required') &&
-           createForm.controls.name.touched"> Vui lòng nhập tên dịch vụ
+           createForm.controls.name.touched"> Please enter service name
           </div>
         </div>
 
@@ -25,10 +25,10 @@
           <input type="text" class="form-control" placeholder="Enter Quantity" formControlName="quantity"
                  [ngClass]="createForm.controls.quantity.valid? 'is-valid':'is-invalid'">
           <div class="style-error" *ngIf="createForm.controls.quantity.hasError('required') &&
-           createForm.controls.quantity.touched"> Vui lòng nhập số lượng
+           createForm.controls.quantity.touched"> Please enter quantity
           </div>
           <div [hidden]="createForm.controls.quantity.errors.required" class="style-error" *ngIf="createForm.controls.quantity.hasError('checkInterger') &&
-           createForm.controls.quantity.touched "> Vui lòng nhập số lượng là số nguyên dương
+           createForm.controls.quantity.touched "> Please enter the quantity as a positive integer
           </div>
         </div>
 
@@ -41,7 +41,7 @@
             <option *ngFor="let item of unitList" [ngValue]="item">{{item.name}}</option>
           </select>
           <div class="style-error" *ngIf="createForm.controls.unit.hasError('required') &&
-           createForm.controls.unit.touched"> Vui lòng chọn đơn vị
+           createForm.controls.unit.touched"> Please choose unit
           </div>
         </div>
 
@@ -50,12 +50,13 @@
           <label class="style-span">Prices (VND) (<span style="color: red">*</span>)</label>
           <input type="text" class="form-control" placeholder="Enter Prices " formControlName="prices"
                  [ngClass]="createForm.controls.prices.valid? 'is-valid':'is-invalid'">
-          <small class="style-error" *ngIf="createForm.controls.prices.hasError('required') &&
-           createForm.controls.prices.touched"> Vui lòng nhập số lượng</small>
-          <small class="style-error" *ngIf="createForm.controls.prices.hasError('min') &&
-           createForm.controls.prices.touched"> Vui lòng nhập giá lớn hơn 1000</small>
-          <small class="style-error" *ngIf="createForm.controls.prices.hasError('pattern') &&
-           createForm.controls.prices.touched"> Vui lòng nhập giá số</small>
+          <div class="style-error" *ngIf="createForm.controls.prices.hasError('required') &&
+           createForm.controls.prices.touched">Please enter price </div>
+          <div [hidden]="createForm.controls.prices.errors.required" class="style-error" *ngIf="createForm.controls.prices.hasError('min') &&
+           createForm.controls.prices.touched"> Please enter a price greater than 1000</div>
+          <div [hidden]="createForm.controls.prices.errors.required && createForm.controls.prices.errors.min "
+               class="style-error" *ngIf="createForm.controls.prices.hasError('pattern') &&
+           createForm.controls.prices.touched"> Please enter price number</div>
 
         </div>
 
@@ -105,7 +106,7 @@
           </button>
 
 
-          <button   class="btn btn-warning" [disabled]="createForm.invalid">
+          <button  type="submit" class="btn btn-warning" [disabled]="createForm.invalid">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                  class="bi bi-pencil-square" viewBox="0 0 16 16">
               <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75
