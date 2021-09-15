@@ -11,7 +11,7 @@ import {GameModule} from './module/game/game.module';
 import {OrderDetailModule} from './module/order-detail/order-detail.module';
 import {ServiceModule} from './module/service/service.module';
 import {RouterModule} from '@angular/router';
-import {StatisticModule} from "./module/statistic/statistic.module";
+import {StatisticModule} from './module/statistic/statistic.module';
 
 
 
