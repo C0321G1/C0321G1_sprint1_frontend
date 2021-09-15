@@ -17,6 +17,9 @@
           <div class="style-error" *ngIf="editForm.controls.name.hasError('required') &&
            editForm.controls.name.touched"> Please enter service name
           </div>
+          <div class="style-error">
+            {{listError.name}}
+          </div>
         </div>
 
 
