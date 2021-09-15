@@ -15,7 +15,7 @@
                  [ngClass]="editForm.controls.name.valid? 'is-valid':'is-invalid'"
                  formControlName="name">
           <div class="style-error" *ngIf="editForm.controls.name.hasError('required') &&
-           editForm.controls.name.touched"> Vui lòng nhập tên dịch vụ
+           editForm.controls.name.touched"> Please enter service name
           </div>
         </div>
 
@@ -25,10 +25,11 @@
           <input type="text" class="form-control" placeholder="Enter Quantity" formControlName="quantity"
                  [ngClass]="editForm.controls.quantity.valid? 'is-valid':'is-invalid'">
           <div class="style-error" *ngIf="editForm.controls.quantity.hasError('required') &&
-           editForm.controls.quantity.touched"> Vui lòng nhập số lượng
+           editForm.controls.quantity.touched"> Please enter quantity
           </div>
           <div [hidden]="editForm.controls.quantity.errors.required" class="style-error" *ngIf="editForm.controls.quantity.hasError('checkInterger') &&
-           editForm.controls.quantity.touched "> Vui lòng nhập số lượng là số nguyên dương
+           editForm.controls.quantity.touched ">
+            Please enter the quantity as a positive integer
           </div>
         </div>
 
@@ -40,35 +41,25 @@
             <option *ngFor="let item of unitList" [ngValue]="item">{{item.name}}</option>
           </select>
           <div class="style-error" *ngIf="editForm.controls.unit.hasError('required') &&
-           editForm.controls.unit.touched"> Vui lòng chọn đơn vị
+           editForm.controls.unit.touched"> Please select unit
           </div>
         </div>
 
         <div class="mt-4">
           <label class="style-span">Prices (VND) (<span style="color: red">*</span>)</label>
-          <input type="text" formControlName="prices" class="form-control" placeholder="Enter Prices "
+          <input type="text" class="form-control" placeholder="Enter Prices " formControlName="prices"
                  [ngClass]="editForm.controls.prices.valid? 'is-valid':'is-invalid'">
-
-<!--          <small class="style-error" *ngIf="editForm.controls.prices.hasError('required') &&-->
-<!--           editForm.controls.prices.touched"> Vui lòng nhập số lượng</small>-->
-<!--          <small class="style-error" *ngIf="editForm.controls.prices.hasError('min') &&-->
-<!--           editForm.controls.prices.touched"> Vui lòng nhập giá lớn hơn 1000</small>-->
-<!--          <small class="style-error" *ngIf="editForm.controls.prices.hasError('pattern') &&-->
-<!--           editForm.controls.prices.touched"> Vui lòng nhập số </small>-->
-          <div
-            *ngIf="!editForm.controls.prices?.valid && (editForm.controls.prices?.dirty || editForm.controls.prices?.touched)">
-            <div [hidden]="!editForm.controls.gaming.errors.required">
-              <p style="color: red">Vui lòng nhập số lượng</p>
-            </div>
-            <div [hidden]="!editForm.controls.gaming.errors.min">
-              <p style="color: red">Vui lòng nhập giá lớn hơn 1000</p>
-            </div>
-            <div [hidden]="!editForm.controls.gaming.errors.pattern">
-              <p style="color: red">Vui lòng nhập số </p>
-            </div>
-          </div>
+          <div class="style-error" *ngIf="editForm.controls.prices.hasError('required') &&
+           editForm.controls.prices.touched">Please enter price </div>
+          <div [hidden]="editForm.controls.prices.errors.required" class="style-error" *ngIf="editForm.controls.prices.hasError('min') &&
+           editForm.controls.prices.touched"> Please enter a price greater than 1000</div>
+          <div [hidden]="editForm.controls.prices.errors.required && editForm.controls.prices.errors.min "
+               class="style-error" *ngIf="editForm.controls.prices.hasError('pattern') &&
+           editForm.controls.prices.touched"> Please enter price number</div>
 
         </div>
+
+
 
 
         <div class="mt-4">
@@ -115,7 +106,7 @@
             </svg>
             <span style="font-family: Averta">Reset</span>
           </button>
-          <button class="btn btn-warning" type="submit">
+          <button class="btn btn-warning" type="submit" (keyup.enter)="$event" >
             <svg xmlns
                    ="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi
         bi-pencil-square" viewBox="0 0 16 16">
