@@ -141,12 +141,12 @@ export class ComputerListComponent implements OnInit {
     const mesDate = new Date();
     this.p = 0;
     if (dateFrom > new Date()) {
-      this.toastrService.error('Start date from < ' + mesDate + ' please!!');
+      this.toastrService.error('Start date from > ' + mesDate + ' please!!');
       return;
     }
     const dateTo = new Date(this.startDateTo);
     if (dateTo > new Date()) {
-      this.toastrService.error('Start date to < ' + mesDate + ' please!!');
+      this.toastrService.error('Start date to > ' + mesDate + ' please!!');
       return;
     }
     this.computerService.searchComputer(this.computerId.trim(), this.location.trim(), this.computerTypeSearch, this.statusSearch,
