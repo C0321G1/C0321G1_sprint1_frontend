@@ -9,6 +9,7 @@ import {ComputerDeleteComponent} from '../computer-delete/computer-delete.compon
 import {ComputerListDeleteComponent} from '../computer-list-delete/computer-list-delete.component';
 import {ToastrService} from 'ngx-toastr';
 
+
 @Component({
   selector: 'app-computer-list',
   templateUrl: './computer-list.component.html',
@@ -42,7 +43,6 @@ export class ComputerListComponent implements OnInit {
 
   ngOnInit(): void {
     this.computerService.getAllComputer().subscribe(value => this.listComputer = value);
-    console.log(this.listComputer);
     this.computerService.getAllComputerType().subscribe(value => this.listComputerType = value);
     this.computerService.getAllComputerStatus().subscribe(value => this.listComputerStatus = value);
     this.computerService.getAllComputerManufacturer().subscribe(value => this.listComputerManufacturer = value);
@@ -138,16 +138,18 @@ export class ComputerListComponent implements OnInit {
 
   searchComputer() {
     const dateFrom = new Date(this.startDateFrom);
+    const mesDate = new Date();
+    this.p = 0;
     if (dateFrom > new Date()) {
-      this.toastrService.error('Input < date now, please!!');
+      this.toastrService.error('Start date from < ' + mesDate + ' please!!');
       return;
     }
     const dateTo = new Date(this.startDateTo);
     if (dateTo > new Date()) {
-      this.toastrService.error('Input < date now, please!!');
+      this.toastrService.error('Start date to < ' + mesDate + ' please!!');
       return;
     }
-    this.computerService.searchComputer(this.computerId, this.location, this.computerTypeSearch, this.statusSearch,
+    this.computerService.searchComputer(this.computerId.trim(), this.location.trim(), this.computerTypeSearch, this.statusSearch,
       this.startDateFrom, this.startDateTo, this.p).subscribe(value => {
       this.listComputerPage = value.content;
       this.ps = new Array<any>(value.totalPages);
@@ -158,4 +160,5 @@ export class ComputerListComponent implements OnInit {
       }
     });
   }
+
 }

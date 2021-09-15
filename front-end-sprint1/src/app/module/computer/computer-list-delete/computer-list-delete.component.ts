@@ -16,18 +16,25 @@ export class ComputerListDeleteComponent implements OnInit {
               private router: Router,
               public dialog: MatDialogRef<ComputerListDeleteComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
-              private toastrService: ToastrService) { }
+              private toastrService: ToastrService) {
+  }
 
   ngOnInit(): void {
   }
 
   delete() {
     for (let i = 0; i <= this.data.idComputer.length; i++) {
-    this.computerService.delete(this.data.idComputer[i]).subscribe(() => {
-      this.dialog.close(true);
-      /*this.router.navigateByUrl('');*/
-      this.toastrService.info('Delete computer ' + this.data.nameComputer[i] + ' Success.');
-    });
+      this.computerService.delete(this.data.idComputer[i]).subscribe(() => {
+          this.dialog.close(true);
+          /*this.router.navigateByUrl('');*/
+          this.toastrService.info('Delete computer ' + this.data.nameComputer[i] + ' Success.');
+        }
+        , error => {
+          if (error.status === 406) {
+            this.toastrService.error(error.error);
+            this.dialog.close(true);
+          }
+        });
     }
   }
 
