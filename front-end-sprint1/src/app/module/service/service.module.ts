@@ -11,6 +11,7 @@ import { DeleteServicesComponent } from './delete-services/delete-services.compo
 import { ServicesListComponent } from './services-list/services-list.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { DrectiveServiceDirective } from './drective-service.directive';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     ServicesCreateComponent,
     ServicesEditComponent,
     DeleteServicesComponent,
-    ServicesListComponent],
+    ServicesListComponent,
+    DrectiveServiceDirective],
   exports: [
     ServicesListComponent
   ],

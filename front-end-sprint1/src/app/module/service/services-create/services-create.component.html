@@ -11,13 +11,17 @@
 
         <div class="mt-4">
           <label class="style-span">Services Name (<span style="color: red">*</span>)</label>
-          <input type="text" class="form-control" placeholder="Enter Services Name "
+          <input  type="text" class="form-control" placeholder="Enter Services Name "
                  [ngClass]="createForm.controls.name.valid? 'is-valid':'is-invalid'"
                  formControlName="name">
           <div class="style-error" *ngIf="createForm.controls.name.hasError('required') &&
            createForm.controls.name.touched"> Please enter service name
           </div>
+          <div class="style-error">
+            {{listError.name}}
+          </div>
         </div>
+
 
 
         <div class="mt-4">
@@ -29,6 +33,9 @@
           </div>
           <div [hidden]="createForm.controls.quantity.errors.required" class="style-error" *ngIf="createForm.controls.quantity.hasError('checkInterger') &&
            createForm.controls.quantity.touched "> Please enter the quantity as a positive integer
+          </div>
+          <div class="style-error">
+            {{listError.quantity}}
           </div>
         </div>
 
@@ -42,6 +49,9 @@
           </select>
           <div class="style-error" *ngIf="createForm.controls.unit.hasError('required') &&
            createForm.controls.unit.touched"> Please choose unit
+          </div>
+          <div class="style-error">
+            {{listError.unit}}
           </div>
         </div>
 
@@ -57,7 +67,9 @@
           <div [hidden]="createForm.controls.prices.errors.required && createForm.controls.prices.errors.min "
                class="style-error" *ngIf="createForm.controls.prices.hasError('pattern') &&
            createForm.controls.prices.touched"> Please enter price number</div>
-
+          <div class="style-error">
+            {{listError.prices}}
+          </div>
         </div>
 
 
@@ -69,6 +81,11 @@
                      id="validatedCustomFile" [ngClass]="newsImageName?.errors? 'is-invalid': 'is-valid'">
               <label class="custom-file-label" for="validatedCustomFile">
                 {{newsImageName.value !== '' ? newsImageName.value : 'Choose file'}}</label>
+              <div class="style-error" *ngIf="createForm.controls.image.hasError('required') &&
+           createForm.controls.prices.touched">Please enter image </div>
+            </div>
+            <div class="style-error">
+              {{listError.image}}
             </div>
           </div>
         </div>

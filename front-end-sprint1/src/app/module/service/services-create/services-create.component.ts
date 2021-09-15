@@ -29,6 +29,7 @@ export class ServicesCreateComponent implements OnInit {
   public isImage = false;
   page: number;
   name: string;
+  listError: any = '';
 
   constructor(private serviceService: ServiceService,
               private toast: ToastrService,
@@ -68,7 +69,7 @@ export class ServicesCreateComponent implements OnInit {
       id: new FormControl(),
       code: new FormControl(this.code),
       name: new FormControl('', Validators.required),
-      prices: new FormControl('', [Validators.required, Validators.min(1000), Validators.pattern('^\\d+$')]),
+      prices: new FormControl('', [Validators.required, Validators.min(1000)]),
       quantity: new FormControl('', [Validators.required, this.validateInterger]),
       unit: new FormControl('', Validators.required),
       image: new FormControl('', Validators.required)
@@ -81,6 +82,10 @@ export class ServicesCreateComponent implements OnInit {
       this.router.navigateByUrl('');
       this.showSuccess();
     }, error => {
+      if (error.status === 400) {
+        this.listError = error.error;
+
+      }
       this.showError();
     });
 

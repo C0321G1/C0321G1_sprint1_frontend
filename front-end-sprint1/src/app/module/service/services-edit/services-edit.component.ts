@@ -23,6 +23,7 @@ export class ServicesEditComponent implements OnInit {
   services: Services;
   urlImage: any;
   isImage = false;
+  listError: any = '';
 
 
   constructor(private service: ServiceService,
@@ -48,6 +49,7 @@ export class ServicesEditComponent implements OnInit {
       this.unitList = data;
     });
   }
+
 // Khanh create
   initForm() {
     this.editForm = new FormGroup({
@@ -109,6 +111,9 @@ export class ServicesEditComponent implements OnInit {
           Swal.close();
       });
     }, e => {
+      if (e.status === 400) {
+        this.listError = e.error;
+      }
       this.showError();
     });
   }
@@ -138,6 +143,6 @@ export class ServicesEditComponent implements OnInit {
   }
 
   eedit($event: any) {
-    this.edit() ;
+    this.edit();
   }
 }
