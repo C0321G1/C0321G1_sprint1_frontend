@@ -6,7 +6,7 @@
       <hr>
 
       <div>
-        <form [formGroup]="formComputer" (ngSubmit)="create()">
+        <form [formGroup]="formComputer" >
           <!--1-->
           <div class="row mt-3 averta">
             <div class="col-md-6"><span style="font-size: 22px;color: #FFF448">Computer ID<span
@@ -16,6 +16,10 @@
               <div class="form-text" *ngIf="formComputer.get('computerCode')
           .hasError('required') && formComputer.get('computerCode')
           .touched" style="color: red">Customer ID ís required.
+              </div>
+              <div class="form-text" *ngIf="formComputer.get('computerCode')
+          .hasError('pattern')" style="color: red">Enter the Computer Code
+                in the format CPXXXX with an X from 0-9
               </div>
             </div>
 
@@ -27,6 +31,10 @@
               <div class="form-text" *ngIf="formComputer.get('location')
           .hasError('required') && formComputer.get('location')
           .touched" style="color: red">Location ís required.
+              </div>
+              <div class="form-text" *ngIf="formComputer.get('location')
+          .hasError('pattern') " style="color: red">Location is AXXXX or BXXXX or
+                CXXXX or DXXXX with X from 0-9
               </div>
             </div>
 
@@ -41,6 +49,9 @@
               <div class="form-text" *ngIf="formComputer.get('startUsedDate')
           .hasError('required') && formComputer.get('startUsedDate')
           .touched" style="color: red">Start used date ís required.
+              </div>
+              <div class="form-text" *ngIf="formComputer.get('startUsedDate')
+          .hasError('dateStart') " style="color: red">startUsedDate must <= date now
               </div>
             </div>
             <div class="col-lg-4"><span style="font-size: 22px;color: #FFF448">Warranty period<span
@@ -119,7 +130,7 @@
               </svg>
               <span style="font-family: Averta">Back</span>
             </button>
-            <button class="btn btn-secondary mx-3">
+            <button class="btn btn-secondary mx-3" (click)="reset()">
               <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor"
                    class="bi bi-arrow-repeat" viewBox="0 0 16 16">
                 <path
@@ -129,7 +140,7 @@
               </svg>
               <span style="font-family: Averta">Reset</span>
             </button>
-            <button class="btn btn-warning" [disabled]="formComputer.invalid">
+            <button class="btn btn-warning" [disabled]="formComputer.invalid" (click)="create()">
               <svg xmlns
                      ="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi
         bi-pencil-square" viewBox="0 0 16 16">
