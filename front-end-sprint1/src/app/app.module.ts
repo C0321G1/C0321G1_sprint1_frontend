@@ -1,13 +1,11 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {CustomerModule} from './module/customer/customer.module';
 import {EmployeeModule} from './module/employee/employee.module';
-import {HttpClientModule} from '@angular/common/http';
-import {AngularFireModule} from '@angular/fire';
-import {environment} from '../environments/environment';
-import {ToastrModule} from 'ngx-toastr';
+
 
 @NgModule({
   declarations: [
@@ -16,10 +14,9 @@ import {ToastrModule} from 'ngx-toastr';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
     EmployeeModule,
-    ToastrModule.forRoot(),
-    AngularFireModule.initializeApp(environment.firebaseConfig)
+    CustomerModule,
+    EmployeeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
