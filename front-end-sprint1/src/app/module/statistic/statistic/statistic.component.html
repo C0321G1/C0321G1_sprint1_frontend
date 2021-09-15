@@ -1,0 +1,68 @@
+<div class="container my-5 content">
+  <div class="row" style="font-family: Averta;">
+    <div class="col-lg-4 col-sm-12 pr-5 " style="padding-right: 10px">
+      <form [formGroup]="statisticForm" (ngSubmit)="onSubmit()">
+        <table class="justify-content-center">
+          <tr>
+            <td><label for="startDate" class="col-form-label fontFamily">Start date: </label></td>
+            <td><input type="date" id="startDate" class="form-control m-3 " formControlName="startDate"></td>
+          </tr>
+          <tr>
+            <td><label for="endDate" class="col-form-label fontFamily">End date: </label></td>
+            <td><input type="date" id="endDate" class="form-control m-3 "  formControlName="endDate"></td>
+          </tr>
+          <tr id="statisticTimeTr">
+            <td><label for="statisticTime" class="col-form-label fontFamily">Statistical time: </label></td>
+            <td>
+              <select id="statisticTime" class="form-control m-3 " (change)="onChange($event.target.value)">
+                <option value='1 week' >1 week</option>
+                <option value="3 week">3 week</option>
+                <option value="1 month" selected>1 month</option>
+                <option value="2 month">2 month</option>
+                <option value="1 quarter">1 quarter</option>
+                <option value="2 quarter">2 quarter</option>
+                <option value="1 year">1 year</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td><label for="statisticWith" class="col-form-label fontFamily">Statistical with: </label></td>
+            <td>
+              <select id="statisticWith" class="form-control m-3 " formControlName="type">
+                <option value="computer" selected>Computer</option>
+                <option value="month">Month</option>
+                <option value="account">Account</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td><label for="sort" class="col-form-label fontFamily">Sort: </label></td>
+            <td>
+              <select id="sort" class="form-control m-3" formControlName="sort">
+                <option selected value="none" >None</option>
+                <option value="ascending" >Ascending</option>
+                <option value="decrease">Decrease</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>
+              <button type="submit" class="btn btn-warning m-3 " style="width: 35%">
+                OK
+              </button>
+            </td>
+          </tr>
+        </table>
+      </form>
+      <div class="fontError">Unable to connect to database!</div>
+    </div>
+
+    <div class="col-lg-8 col-sm-12" style="padding: 30px">
+      <canvas style="background-color: white" id="myChart"></canvas>
+    </div>
+  </div>
+</div>
+
+
+
