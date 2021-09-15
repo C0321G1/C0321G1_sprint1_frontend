@@ -14,6 +14,7 @@ import {RouterModule} from '@angular/router';
 import {StatisticModule} from './module/statistic/statistic.module';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
