@@ -3,7 +3,7 @@ import {StatisticService} from '../../../service/statistic/statistic.service';
 import {StatisticByComputer} from '../../../model/statistic/statistic-by-computer';
 import {StatisticByMonth} from '../../../model/statistic/statistic-by-month';
 import {StatisticByAccount} from '../../../model/statistic/statistic-by-account';
-import {FormControl, FormGroup} from '@angular/forms';
+import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {InputStatistic} from '../../../model/statistic/input-statistic';
 import {DatePipe} from '@angular/common';
 import {Chart, registerables} from 'chart.js';
@@ -19,6 +19,11 @@ Chart.register(...registerables);
 })
 // Create by HauHP
 export class StatisticComponent implements OnInit {
+
+  constructor(private statisticService: StatisticService,
+              private datePipe: DatePipe) {
+  }
+
   listStatisticByComputer: StatisticByComputer[];
   listStatisticByMonth: StatisticByMonth[];
   listStatisticByAccount: StatisticByAccount[];
@@ -27,21 +32,40 @@ export class StatisticComponent implements OnInit {
   today = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
   statisticForm = new FormGroup({
     startDate: new FormControl(this.pastDay),
-    endDate: new FormControl(this.today),
+    endDate: new FormControl(this.today, this.dateInFuture),
     sort: new FormControl('none'),
     type: new FormControl('computer')
-  });
+  }, this.invalidDate);
   private myChart: Chart;
+  notError = true;
 
-  constructor(private statisticService: StatisticService,
-              private datePipe: DatePipe) {
+  invalidDate(abstractControl: AbstractControl) {
+    const v = abstractControl.value;
+    const start = new Date(v.startDate);
+    const end = new Date(v.endDate);
+    end.setDate(end.getDate() - 1);
+    if (start > end) {
+      return {dateNotValid: true};
+    } else {
+      return null;
+    }
+  }
+
+  dateInFuture(abstractControl: AbstractControl) {
+    const v = abstractControl.value;
+    const end = new Date(v);
+    if (end > new Date()) {
+      return {futureDate: true};
+    } else {
+      return null;
+    }
   }
 
   ngOnInit(): void {
     this.statisticService.getStatisticByComputer
     (this.datePipe.transform(new Date().setDate(new Date().getDate() - 3650), 'yyyy-MM-dd'), this.today)
       .subscribe(value => this.listStatisticByComputer = value,
-        error => console.log(error),
+        error => this.notError = false,
         () => this.createChartComputer());
   }
 
@@ -49,8 +73,11 @@ export class StatisticComponent implements OnInit {
     this.statisticInput = this.statisticForm.value;
     if (this.statisticInput.type === 'computer') {
       this.statisticService.getStatisticByComputer(this.statisticInput.startDate, this.statisticInput.endDate)
-        .subscribe(value => this.listStatisticByComputer = value,
-          error => console.log(error),
+        .subscribe(value => {
+            this.listStatisticByComputer = value;
+            this.notError = true;
+          },
+          error => this.notError = false,
           () => {
             if (this.statisticInput.sort === 'ascending') {
               this.listStatisticByComputer.sort((a, b) => (a.hour > b.hour) ? 1 : -1);
@@ -58,14 +85,17 @@ export class StatisticComponent implements OnInit {
             if (this.statisticInput.sort === 'decrease') {
               this.listStatisticByComputer.sort((a, b) => (a.hour < b.hour) ? 1 : -1);
             }
-            this.myChart.destroy();
+            this.destroyChart();
             this.createChartComputer();
           });
     }
     if (this.statisticInput.type === 'month') {
       this.statisticService.getStatisticByMonth(this.statisticInput.startDate, this.statisticInput.endDate)
-        .subscribe(value => this.listStatisticByMonth = value,
-          error => console.log(error),
+        .subscribe(value => {
+            this.listStatisticByMonth = value;
+            this.notError = true;
+          },
+          error => this.notError = false,
           () => {
             if (this.statisticInput.sort === 'ascending') {
               this.listStatisticByMonth.sort((a, b) => (a.total > b.total) ? 1 : -1);
@@ -73,14 +103,17 @@ export class StatisticComponent implements OnInit {
             if (this.statisticInput.sort === 'decrease') {
               this.listStatisticByMonth.sort((a, b) => (a.total < b.total) ? 1 : -1);
             }
-            this.myChart.destroy();
+            this.destroyChart();
             this.createChartMonth();
           });
     }
     if (this.statisticInput.type === 'account') {
       this.statisticService.getStatisticByAccount(this.statisticInput.startDate, this.statisticInput.endDate)
-        .subscribe(value => this.listStatisticByAccount = value,
-          error => console.log(error),
+        .subscribe(value => {
+            this.listStatisticByAccount = value;
+            this.notError = true;
+          },
+          error => this.notError = false,
           () => {
             if (this.statisticInput.sort === 'ascending') {
               this.listStatisticByAccount.sort((a, b) => (a.hour > b.hour) ? 1 : -1);
@@ -88,7 +121,7 @@ export class StatisticComponent implements OnInit {
             if (this.statisticInput.sort === 'decrease') {
               this.listStatisticByAccount.sort((a, b) => (a.hour < b.hour) ? 1 : -1);
             }
-            this.myChart.destroy();
+            this.destroyChart();
             this.createChartAccount();
           });
     }
@@ -376,6 +409,12 @@ export class StatisticComponent implements OnInit {
         }
       }
     });
+  }
+
+  destroyChart() {
+    if (this.myChart != null) {
+      this.myChart.destroy();
+    }
   }
 
 }
