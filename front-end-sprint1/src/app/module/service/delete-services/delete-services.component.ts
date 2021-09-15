@@ -23,9 +23,11 @@ export class DeleteServicesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.code = this.data.name;
-    this.id = this.data.name;
+    console.log(this.data.name);
+    this.code=this.data.name.code;
+    this.id=this.data.name.servicesId;
     console.log(this.id);
+
 
   }
 
@@ -34,14 +36,10 @@ export class DeleteServicesComponent implements OnInit {
   }
 
   delete() {
+    console.log(this.id);
     this.serviceService.deleteServices(this.id).subscribe(dataDialog => {
-      this.dialogRef.close();
-      // let config = new MatSnackBarConfig();
-      // config.duration = 2000;
-      // config.verticalPosition = 'top';
-      // config.panelClass = ['alert-red'];
-      this.toast.success('delete success fully', 'thong bao');
-
+    this.dialogRef.close();
+    this.toast.success('delete success fully');
     });
   }
 }

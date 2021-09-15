@@ -9,7 +9,7 @@ import {formatDate} from '@angular/common';
 import {finalize} from 'rxjs/operators';
 import {AngularFireStorage} from '@angular/fire/storage';
 import Swal from 'sweetalert2';
-import {ignoreDiagnostics} from '@angular/compiler-cli/src/ngtsc/typecheck/src/diagnostics';
+
 
 @Component({
   selector: 'app-services-create',
@@ -76,19 +76,20 @@ export class ServicesCreateComponent implements OnInit {
   }
 
   create() {
-    console.log(this.createForm.value);
     this.serviceService.create(this.createForm.value).subscribe(data => {
       console.log(this.createForm.value);
       this.router.navigateByUrl('');
       this.showSuccess();
+    }, error => {
+      this.showError();
     });
 
   }
 
   loadImg() {
     Swal.fire({
-      title: 'Đang gửi dữ liệu',
-      text: 'Vui lòng chờ ...',
+      title: 'Sending data',
+      text: 'Please wait ...',
       imageUrl: '../../../../../assets/image/spin.gif',
       imageWidth: '100px',
       showConfirmButton: false,
@@ -102,6 +103,7 @@ export class ServicesCreateComponent implements OnInit {
           console.log(url);
           this.createForm.value.image = url;
           this.urlImage = url;
+          console.log(this.urlImage);
           this.isImage = true;
           Swal.close();
         });
@@ -125,11 +127,11 @@ export class ServicesCreateComponent implements OnInit {
   }
 
   showSuccess() {
-    this.toast.success('Thêm mới thành công !', 'Thông báo : ');
+    this.toast.success('Successfully added new !', 'Notify : ');
   }
 
   showError() {
-    this.toast.error('Thêm mới thất bại !', 'Cảnh báo : ');
+    this.toast.error('Add new failure !', 'Warning : ');
   }
 
   get newsImageName() {

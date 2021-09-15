@@ -18,7 +18,9 @@ export class ServicesListComponent implements OnInit {
   public p = 0;
   public code = '';
   public prices = '';
+  public pageTotal: number;
   public totalPage;
+  searchPageInput: string;
   ps: Array<any> = [];
 
   constructor(private dialog: MatDialog,
@@ -43,6 +45,7 @@ export class ServicesListComponent implements OnInit {
         console.log(this.servicesPage);
       }
       this.ps = new Array<any>(value.totalpages);
+      console.log(this.ps.length);
     }, error => {
       console.log(error);
     });
@@ -97,19 +100,18 @@ export class ServicesListComponent implements OnInit {
 
   openDialog(id: any): void {
     console.log(id);
-    // this.customerService.findById(id).subscribe(dataDialog => {
-    const dialogRef = this.dialog.open(DeleteServicesComponent, {
-      width: '500px',
-      data: {name: 'DV-0000'},
-      disableClose: true
+    this.serviceService.findById(id).subscribe(dataDialog => {
+      console.log(id);
+      const dialogRef = this.dialog.open(DeleteServicesComponent, {
+        width: '500px',
+        data: {name: dataDialog},
+        disableClose: true
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        this.ngOnInit();
+      });
     });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-
-      this.toast.success('delete success fully', 'thong bao');
-      this.ngOnInit();
-    });
-
   }
+
+
 }
