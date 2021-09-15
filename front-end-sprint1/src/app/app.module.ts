@@ -6,6 +6,7 @@ import {AppComponent} from './app.component';
 import {CustomerModule} from './module/customer/customer.module';
 import {EmployeeModule} from './module/employee/employee.module';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -13,6 +14,7 @@ import {EmployeeModule} from './module/employee/employee.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    EmployeeModule,
     CustomerModule,
     EmployeeModule
   ],
