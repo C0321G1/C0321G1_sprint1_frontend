@@ -18,9 +18,11 @@ export class ServicesListComponent implements OnInit {
   public p = 0;
   public code = '';
   public prices = '';
-  public pageTotal: number;
-  public totalPage;
-  searchPageInput: string;
+  public messenger = '';
+  public check = 0;
+  public checkNumber=true;
+  public inputPage = '';
+
   ps: Array<any> = [];
 
   constructor(private dialog: MatDialog,
@@ -33,71 +35,109 @@ export class ServicesListComponent implements OnInit {
     this.getAllServicesList();
     // this.searchNameCodePrices();
   }
-
+// phap
   getAllServicesList() {
     this.serviceService.getAllServices(this.name, this.p).subscribe(value => {
-
+        this.check=0;
       if (value == null) {
         this.servicesPage = [];
-      } else {
-        this.servicesPage = value.content;
+        this.messenger = "List is empty";
         this.p = 0;
-        console.log(this.servicesPage);
       }
-      this.ps = new Array<any>(value.totalpages);
-      console.log(this.ps.length)
+      this.servicesPage = value.content;
+      this.ps = new Array<any>(value.totalPages);
+      console.log(this.servicesPage);
     }, error => {
       console.log(error);
     });
   }
-
+// phap
   searchNameCodePrices() {
-    console.log(this.code);
-    console.log(this.name2);
     this.serviceService.searchNameCode(this.code, this.name2, this.prices, this.p).subscribe(value => {
+      this.check=1;
       if (value == null) {
         this.servicesPage = [];
-      } else {
-        this.servicesPage = value.content;
+        this.messenger = "List is empty";
         this.p = 0;
       }
-      console.log(value.http);
-      this.ps = new Array<any>(value.totalpages);
+      this.servicesPage = value.content;
+      this.ps = new Array<any>(value.totalPages);
+      console.log(this.servicesPage);
     }, error => {
       console.log(error);
     });
   }
-
+// phap
   first() {
-    this.p = 0;
+    if(this.check===0){
+      this.p = 0;
+      this.getAllServicesList();
+    }else {
+      this.p = 0;
+      this.searchNameCodePrices();
+    }
   }
-
+// phap
   last() {
-    this.p = this.ps.length - 1;
-  }
+    if (this.check===0){
+      this.p = this.ps.length-1;
+      this.getAllServicesList();
+    }else {
+      this.p = this.ps.length-1;
+      this.searchNameCodePrices();
+    }
 
+  }
+// phap
   previous() {
-    if (this.p === 0) {
-      this.p = 1;
-    }
-    this.p = this.p - 1;
-    this.getAllServicesList();
-  }
+    if (this.p <= 0) {
+      if (this.check===0){
+        this.p = 0;
+        this.getAllServicesList();
+      }else {
+        this.p = 0;
+        this.searchNameCodePrices();
+      }
+    } else {
+      if (this.check===0){
+        this.p = this.p - 1;
+        this.getAllServicesList();
+      }else {
+        this.p = this.p - 1;
+        this.searchNameCodePrices();
+      }
 
+    }
+
+  }
+// phap
   next() {
-    if (this.p > this.ps.length - 2) {
-      this.p = this.ps.length - 1;
+    console.log(this.ps.length);
+    if (this.p  > this.ps.length-2 ) {
+      if (this.check==0){
+        this.p = this.ps.length-1;
+        this.getAllServicesList();
+      }else {
+        this.p = this.ps.length-1;
+        this.searchNameCodePrices();
+      }
+    }else {
+      console.log(this.p);
+      if (this.check===0){
+        this.p =this.p+1;
+        console.log(this.p);
+        this.getAllServicesList();
+      }else {
+        this.p =this.p+1;
+        this.searchNameCodePrices();
+      }
+
+      console.log(this.p);
     }
-    this.p = this.p + 1;
-    this.getAllServicesList();
+
   }
 
-  setPage(i: number) {
-    this.p = i;
-    this.getAllServicesList();
-  }
-
-
+  //phap
   openDialog(id: any): void {
     console.log(id);
     this.serviceService.findById(id).subscribe(dataDialog => {
@@ -113,5 +153,23 @@ export class ServicesListComponent implements OnInit {
     });
   }
 
+// phap
+  changePage(event: any) {
+   this.checkNumber= !isNaN(event.target.value);
+   if (Number(event.target.value)-1<this.ps.length-2){
+     this.first();
+   }
+   else if (Number(event.target.value)>this.ps.length-2){
+     this.last();
+   }
+   else if(this.check==0){
+     this.p=Number(event.target.value)-1;
 
+     this.getAllServicesList();
+   }else {
+     this.p=Number(event.target.value)-1;
+     console.log(this.p);
+     this.searchNameCodePrices();
+   }
+  }
 }
