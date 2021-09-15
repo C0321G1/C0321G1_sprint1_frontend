@@ -152,6 +152,10 @@ export class ComputerListComponent implements OnInit {
       this.listComputerPage = value.content;
       this.ps = new Array<any>(value.totalPages);
       this.check = 1;
+    }, error => {
+      if (error.status === 404) {
+        this.toastrService.error('Not found computer!!');
+      }
     });
   }
 }

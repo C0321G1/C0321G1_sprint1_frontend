@@ -26,7 +26,7 @@ export class ComputerListDeleteComponent implements OnInit {
     this.computerService.delete(this.data.idComputer[i]).subscribe(() => {
       this.dialog.close(true);
       /*this.router.navigateByUrl('');*/
-      this.toastrService.info('Delete Success!!!');
+      this.toastrService.info('Delete computer ' + this.data.nameComputer[i] + ' Success.');
     });
     }
   }
