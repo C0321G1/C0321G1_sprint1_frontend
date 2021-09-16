@@ -1,16 +1,16 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {GameType} from "../../../model/game/game-type";
-import {AppComponent} from "../../../app.component";
-import {GameService} from "../../../service/game/game.service";
-import {GameTypeService} from "../../../service/game/gameType/game-type.service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {ToastrService} from "ngx-toastr";
-import {AngularFireStorage} from "@angular/fire/storage";
-import {formatDate} from "@angular/common";
-import Swal from "sweetalert2";
-import {finalize} from "rxjs/operators";
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {GameType} from '../../../model/game/game-type';
+import {AppComponent} from '../../../app.component';
+import {GameService} from '../../../service/game/game.service';
+import {GameTypeService} from '../../../service/game/gameType/game-type.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
+import {AngularFireStorage} from '@angular/fire/storage';
+import {formatDate} from '@angular/common';
+import Swal from 'sweetalert2';
+import {finalize} from 'rxjs/operators';
 
 @Component({
   selector: 'app-game-edit',
@@ -22,7 +22,7 @@ export class GameEditComponent implements OnInit {
   public gameForm: FormGroup;
   public gameType: GameType[] = [];
   private gameId: number;
-  imageGame: String;
+  imageGame: string;
   private selectedImage: any;
 
   constructor(@Inject(AngularFireStorage) private storage: AngularFireStorage,
@@ -50,7 +50,7 @@ export class GameEditComponent implements OnInit {
     });
   }
 
-  findGame(){
+  findGame() {
     this.activatedRoute.params.subscribe(data => {
       this.gameId = data.id;
       this.gameService.getById(this.gameId).subscribe(data2 => {
@@ -91,7 +91,7 @@ export class GameEditComponent implements OnInit {
 
   editGame() {
     if (this.gameForm.valid) {
-      this.gameService.updateGame(this.gameId,this.gameForm.value,).subscribe(data => {
+      this.gameService.updateGame(this.gameId, this.gameForm.value,).subscribe(data => {
         console.log(this.gameForm.value);
         this.router.navigateByUrl('');
         this.toastr.success('Thanks!', 'Edit game successfully !');
@@ -105,7 +105,7 @@ export class GameEditComponent implements OnInit {
 
   showPreview(event: any) {
     this.selectedImage = event.target.files[0];
-    if(this.selectedImage !== this.imageGame){
+    if (this.selectedImage !== this.imageGame) {
       this.loadImg();
     }
   }

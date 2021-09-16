@@ -1,15 +1,15 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {AppComponent} from '../../../app.component';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {GameType} from "../../../model/game/game-type";
-import {GameService} from "../../../service/game/game.service";
-import {GameTypeService} from "../../../service/game/gameType/game-type.service";
-import {Router} from "@angular/router";
-import {ToastrService} from "ngx-toastr";
-import {AngularFireStorage} from "@angular/fire/storage";
-import {finalize} from "rxjs/operators";
-import {formatDate} from "@angular/common";
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {GameType} from '../../../model/game/game-type';
+import {GameService} from '../../../service/game/game.service';
+import {GameTypeService} from '../../../service/game/gameType/game-type.service';
+import {Router} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
+import {AngularFireStorage} from '@angular/fire/storage';
+import {finalize} from 'rxjs/operators';
+import {formatDate} from '@angular/common';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -21,7 +21,7 @@ export class GameCreateComponent implements OnInit {
   public Editor = ClassicEditor;
   public gameForm: FormGroup;
   public gameType: GameType[] = [];
-  image: String;
+  image: string;
   private selectedImage: any;
   public isImage = false;
 
@@ -93,7 +93,7 @@ export class GameCreateComponent implements OnInit {
 
   showPreview(event: any) {
     this.selectedImage = event.target.files[0];
-    if(this.selectedImage !== ""){
+    if (this.selectedImage !== '') {
       this.loadImg();
     }
   }
@@ -104,6 +104,6 @@ export class GameCreateComponent implements OnInit {
 
   reset() {
     this.isImage = false;
-    this.image = "";
+    this.image = '';
   }
 }
