@@ -11,7 +11,7 @@ export interface Customer {
   dateOfBirth: string;
   address: Address;
   phone: string;
-  status: CustomerStatus;
+  customerStatus: CustomerStatus;
   flag: number;
   gender: Gender;
 }
