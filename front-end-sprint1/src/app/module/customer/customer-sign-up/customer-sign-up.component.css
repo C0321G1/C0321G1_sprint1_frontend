@@ -2,7 +2,7 @@
   background-image: url('../../../../assets/image/bg5.png');
   background-size: cover;
   background-repeat: inherit;
-  height: 100%;
+  height: 100vh;
   font-family: 'Numans', sans-serif;
 }
 
