@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {GameType} from '../../../model/game/game-type';
@@ -11,7 +11,6 @@ import {AngularFireStorage} from '@angular/fire/storage';
 import {formatDate} from '@angular/common';
 import Swal from 'sweetalert2';
 import {finalize} from 'rxjs/operators';
-import {MatDialog} from '@angular/material/dialog';
 import {Game} from '../../../model/game/game';
 
 @Component({
@@ -28,14 +27,17 @@ export class GameEditComponent implements OnInit {
   imageGame: string;
   private selectedImage: any;
   listError: any = '';
+  @ViewChild('nameinput') private elementRef: ElementRef;
 
+  public ngAfterViewInit(): void {
+    this.elementRef.nativeElement.focus();
+  }
   constructor(@Inject(AngularFireStorage) private storage: AngularFireStorage,
               private appComponent: AppComponent,
               private gameService: GameService,
               private gameTypeService: GameTypeService,
               public activatedRoute: ActivatedRoute,
-              public router: Router, private toastr: ToastrService,
-              private dialog: MatDialog) {
+              public router: Router, private toastr: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -171,8 +173,6 @@ export class GameEditComponent implements OnInit {
         this.router.navigateByUrl('');
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         this.gameForm.patchValue(this.game);
-        console.log(this.game);
-        console.log(this.gameForm.value);
       }
     });
   }

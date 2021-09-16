@@ -10,7 +10,7 @@
         <div class="mt-3">
                 <label for="name" style="font-size: 22px;color: #FFF448;font-family: Averta">Name <span
                   style="color: red">(*)</span></label>
-          <input autofocus formControlName="name" type="text" class="form-control"
+          <input #nameinput formControlName="name" type="text" class="form-control"
                  [ngClass]="gameForm.controls.name.valid? 'is-valid':'is-invalid'" id="name"
                  aria-describedby="validationServer03Feedback" required>
           <div
