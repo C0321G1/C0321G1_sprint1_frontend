@@ -112,7 +112,7 @@ export class GameListComponent implements OnInit {
 
   searchGame(page: number) {
     if (this.gameSearch.value.nameGame === '' && this.gameSearch.value.gameType === '') {
-      this.toast.error('Please enter the field you want to search!', 'search game');
+      this.toast.error('Please enter the field you want to search!', 'Search game');
     } else {
       this.checkSearch = 1;
       this.gameService.searchGame(page, this.gameSearch.value.nameGame, this.gameSearch.value.gameType).subscribe(value => {
@@ -120,7 +120,7 @@ export class GameListComponent implements OnInit {
         this.totalPage = value.totalPages;
       }, error => {
         this.checkSearch = 0;
-        this.toast.error('Game not found.', 'search game');
+        this.toast.error('Game not found.', 'Search game');
       });
     }
   }
@@ -177,7 +177,7 @@ export class GameListComponent implements OnInit {
       }
     } else {
       if (this.searchPageInput !== '') {
-        this.toast.error('please enter page number!', 'search game');
+        this.toast.error('please enter page number!', 'Search page');
       }
     }
   }
