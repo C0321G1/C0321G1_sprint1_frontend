@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import {DatePipe} from '@angular/common';
-import * as firebase from "firebase";
+import * as firebase from 'firebase';
+
 export const snapshotToArray = (snapshot: any) => {
   const returnArr = [];
 
@@ -13,6 +14,7 @@ export const snapshotToArray = (snapshot: any) => {
 
   return returnArr;
 };
+
 @Component({
   selector: 'app-room-list',
   templateUrl: './room-list.component.html',
@@ -20,7 +22,6 @@ export const snapshotToArray = (snapshot: any) => {
 })
 export class RoomListComponent implements OnInit {
   nickname = '';
-  displayedColumns: string[] = ['roomname'];
   rooms = [];
   isLoadingResults = true;
 
@@ -46,29 +47,10 @@ export class RoomListComponent implements OnInit {
     const newMessage = firebase.database().ref('chats/').push();
     newMessage.set(chat);
 
-    // firebase.database().ref('roomusers/').orderByChild('roomname').equalTo(roomname).on('value', (resp: any) => {
-    //   let roomuser = [];
-    //   roomuser = snapshotToArray(resp);
-    //   const user = roomuser.find(x => x.nickname === this.nickname);
-    //   if (user !== undefined) {
-    //     const userRef = firebase.database().ref('roomusers/' + user.key);
-    //     userRef.update({status: 'online'});
-    //   } else {
-    //     const newroomuser = {roomname: '', nickname: '', status: ''};
-    //     newroomuser.roomname = roomname;
-    //     newroomuser.nickname = this.nickname;
-    //     newroomuser.status = 'online';
-    //     const newRoomUser = firebase.database().ref('roomusers/').push();
-    //     newRoomUser.set(newroomuser);
-    //   }
-    // });
-
     this.router.navigate(['/chatRoom', roomname]);
   }
 
-  // logout(): void {
-  //   localStorage.removeItem('nickname');
-  //   this.router.navigate(['/login']);
-  // }
-
+  backToHomePage() {
+    this.router.navigate(['/homepage']);
+  }
 }

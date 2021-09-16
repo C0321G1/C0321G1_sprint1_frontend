@@ -24,3 +24,11 @@
 .mat-flat-button {
   margin: 5px;
 }
+
+.body {
+  background-image: url("../../../../assets/image/bg5.png");
+  height: 100%;
+  background-size: cover;
+  background-repeat: inherit;
+  font-size: 18px;
+}

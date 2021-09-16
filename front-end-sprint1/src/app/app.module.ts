@@ -6,6 +6,7 @@ import {AppComponent} from './app.component';
 import {CustomerModule} from './module/customer/customer.module';
 import {MessageModule} from './module/message/message.module';
 import {MessageRoutingModule} from './module/message/message-routing.module';
+import {DatePipe} from '@angular/common';
 
 @NgModule({
   declarations: [

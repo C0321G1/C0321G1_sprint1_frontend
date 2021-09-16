@@ -5,6 +5,9 @@ import {ErrorStateMatcher} from '@angular/material/core';
 import * as firebase from 'firebase';
 import {snapshotToArray} from '../room-list/room-list.component';
 import {DatePipe} from '@angular/common';
+import {AccountService} from '../../../service/account/account.service';
+import {Account} from '../../../model/account/account';
+import {Role} from '../../../model/account/role';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -19,25 +22,29 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./join-chat.component.css']
 })
 export class JoinChatComponent implements OnInit {
-  loginForm: FormGroup;
   nickname = 'Admin';
   refRooms = firebase.database().ref('rooms/');
   refUsers = firebase.database().ref('users/');
   matcher = new MyErrorStateMatcher();
+  role: string;
 
-  constructor(private router: Router, public datepipe: DatePipe) {
+  constructor(private router: Router, public datepipe: DatePipe,
+              private accountService: AccountService,
+              // private tokenStorage: TokenStorage
+  ) {
+      // this.findUser();
   }
 
   ngOnInit(): void {
-
   }
 
   enterChatRoom(roomname: string) {
     localStorage.setItem('nickname', this.nickname);
-    this.addUser(this.nickname)
+    this.addUser(this.nickname);
     if (this.nickname !== 'Admin') {
       this.addRoom(roomname);
       const chat = {roomname: '', nickname: '', message: '', date: '', type: ''};
+      console.log(chat.date);
       chat.roomname = roomname;
       chat.nickname = this.nickname;
       chat.date = this.datepipe.transform(new Date(), 'dd/MM/yyyy HH:mm:ss');
@@ -45,23 +52,6 @@ export class JoinChatComponent implements OnInit {
       chat.type = 'join';
       const newMessage = firebase.database().ref('chats/').push();
       newMessage.set(chat);
-
-      // firebase.database().ref('roomusers/').orderByChild('roomname').equalTo(roomname).on('value', (resp: any) => {
-      //   let roomuser = [];
-      //   roomuser = snapshotToArray(resp);
-      //   const user = roomuser.find(x => x.nickname === this.nickname);
-      //   if (user !== undefined) {
-      //     const userRef = firebase.database().ref('roomusers/' + user.key);
-      //     userRef.update({status: 'online'});
-      //   } else {
-      //     const newroomuser = {roomname: '', nickname: '', status: ''};
-      //     newroomuser.roomname = roomname;
-      //     newroomuser.nickname = this.nickname;
-      //     newroomuser.status = 'online';
-      //     const newRoomUser = firebase.database().ref('roomusers/').push();
-      //     newRoomUser.set(newroomuser);
-      //   }
-      // });
 
       this.router.navigate(['/chatRoom', roomname]);
     } else {
@@ -71,7 +61,7 @@ export class JoinChatComponent implements OnInit {
 
   addRoom(roomName: any) {
     const room = {roomname: ''};
-    room.roomname = roomName
+    room.roomname = roomName;
     this.refRooms.orderByChild('roomname').equalTo(room.roomname).once('value', (snapshot: any) => {
       if (!snapshot.exists()) {
         const newRoom = firebase.database().ref('rooms/').push();
@@ -92,4 +82,13 @@ export class JoinChatComponent implements OnInit {
       }
     });
   }
+
+  // findUser() {
+  //   this.role = this.tokenStorage.getUser().roles;
+  //   if (this.role === 'ROLE_ADMIN' || this.role === 'ROLE_EMPLOYEE') {
+  //     this.nickname = 'Admin';
+  //   } else {
+  //     this.nickname = this.tokenStorage.getUser().username;
+  //   }
+  // }
 }

@@ -14,39 +14,39 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {DatePipe} from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
-import {BrowserModule} from "@angular/platform-browser";
+import {BrowserModule} from '@angular/platform-browser';
 import {JoinChatComponent} from './join-chat/join-chat.component';
 import {ChatRoomComponent} from './chat-room/chat-room.component';
 import {RoomListComponent} from './room-list/room-list.component';
-import {RouterModule} from "@angular/router";
+import {RouterModule} from '@angular/router';
 
 
 @NgModule({
-    declarations: [JoinChatComponent,
-        ChatRoomComponent,
-        RoomListComponent],
-    imports: [
-        CommonModule,
-        BrowserModule,
-        BrowserAnimationsModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MatInputModule,
-        MatIconModule,
-        MatCardModule,
-        MatFormFieldModule,
-        MatTableModule,
-        MatProgressSpinnerModule,
-        MatSortModule,
-        MatSnackBarModule,
-        MatSidenavModule,
-        MatButtonModule,
-        RouterModule
-    ],
-    providers: [DatePipe],
-    exports: [
-        JoinChatComponent
-    ]
+  declarations: [JoinChatComponent,
+    ChatRoomComponent,
+    RoomListComponent],
+  imports: [
+    CommonModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatIconModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatTableModule,
+    MatProgressSpinnerModule,
+    MatSortModule,
+    MatSnackBarModule,
+    MatSidenavModule,
+    MatButtonModule,
+    RouterModule,
+  ],
+  providers: [DatePipe],
+  exports: [
+    JoinChatComponent
+  ]
 })
 export class MessageModule {
 }

@@ -25,7 +25,6 @@ export class ChatRoomComponent implements OnInit {
   nickname = '';
   roomname = '';
   message = '';
-  users = [];
   chats = [];
   matcher = new MyErrorStateMatcher();
 
@@ -40,10 +39,6 @@ export class ChatRoomComponent implements OnInit {
       this.chats = snapshotToArray(resp);
       setTimeout(() => this.scrolltop = this.chatcontent.nativeElement.scrollHeight, 500);
     });
-    // firebase.database().ref('roomusers/').orderByChild('roomname').equalTo(this.roomname).on('value', (resp2: any) => {
-    //   const roomusers = snapshotToArray(resp2);
-    //   this.users = roomusers.filter(x => x.status === 'online');
-    // });
   }
 
   ngOnInit(): void {
@@ -74,22 +69,11 @@ export class ChatRoomComponent implements OnInit {
     chat.type = 'exit';
     const newMessage = firebase.database().ref('chats/').push();
     newMessage.set(chat);
-
-    // firebase.database().ref('roomusers/').orderByChild('roomname').equalTo(this.roomname).on('value', (resp: any) => {
-    //   let roomuser = [];
-    //   roomuser = snapshotToArray(resp);
-    //   const user = roomuser.find(x => x.nickname === this.nickname);
-    //   if (user !== undefined) {
-    //     const userRef = firebase.database().ref('roomusers/' + user.key);
-    //     userRef.update({status: 'offline'});
-    //   }
-    // });
     if (this.nickname === 'Admin') {
       this.router.navigate(['/roomList']);
     } else {
-      this.router.navigate(['/customerSignUp']);
+      this.router.navigate(['/homePage']);
     }
-
   }
 
 }
