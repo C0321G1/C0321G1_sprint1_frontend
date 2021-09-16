@@ -11,6 +11,8 @@ import {GameModule} from './module/game/game.module';
 import {OrderDetailModule} from './module/order-detail/order-detail.module';
 import {ServiceModule} from './module/service/service.module';
 import {RouterModule} from '@angular/router';
+import {StatisticModule} from './module/statistic/statistic.module';
+
 
 
 @NgModule({
@@ -28,6 +30,7 @@ import {RouterModule} from '@angular/router';
     OrderDetailModule,
     ServiceModule,
     RouterModule,
+    StatisticModule
   ],
   providers: [],
   bootstrap: [AppComponent]

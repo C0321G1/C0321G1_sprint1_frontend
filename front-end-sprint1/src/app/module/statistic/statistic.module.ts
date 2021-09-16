@@ -1,12 +1,27 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, DatePipe} from '@angular/common';
+import { StatisticComponent } from './statistic/statistic.component';
+import {RouterModule, Routes} from '@angular/router';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
+import {StatisticRoutingModule} from './statistic-routing.module';
+import {StatisticService} from '../../service/statistic/statistic.service';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [StatisticComponent],
   imports: [
-    CommonModule
-  ]
+    CommonModule,
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
+    FormsModule,
+    HttpClientModule,
+    StatisticRoutingModule
+  ],
+  exports: [RouterModule, StatisticComponent],
+  providers: [DatePipe, StatisticService]
+
 })
 export class StatisticModule { }
