@@ -193,4 +193,13 @@ export class GameListComponent implements OnInit {
       this.page = 0;
     }
   }
+
+  reset() {
+    this.gameSearch = new FormGroup({
+      nameGame: new FormControl(''),
+      gameType: new FormControl('')
+    });
+    this.checkSearch = 0;
+    this.getAll();
+  }
 }

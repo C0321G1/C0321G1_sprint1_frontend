@@ -12,6 +12,39 @@
   overflow: hidden;
 }
 
+/*@media only screen and (min-width: 751px) and (max-width: 860px) {*/
+/*  .imgz {*/
+/*    height: 150px!important;*/
+/*  }*/
+/*}*/
+
+/*@media only screen and (min-width: 651px) and (max-width: 750px) {*/
+/*  .imgz {*/
+/*    height: 120px;*/
+/*  }*/
+/*}*/
+
+/*@media only screen and (min-width: 551px) and (max-width: 650px) {*/
+/*  .imgz {*/
+/*    height: 90px;*/
+/*  }*/
+/*}*/
+
+/*@media only screen and (min-width: 451px) and (max-width: 550px) {*/
+/*  .imgz {*/
+/*    height: 60px;*/
+/*  }*/
+/*}*/
+
+/*@media only screen and (min-width: 350px) and (max-width: 450px) {*/
+/*  .imgz {*/
+/*    height: 60px;*/
+/*  }*/
+/*}*/
+
+
+
+
 @media only screen and (min-width: 751px) and (max-width: 860px) {
   .imgrp {
     width: 60px;
