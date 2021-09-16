@@ -25,7 +25,7 @@ export class GameEditComponent implements OnInit {
   public game: Game;
   public gameType: GameType[] = [];
   private gameId: number;
-  imageGame: String;
+  imageGame: string;
   private selectedImage: any;
   listError: any = '';
 

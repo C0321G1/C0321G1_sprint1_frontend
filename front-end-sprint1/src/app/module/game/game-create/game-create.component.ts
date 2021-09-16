@@ -22,7 +22,7 @@ export class GameCreateComponent implements OnInit {
   public Editor = ClassicEditor;
   public gameForm: FormGroup;
   public gameType: GameType[] = [];
-  image: String;
+  image: string;
   private selectedImage: any;
   public isImage = false;
   listError: any = '';
