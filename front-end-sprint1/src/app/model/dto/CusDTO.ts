@@ -1,12 +1,14 @@
+import {Address} from '../address/address';
+
 export interface CusDTO {
   customerId: number;
   fullName: string;
   email: string;
   dateOfBirth: string;
   phone: string;
-  addressId: number;
+  address: Address;
   genderId:number;
-  customerStatusId;
+  customerStatusId: number;
   password: string;
   username: string;
 }

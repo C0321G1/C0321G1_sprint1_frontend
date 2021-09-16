@@ -1,3 +1,4 @@
+<body background="../../../../assets/image/hinh-nen-da-dang-nhap.jpg">
 <div class="container-fluid">
   <!--Header-->
   <nav class="row navbar navbar-expand-lg navbar-light sticky-top" style="background-color: black">
@@ -91,13 +92,12 @@
     </div>
   </nav>
   <div class="row" style="background-image: url('src/assets/image/anh-lmht-31.jpg');background-size: cover;background-repeat: no-repeat;height: 100%">
-
+    <form [formGroup]="customerForm" (ngSubmit)="createCustomer()">
     <div class="container py-5" style=" border-radius: 5px">
       <div style="padding: 15px 10%; background: rgba(0, 0, 0, 0.5);"><h2
         style="text-align: center;color: #FFC312 ; ">Please enter full information</h2>
         <hr>
         <div>
-
           <div class="row mt-3">
             <div class="col-6 "><label for="fullName" style="font-size: 22px;color: #FFF448">Full Name </label>
               <span style="color: red" class="asterisk-red">(*)</span>
@@ -144,31 +144,33 @@
               <div style="color: red">Please enter password</div>
             </div>
           </div>
+
         </div>
         <div class="row mt-3">
           <div class="col-4"><label  style="font-size: 22px;color: #FFF448">Address </label>
           </div>
+
         </div>
-        <div class="row mt-3" formGroup="address">
+        <div class="row mt-3" formGroupName="address">
           <div class="col-4">
-            <select class="form-control " id="province" formControlName="province" required>
+            <select class="form-control " id="province" formControlName="provinceId"  required>
               <option selected>Please Choose Province </option>
-              <option *ngFor="let province of provinceList" [value]="province">{{province.provinceName}}</option>
+              <option *ngFor="let province of provinceList" [ngValue]="province.provinceId">{{province.name}}</option>
             </select>
           </div>
 
           <div class="col-4">
-            <select class="form-control " id="district" formControlName="district" required>
+            <select class="form-control " id="district" formControlName="districtId" required>
               <option selected>Please Choose District </option>
-             <option *ngFor="let district of districtList" [value]="district">{{district.districtName}}</option>
+             <option *ngFor="let district of districtList" [ngValue]="district.districtId">{{district.name}}</option>
 
             </select>
           </div>
 
           <div class="col-4">
-            <select class="form-control " id="commune" formControlName="commune" required>
-              <option selected>Please Choose Commune </option>
-              <option *ngFor="let commune of communeList" [value]="commune">{{commune.communeName}}</option>
+            <select class="form-control " id="commune" formControlName="communeId" required>
+              <option selected value="">Please Choose Commune </option>
+              <option *ngFor="let commune of communeList" [ngValue]="commune.communeId">{{commune.name}}</option>
             </select>
           </div>
         </div>
@@ -177,7 +179,7 @@
           <div class="col-6 ">
             <label for="gender" style="font-size: 22px;color: #FFF448">Gender </label>
             <span style="color: red" class="asterisk-red">(*)</span>
-            <select  class="form-control" style="font-size: 18px" id="gender" formControlName="gender" required>
+            <select  class="form-control" style="font-size: 18px" id="gender" formControlName="genderId" required>
               <option selected>Please Choose Gender </option>
               <option *ngFor="let gender of genderList" [ngValue]="gender">{{gender.name}}</option>
             </select>
@@ -186,9 +188,9 @@
           </div>
           <div class="col-6">
             <label for="status" style="font-size: 22px;color: #FFF448">Status </label>
-            <select class="form-control " id="status" formControlName="customerStatus" required>
+            <select class="form-control " id="status" formControlName="customerStatusId" required>
               <option selected>Please Choose Status </option>
-          <option *ngFor="let customerStatus of statusList" [ngValue]="customerStatus">{{customerStatus.nameStatus}}</option>
+          <option *ngFor="let customerStatus of statusList" [ngValue]="customerStatus">{{customerStatus.name}}</option>
 
             </select>
 
@@ -217,17 +219,19 @@
                     d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
             </svg>
             <span style="font-family: Averta">Reset</span>
-          </button>
-          <button class="btn mt-3 btn-warning mr-3">
+
+          </button >
+          <button  type="submit" class="btn mt-3 btn-warning mr-3" >
 
             <span style="font-family: Averta">Create</span>
           </button>
+<
         </div>
       </div>
     </div>
+    </form>
   </div>
 </div>
-
 <!--footer-->
 <div class="d-flex justify-content-center" style="background-color: black;">
   <div class="">
@@ -288,3 +292,4 @@
   </div>
 </div>
 
+</body>
