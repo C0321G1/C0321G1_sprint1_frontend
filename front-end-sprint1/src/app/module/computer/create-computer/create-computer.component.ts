@@ -23,8 +23,8 @@ export class CreateComputerComponent implements OnInit {
       location: new FormControl('', [Validators.required,
         Validators.pattern('^(A[0-9]{4}|B[0-9]{4}|C[0-9]{4}|D[0-9]{4})$')]),
       startUsedDate: new FormControl('', [Validators.required, validateStartUsedDate]),
-      configuration: new FormControl('', [Validators.required]),
-      warrantyPeriod: new FormControl('', [Validators.required]),
+      configuration: new FormControl('', [Validators.required,Validators.maxLength(25)]),
+      warrantyPeriod: new FormControl('', [Validators.required,Validators.maxLength(10)]),
       flagDelete: new FormControl(0),
       computerType: new FormGroup({
         name: new FormControl('', [Validators.required])
