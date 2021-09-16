@@ -32,8 +32,8 @@ export class GameService {
     return this.http.patch<any>(this.API_GAME + '/delete/' + id);
   }
 
-  getById(id): Observable<Game[]> {
-    return this.http.get<Game[]>(this.API_GAME + '/' + id).pipe();
+  getById(id): Observable<any> {
+    return this.http.get<any>(this.API_GAME + '/' + id).pipe();
   }
 
   // Creator: Nhung
@@ -41,7 +41,7 @@ export class GameService {
     return this.http.post<Game>(this.API_GAME, game);
   }
 
-  updateGame(id: number, game: Game): Observable<Game> {
-    return this.http.patch<Game>(this.API_GAME + '/' + id, game);
+  updateGame(id: number,game: Game): Observable<Game> {
+    return this.http.patch<Game>(this.API_GAME + '/' + id,game);
   }
 }

@@ -15,6 +15,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {GameTrailerComponent} from './game-trailer/game-trailer.component';
 import {GameDetailComponent} from './game-detail/game-detail.component';
 
+
 @NgModule({
   declarations: [GameEditComponent, GameCreateComponent, GameListComponent, GameDeleteDialogComponent, GameTrailerComponent, GameDetailComponent],
   exports: [
