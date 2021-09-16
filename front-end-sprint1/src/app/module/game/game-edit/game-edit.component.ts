@@ -11,6 +11,8 @@ import {AngularFireStorage} from '@angular/fire/storage';
 import {formatDate} from '@angular/common';
 import Swal from 'sweetalert2';
 import {finalize} from 'rxjs/operators';
+import {MatDialog} from '@angular/material/dialog';
+import {Game} from '../../../model/game/game';
 
 @Component({
   selector: 'app-game-edit',
@@ -20,17 +22,20 @@ import {finalize} from 'rxjs/operators';
 export class GameEditComponent implements OnInit {
   public Editor = ClassicEditor;
   public gameForm: FormGroup;
+  public game: Game;
   public gameType: GameType[] = [];
   private gameId: number;
   imageGame: string;
   private selectedImage: any;
+  listError: any = '';
 
   constructor(@Inject(AngularFireStorage) private storage: AngularFireStorage,
               private appComponent: AppComponent,
               private gameService: GameService,
               private gameTypeService: GameTypeService,
               public activatedRoute: ActivatedRoute,
-              public router: Router, private toastr: ToastrService) {
+              public router: Router, private toastr: ToastrService,
+              private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -43,7 +48,7 @@ export class GameEditComponent implements OnInit {
     this.gameForm = new FormGroup({
       name: new FormControl('', [Validators.required]),
       trailer: new FormControl('', [Validators.required]),
-      content: new FormControl('', [Validators.required]),
+      content: new FormControl('', [Validators.required, Validators.maxLength(2000)]),
       image: new FormControl('', [Validators.required]),
       gaming: new FormControl('', [Validators.required, Validators.min(0), Validators.pattern("^\\d+$")]),
       gameType: new FormControl('', [Validators.required]),
@@ -57,6 +62,8 @@ export class GameEditComponent implements OnInit {
         this.gameForm.patchValue(data2);
         this.imageGame = data2.image;
       });
+    }, error => {
+      this.toastr.error('Warning!', 'Game not found!');
     });
   }
 
@@ -72,7 +79,8 @@ export class GameEditComponent implements OnInit {
       imageUrl: '../../../../../assets/image/swal-nhung.gif',
       imageWidth: '170px',
       showConfirmButton: false,
-      allowOutsideClick: false
+      allowOutsideClick: false,
+      confirmButtonColor: '#DD6B55'
     });
     const nameImg = this.getCurrentDateTime() + this.selectedImage?.name;
     const fileRef = this.storage.ref(nameImg);
@@ -94,7 +102,13 @@ export class GameEditComponent implements OnInit {
       this.gameService.updateGame(this.gameId, this.gameForm.value,).subscribe(data => {
         console.log(this.gameForm.value);
         this.router.navigateByUrl('');
-        this.toastr.success('Thanks!', 'Edit game successfully !');
+        this.toastrEdit();
+      }, error => {
+        console.log(error);
+        if (error.status === 400) {
+          this.listError = error.error;
+        }
+        this.toastr.error('Warning!', 'Edit game fail !');
       });
     }
   }
@@ -115,10 +129,55 @@ export class GameEditComponent implements OnInit {
   }
 
   reset() {
-    this.findGame();
+    this.game = this.gameForm.value;
+    Swal.fire({
+      title: 'Are you sure to Reset?',
+      text: 'This action cannot be undone !',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+      allowOutsideClick: false,
+      confirmButtonColor: '#DD6B55'
+    }).then((result) => {
+      if (result.value) {
+        this.findGame();
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        this.gameForm.patchValue(this.game);
+        console.log(this.game);
+        console.log(this.gameForm.value);
+      }
+    });
   }
 
   compareFn(c1: any, c2: any): boolean {
     return c1 && c2 ? c1.id === c2.id : c1 === c2;
+  }
+
+  back() {
+    console.log('back1');
+    this.game = this.gameForm.value;
+    Swal.fire({
+      title: 'Are you sure back to Home?',
+      text: 'Changes will not be saved !',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+      allowOutsideClick: false,
+      confirmButtonColor: '#DD6B55'
+    }).then((result) => {
+      if (result.value) {
+        this.router.navigateByUrl('');
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        this.gameForm.patchValue(this.game);
+        console.log(this.game);
+        console.log(this.gameForm.value);
+      }
+    });
+  }
+
+  toastrEdit() {
+    this.toastr.success('Thanks!', 'Edit game successfully !');
   }
 }

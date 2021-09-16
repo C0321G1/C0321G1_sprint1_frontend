@@ -11,6 +11,7 @@ import {AngularFireStorage} from '@angular/fire/storage';
 import {finalize} from 'rxjs/operators';
 import {formatDate} from '@angular/common';
 import Swal from 'sweetalert2';
+import {Game} from '../../../model/game/game';
 
 @Component({
   selector: 'app-game-create',
@@ -24,6 +25,8 @@ export class GameCreateComponent implements OnInit {
   image: string;
   private selectedImage: any;
   public isImage = false;
+  listError: any = '';
+  public game: Game;
 
   constructor(@Inject(AngularFireStorage) private storage: AngularFireStorage,
               private appComponent: AppComponent,
@@ -37,11 +40,12 @@ export class GameCreateComponent implements OnInit {
     this.getAllGameType();
   }
 
+
   initfrom() {
     this.gameForm = new FormGroup({
       name: new FormControl('', [Validators.required]),
       trailer: new FormControl('', [Validators.required]),
-      content: new FormControl('', [Validators.required]),
+      content: new FormControl('', [Validators.required, Validators.maxLength(2007)]),
       image: new FormControl('', [Validators.required]),
       gaming: new FormControl('', [Validators.required, Validators.min(0), Validators.pattern("^\\d+$")]),
       gameType: new FormControl('', [Validators.required]),
@@ -80,9 +84,16 @@ export class GameCreateComponent implements OnInit {
   save() {
     if (this.gameForm.valid) {
       this.gameForm.value.image = this.image;
+      console.log(this.gameForm.value.image);
       this.gameService.saveGame(this.gameForm.value).subscribe(data => {
         this.router.navigateByUrl('');
         this.toastr.success('Thanks!', 'Create new game successfully !');
+      }, error => {
+        console.log(error);
+        if (error.status === 400) {
+          this.listError = error.error;
+        }
+        this.toastr.error('Warning!', 'Create new game fail !');
       });
     }
   }
@@ -93,7 +104,7 @@ export class GameCreateComponent implements OnInit {
 
   showPreview(event: any) {
     this.selectedImage = event.target.files[0];
-    if (this.selectedImage !== '') {
+    if (this.selectedImage !== this.image) {
       this.loadImg();
     }
   }
@@ -102,8 +113,43 @@ export class GameCreateComponent implements OnInit {
     return this.gameForm.get('image');
   }
 
-  reset() {
-    this.isImage = false;
-    this.image = '';
+  resetValue() {
+    this.game = this.gameForm.value;
+    console.log(this.game);
+    Swal.fire({
+      title: 'Are you sure to Reset?',
+      text: 'This action cannot be undone !',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+      allowOutsideClick: false,
+      confirmButtonColor: '#DD6B55'
+    }).then((result) => {
+      if (result.value) {
+        this.isImage = false;
+        this.image = '';
+        this.initfrom();
+        console.log(this.game);
+      }
+    });
+  }
+
+  back() {
+    this.game = this.gameForm.value;
+    Swal.fire({
+      title: 'Are you sure back to Home?',
+      text: 'Changes will not be saved !',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+      allowOutsideClick: false,
+      confirmButtonColor: '#DD6B55'
+    }).then((result) => {
+      if (result.value) {
+        this.router.navigateByUrl('');
+      }
+    });
   }
 }

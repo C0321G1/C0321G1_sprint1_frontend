@@ -42,14 +42,14 @@
   </h3>
   <div class="row d-flex justify-content-center pr-5 pl-5">
     <div class="zoom card bg-dark text-white col-4 mt-5">
-      <img src="{{top2}}" class="card-img img-thumbnail" style="position: relative; z-index: 1;width: 100%;height: 100%"
+      <img src="{{top2}}" class="card-img img-thumbnail" style="position: relative; z-index: 1;width: 80vh;height: 30vh"
            alt="...">
       <img class="imgrp rounded-circle"
            style=" position: absolute; z-index: 1; top: -45px; left: -10%; width: 35%"
            src="assets/image/thuy/hc2.png">
     </div>
     <div class="zoom card bg-dark text-white col-4 mb-5">
-      <img src="{{top1}}" class="card-img img-thumbnail" style="position: relative; z-index: 1;width: 100%;height: 100%"
+      <img src="{{top1}}" class="card-img img-thumbnail" style="position: relative; z-index: 1;width: 80vh;height: 30vh"
            alt="...">
       <img class="imgrp rounded-circle"
            style=" position: absolute; z-index: 1; top: -45px; left: -10%; width: 35%"
@@ -57,7 +57,7 @@
     </div>
     <div class="zoom card bg-dark text-white col-4 mt-5">
       <img src="{{top3}}" class="card-img img-thumbnail"
-           style="position: relative; z-index: 1;width: 100%;height: 100%"
+           style="position: relative; z-index: 1;width: 80vh;height: 30vh"
            alt="...">
       <img class="imgrp rounded-circle" style="position: absolute; z-index: 1; top: -45px; left: -10%; width: 35%"
            src="assets/image/thuy/hc3.png">
@@ -83,7 +83,7 @@
   </h3>
 
   <div class="container">
-<!--    Tìm kiếm theo tên game và thể loại game-->
+    <!--    Tìm kiếm theo tên game và thể loại game-->
     <form class=" pb-2" [formGroup]="gameSearch" (ngSubmit)="searchGame(0); setPage()">
       <div class="form-row">
         <div class="form-group col-12 col-md-4 col-sm-6 col-lg-3">
@@ -123,7 +123,7 @@
       </div>
     </form>
 
-<!--    Hiển thị list game-->
+    <!--    Hiển thị list game-->
     <div class="row ">
       <div class="show card col-md-3 col-sm-6 col-6 bg-dark mb-3 thumbnail" style="width: 18rem;"
            *ngFor="let game of games">
