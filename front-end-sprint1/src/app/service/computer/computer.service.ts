@@ -64,7 +64,7 @@ export class ComputerService {
     return this.httpClient.get<ComputerManufacturer[]>(this.API_URL_COMPUTER_MANUFACTURER);
   }
 
-  getComputerById(computerId: any) : Observable<Computer> {
+  getComputerById(computerId: any): Observable<Computer> {
     return this.httpClient.get<Computer>(this.API_URL_COMPUTER + '/' + computerId);
   }
 
