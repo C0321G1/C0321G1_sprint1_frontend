@@ -41,7 +41,7 @@ export class GameService {
     return this.http.post<Game>(this.API_GAME, game);
   }
 
-  updateGame(id: number,game: Game): Observable<Game> {
-    return this.http.patch<Game>(this.API_GAME + '/' + id,game);
+  updateGame(id: number, game: Game): Observable<Game> {
+    return this.http.patch<Game>(this.API_GAME + '/' + id, game);
   }
 }
