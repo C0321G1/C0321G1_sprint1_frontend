@@ -82,7 +82,7 @@ export class GameListComponent implements OnInit {
     this.gameService.getById(id).subscribe(data => {
       const dialogRef = this.dialog.open(GameDetailComponent, {
         width: '500px',
-        height: '400px',
+        height: '450px',
         data: {game: data},
         disableClose: true
       });
@@ -192,5 +192,14 @@ export class GameListComponent implements OnInit {
     if (this.checkSearch === 1) {
       this.page = 0;
     }
+  }
+
+  reset() {
+    this.gameSearch = new FormGroup({
+      nameGame: new FormControl(''),
+      gameType: new FormControl('')
+    });
+    this.checkSearch = 0;
+    this.getAll();
   }
 }
