@@ -25,10 +25,11 @@ export class ServicesCreateComponent implements OnInit {
   selectedImage: any = null;
   services: Services;
   urlImage: string;
-  require: any;
+  serviceForm: any;
   public isImage = false;
   page: number;
   name: string;
+  listError: any = '';
 
   constructor(private serviceService: ServiceService,
               private toast: ToastrService,
@@ -76,11 +77,16 @@ export class ServicesCreateComponent implements OnInit {
   }
 
   create() {
+    this.createForm.value.image = this.urlImage;
     this.serviceService.create(this.createForm.value).subscribe(data => {
       console.log(this.createForm.value);
       this.router.navigateByUrl('');
       this.showSuccess();
     }, error => {
+      if (error.status === 400) {
+        this.listError = error.error;
+
+      }
       this.showError();
     });
 
@@ -138,8 +144,42 @@ export class ServicesCreateComponent implements OnInit {
     return this.createForm.get('image');
   }
 
+
   reset() {
-    this.isImage = false;
-    this.urlImage = '';
+    this.serviceForm = this.createForm.value;
+    Swal.fire({
+      title: 'Are you sure to Reset?',
+      text: 'This action cannot be undone !',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#DD6B55',
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+      allowOutsideClick: false
+    }).then((result) => {
+      if (result.value) {
+        this.isImage = false;
+        this.urlImage = '';
+        this.getInit();
+      }
+    });
+  }
+
+  back() {
+    this.serviceForm = this.createForm.value;
+    Swal.fire({
+      title: 'Are you sure back to home ?',
+      text: 'Changes will not be saved !',
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#DD6B55',
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+      allowOutsideClick: false
+    }).then((result) => {
+      if (result.value) {
+        this.router.navigateByUrl('');
+      }
+    });
   }
 }
