@@ -22,20 +22,10 @@ export class GameService {
     return this.http.get<Game[]>(this.API_TOP_GAME);
   }
 
-  // getAllGame(): Observable<any> {
-  //   return this.http.get<any>(this.API_GAME);
-  // }
-
   searchGame(page: number, name: string, gameType: string): Observable<any> {
     return this.http.get<any>(this.API_GAME + '/search' + '?page=' + page + '&name=' + name
       + '&gameType=' + gameType);
   }
-  // getAllComputerPage(page: number): Observable<any> {
-  //   return this.httpClient.get<any>(this.API_URL_COMPUTER_PAGE + '?page=' + page);
-  // }
-//   getAllGame(name: string, gameType: string): Observable<Game[]> {
-//     return this.http.get<Game[]>(this.API_GAME + '?name=' + name + '&' + 'gameType=' + gameType);
-//   }
 
   deleteGame(id: number): Observable<any> {
     // @ts-ignore

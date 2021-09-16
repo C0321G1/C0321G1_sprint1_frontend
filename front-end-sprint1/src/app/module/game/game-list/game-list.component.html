@@ -83,7 +83,8 @@
   </h3>
 
   <div class="container">
-    <form class=" pb-2" [formGroup]="gameSearch" (ngSubmit)="searchGame(0)">
+<!--    Tìm kiếm theo tên game và thể loại game-->
+    <form class=" pb-2" [formGroup]="gameSearch" (ngSubmit)="searchGame(0); setPage()">
       <div class="form-row">
         <div class="form-group col-12 col-md-4 col-sm-6 col-lg-3">
           <label for="exampleInputEmail1" class="mr-5 text-light">Game:</label>
@@ -95,6 +96,7 @@
         <div class="form-group col-12 col-md-4 col-sm-6 col-lg-3">
           <label for="exampleFormControlSelect21" class="text-light">Game type:</label>
           <select formControlName="gameType" class="form-control" style="width: 200px" id="exampleFormControlSelect21">
+            <option value="" selected>--Choose--</option>
             <option *ngFor="let gameType of gameTypes" value="{{gameType.name}}">{{gameType.name}}</option>
           </select>
         </div>
@@ -111,33 +113,36 @@
       </div>
     </form>
 
+<!--    Hiển thị list game-->
     <div class="row ">
       <div class="show card col-md-3 col-sm-6 col-12 bg-dark mb-3 thumbnail" style="width: 18rem;"
            *ngFor="let game of games">
-        <a class="detailButton position-relative " href="#" role="button" data-toggle="modal"
-           data-target="#detailModal">
+        <a class="detailButton position-relative " href="#" role="button">
           <img src="{{game.image}}" class="card-img-top" alt="...">
           <div class="overlay">
             <div class="text">
-              <button class="btn mt-3 btn-warning mr-3">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+              <button class="btn btn-warning" (click)="detail(game.gameId)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                     class="bi bi-eye-fill" viewBox="0 0 16 16">
                   <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
-                  <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+                  <path
+                    d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
                 </svg>
               </button>
-              <button class="btn mt-3 btn-danger mr-3">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-youtube" viewBox="0 0 16 16">
-                <path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.007 2.007 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.007 2.007 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31.4 31.4 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.007 2.007 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A99.788 99.788 0 0 1 7.858 2h.193zM6.4 5.209v4.818l4.157-2.408L6.4 5.209z"/>
-              </svg>
+              <button class="btn btn-danger ml-2" (click)="trailer(game.gameId)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-youtube"
+                     viewBox="0 0 16 16">
+                  <path
+                    d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.007 2.007 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.007 2.007 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31.4 31.4 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.007 2.007 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A99.788 99.788 0 0 1 7.858 2h.193zM6.4 5.209v4.818l4.157-2.408L6.4 5.209z"/>
+                </svg>
               </button>
             </div>
           </div>
         </a>
         <div class="card-body">
           <h5 class="card-title text-light">{{game.name}}</h5>
-          <p class="card-text text-light">Thể loại: {{game.gameType.name}}</p>
-          <!--          <p class="card-text text-light">{{game.content}}</p>-->
-          <p class="card-text text-light" [innerHTML]="game.content"></p>
+          <p class="card-text text-light">Game type: {{game.gameType.name}}</p>
+          <p class="card-text text-light">Gaming: {{game.gaming}}<span> lượt chơi</span></p>
           <button class="btn mt-3 btn-warning mr-2" [routerLink]="['/game-edit', game.gameId]">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi
                           bi-pencil-square" viewBox="0 0 16 16">
@@ -180,13 +185,14 @@
       </div>
       <div class="float-right mt-3 d-inline-block">
         <ul class="pagination ">
-          <li class="page-item mr-1"><input type="text" style="width: 50px; height: 40px" [(ngModel)]="searchPageInput"
+          <li class="page-item mr-1"><input type="number" min="1" max="{{this.totalPage}}"
+                                            style="width: 50px; height: 40px" [(ngModel)]="searchPageInput"
                                             (change)="searchPage()"></li>
           <li class="page-item "><a class="page-link bg-dark text-warning" (click)="firstPage()">First</a></li>
           <li class="page-item "><a class="page-link bg-dark text-warning" (click)="previousPage()">Previous</a></li>
-          <li class="page-item"><a class="page-link bg-dark text-warning">{{this.p + 1}}</a></li>
+          <li class="page-item"><a class="page-link bg-dark text-warning">{{this.page + 1}}</a></li>
           <li class="page-item"><p class="page-link bg-dark text-warning">/</p></li>
-          <li class="page-item"><a class="page-link bg-dark text-warning">{{this.ps.length}}</a></li>
+          <li class="page-item"><a class="page-link bg-dark text-warning">{{this.totalPage}}</a></li>
           <li class="page-item"><a class="page-link bg-dark text-warning" (click)="nextPage()">Next</a></li>
           <li class="page-item "><a class="page-link bg-dark text-warning" (click)="lastPage()">Last</a></li>
         </ul>
@@ -194,38 +200,4 @@
     </div>
   </div>
 </div>
-
-
-<!--Modal hien thi trailer-->
-<div class="modal fade fontChu" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Trailer
-          <input readonly style="outline: none; border: none;" type="text" id="userName"></h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <!--      <form action="/delete" method="get">-->
-      <!--        <input type="hidden" name="customerIdDelete" value="" id="customerIdDelete">-->
-      <!--        <div class="modal-body">-->
-      <!--          <div class="row">-->
-      <!--            <div class="col-12">-->
-      <iframe width="100%" src="https://www.youtube.com/embed/hU8oGKzVAmQ"
-              title="YouTube video player" frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen></iframe>
-      <!--            </div>-->
-      <!--          </div>-->
-      <!--        </div>-->
-      <!--        <div class="modal-footer">-->
-      <!--          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
-      <!--        </div>-->
-      <!--      </form>-->
-    </div>
-  </div>
-</div>
 </body>
-
