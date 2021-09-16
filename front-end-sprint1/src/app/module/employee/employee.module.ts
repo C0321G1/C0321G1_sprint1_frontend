@@ -1,3 +1,4 @@
+
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ListEmployeeComponent} from './list-employee/list-employee.component';
@@ -8,12 +9,18 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {EmployeeRoutingModule} from './employee-routing.module';
 import {RouterModule} from '@angular/router';
 import {BrowserModule} from '@angular/platform-browser';
+import {CreateEmployeeComponent} from './create-employee/create-employee.component';
+import {EditEmployeeComponent} from './edit-employee/edit-employee.component';
+import {AngularFireModule} from '@angular/fire';
+import {environment} from '../../../environments/environment';
 
 
 @NgModule({
-  declarations: [ListEmployeeComponent],
+  declarations: [ListEmployeeComponent, CreateEmployeeComponent, EditEmployeeComponent],
   exports: [
-    ListEmployeeComponent
+    ListEmployeeComponent,
+    CreateEmployeeComponent,
+    EditEmployeeComponent
   ],
   imports: [
     CommonModule,
@@ -24,7 +31,8 @@ import {BrowserModule} from '@angular/platform-browser';
     BrowserAnimationsModule,
     RouterModule,
     BrowserModule,
-    EmployeeRoutingModule
+    EmployeeRoutingModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig)
   ]
 })
 export class EmployeeModule { }
