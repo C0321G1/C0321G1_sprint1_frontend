@@ -8,13 +8,23 @@ import {Game} from '../../model/game/game';
 })
 export class GameService {
   public API_GAME = 'http://localhost:8080/game/api';
+  public API_TOP_GAME = 'http://localhost:8080/game/api/top';
 
   constructor(private http: HttpClient) {
   }
 
 // Creator: Thúy
-  getAllGame(name: string, gameType: string): Observable<Game[]> {
-    return this.http.get<Game[]>(this.API_GAME + '?name=' + name + '&' + 'gameType=' + gameType);
+  getAllGamePage(page: number): Observable<any> {
+    return this.http.get<any>(this.API_GAME + '?page=' + page);
+  }
+
+  getTopGame(): Observable<Game[]> {
+    return this.http.get<Game[]>(this.API_TOP_GAME);
+  }
+
+  searchGame(page: number, name: string, gameType: string): Observable<any> {
+    return this.http.get<any>(this.API_GAME + '/search' + '?page=' + page + '&name=' + name
+      + '&gameType=' + gameType);
   }
 
   deleteGame(id: number): Observable<any> {
@@ -31,7 +41,7 @@ export class GameService {
     return this.http.post<Game>(this.API_GAME, game);
   }
 
-  updateGame(id: number,game: Game): Observable<Game> {
-    return this.http.patch<Game>(this.API_GAME + '/' + id,game);
+  updateGame(id: number, game: Game): Observable<Game> {
+    return this.http.patch<Game>(this.API_GAME + '/' + id, game);
   }
 }

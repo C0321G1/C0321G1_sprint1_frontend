@@ -9,11 +9,13 @@ import {ToastrService} from 'ngx-toastr';
   styleUrls: ['./game-delete-dialog.component.css']
 })
 export class GameDeleteDialogComponent implements OnInit {
+  // Creator: Thúy
   public id: number;
   public name: string;
 
   constructor(public dialogRef: MatDialogRef<GameDeleteDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any,
-              public gameService: GameService, private toast: ToastrService) { }
+              public gameService: GameService, private toast: ToastrService) {
+  }
 
   ngOnInit(): void {
     this.id = this.data.game.gameId;
@@ -27,11 +29,9 @@ export class GameDeleteDialogComponent implements OnInit {
   delete() {
     this.gameService.deleteGame(this.id).subscribe(() => {
       this.dialogRef.close();
-      this.alert();
+      this.toast.success('Delete game successfully!', 'Delete game');
+    }, error => {
+      this.toast.success('Delete failed game.', 'Delete game');
     });
-  }
-
-  alert() {
-    this.toast.success('Delete game successfully!!!', 'title');
   }
 }
