@@ -27,7 +27,7 @@
 
 .body {
   background-image: url("../../../../assets/image/bg5.png");
-  height: 100%;
+  height: 100vh;
   background-size: cover;
   background-repeat: inherit;
   font-size: 18px;
