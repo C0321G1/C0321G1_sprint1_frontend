@@ -161,8 +161,8 @@ export class ComputerListComponent implements OnInit {
         if (result){
           this.listComputerId = [];
           this.listComputerCode = [];
+          this.ngOnInit();
         }
-        this.ngOnInit();
       });
     }
   }
