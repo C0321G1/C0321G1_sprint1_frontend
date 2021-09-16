@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
 import {AppComponent} from '../../../app.component';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
@@ -27,7 +27,11 @@ export class GameCreateComponent implements OnInit {
   public isImage = false;
   listError: any = '';
   public game: Game;
+  @ViewChild('nameinput') private elementRef: ElementRef;
 
+  public ngAfterViewInit(): void {
+    this.elementRef.nativeElement.focus();
+  }
   constructor(@Inject(AngularFireStorage) private storage: AngularFireStorage,
               private appComponent: AppComponent,
               private gameService: GameService,
@@ -84,12 +88,10 @@ export class GameCreateComponent implements OnInit {
   save() {
     if (this.gameForm.valid) {
       this.gameForm.value.image = this.image;
-      console.log(this.gameForm.value.image);
       this.gameService.saveGame(this.gameForm.value).subscribe(data => {
         this.router.navigateByUrl('');
         this.toastr.success('Thanks!', 'Create new game successfully !');
       }, error => {
-        console.log(error);
         if (error.status === 400) {
           this.listError = error.error;
         }
@@ -130,7 +132,6 @@ export class GameCreateComponent implements OnInit {
         this.isImage = false;
         this.image = '';
         this.initfrom();
-        console.log(this.game);
       }
     });
   }
