@@ -1,4 +1,4 @@
 export interface Province {
   provinceId: number;
-  provinceName: string;
+  name: string;
 }

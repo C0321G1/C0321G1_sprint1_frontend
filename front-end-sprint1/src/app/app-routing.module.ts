@@ -7,9 +7,12 @@ const routes: Routes = [
     loadChildren: () => import('./module/service/service.module').then(module => module.ServiceModule)
 
 const routes: Routes = [
+  {path: 'login',
+  loadChildren: () => import('./module/account/account.module').then(module => module.AccountModule)
+  },
   {
-    path: 'statistic',
-    loadChildren: () => import ('./module/statistic/statistic.module').then(value => value.StatisticModule)
+    path: 'guest-homepage',
+    loadChildren:() => import ('./module/client/client.module').then(module => module.ClientModule)
   }
 ];
 
