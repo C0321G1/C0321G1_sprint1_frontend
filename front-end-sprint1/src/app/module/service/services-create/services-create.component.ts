@@ -1,4 +1,4 @@
-import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ServiceService} from '../../../service/service/service.service';
 import {ToastrService} from 'ngx-toastr';
@@ -30,13 +30,6 @@ export class ServicesCreateComponent implements OnInit {
   page: number;
   name: string;
   listError: any = '';
-
-  @ViewChild('nameinput') private elementRef: ElementRef;
-
-  // tslint:disable-next-line:use-lifecycle-interface
-  public ngAfterViewInit(): void {
-    this.elementRef.nativeElement.focus();
-  }
 
   constructor(private serviceService: ServiceService,
               private toast: ToastrService,
@@ -106,7 +99,7 @@ export class ServicesCreateComponent implements OnInit {
       imageUrl: '../../../../../assets/image/spin.gif',
       imageWidth: '100px',
       showConfirmButton: false,
-      allowOutsideClick: false,
+      allowOutsideClick: false
     });
     const nameImg = this.getCurrentDateTime() + this.selectedImage?.name;
     const fileRef = this.storage.ref(nameImg);
