@@ -1,17 +1,17 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {AppComponent} from '../../../app.component';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {GameType} from "../../../model/game/game-type";
-import {GameService} from "../../../service/game/game.service";
-import {GameTypeService} from "../../../service/game/gameType/game-type.service";
-import {Router} from "@angular/router";
-import {ToastrService} from "ngx-toastr";
-import {AngularFireStorage} from "@angular/fire/storage";
-import {finalize} from "rxjs/operators";
-import {formatDate} from "@angular/common";
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {GameType} from '../../../model/game/game-type';
+import {GameService} from '../../../service/game/game.service';
+import {GameTypeService} from '../../../service/game/gameType/game-type.service';
+import {Router} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
+import {AngularFireStorage} from '@angular/fire/storage';
+import {finalize} from 'rxjs/operators';
+import {formatDate} from '@angular/common';
 import Swal from 'sweetalert2';
-import {Game} from "../../../model/game/game";
+import {Game} from '../../../model/game/game';
 
 @Component({
   selector: 'app-game-create',
@@ -90,7 +90,7 @@ export class GameCreateComponent implements OnInit {
         this.toastr.success('Thanks!', 'Create new game successfully !');
       }, error => {
         console.log(error);
-        if(error.status === 400){
+        if (error.status === 400) {
           this.listError = error.error;
         }
         this.toastr.error('Warning!', 'Create new game fail !');
@@ -128,11 +128,11 @@ export class GameCreateComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this.isImage = false;
-        this.image = "";
+        this.image = '';
         this.initfrom();
         console.log(this.game);
       }
-    })
+    });
   }
 
   back() {
@@ -150,7 +150,6 @@ export class GameCreateComponent implements OnInit {
       if (result.value) {
         this.router.navigateByUrl('');
       }
-    })
+    });
   }
-
 }

@@ -1,18 +1,18 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {GameType} from "../../../model/game/game-type";
-import {AppComponent} from "../../../app.component";
-import {GameService} from "../../../service/game/game.service";
-import {GameTypeService} from "../../../service/game/gameType/game-type.service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {ToastrService} from "ngx-toastr";
-import {AngularFireStorage} from "@angular/fire/storage";
-import {formatDate} from "@angular/common";
-import Swal from "sweetalert2";
-import {finalize} from "rxjs/operators";
-import {MatDialog} from "@angular/material/dialog";
-import {Game} from "../../../model/game/game";
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {GameType} from '../../../model/game/game-type';
+import {AppComponent} from '../../../app.component';
+import {GameService} from '../../../service/game/game.service';
+import {GameTypeService} from '../../../service/game/gameType/game-type.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
+import {AngularFireStorage} from '@angular/fire/storage';
+import {formatDate} from '@angular/common';
+import Swal from 'sweetalert2';
+import {finalize} from 'rxjs/operators';
+import {MatDialog} from '@angular/material/dialog';
+import {Game} from '../../../model/game/game';
 
 @Component({
   selector: 'app-game-edit',
@@ -147,7 +147,7 @@ export class GameEditComponent implements OnInit {
         console.log(this.game);
         console.log(this.gameForm.value);
       }
-    })
+    });
   }
 
   compareFn(c1: any, c2: any): boolean {
@@ -155,7 +155,7 @@ export class GameEditComponent implements OnInit {
   }
 
   back() {
-    console.log("back1");
+    console.log('back1');
     this.game = this.gameForm.value;
     Swal.fire({
       title: 'Are you sure back to Home?',
@@ -174,10 +174,10 @@ export class GameEditComponent implements OnInit {
         console.log(this.game);
         console.log(this.gameForm.value);
       }
-    })
+    });
   }
 
-  toastrEdit(){
+  toastrEdit() {
     this.toastr.success('Thanks!', 'Edit game successfully !');
   }
 }
