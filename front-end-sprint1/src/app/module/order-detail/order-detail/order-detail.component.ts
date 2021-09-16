@@ -5,6 +5,8 @@ import {Router} from '@angular/router';
 import {OrderDetail} from '../../../model/order/order-detail';
 import {OrderDetailService} from '../../../service/order-detail/order-detail.service';
 import {Order} from '../../../model/order/order';
+import {OrderService} from '../../../service/order/order.service';
+import {Customer} from '../../../model/customer/customer';
 
 @Component({
   selector: 'app-order-detail',
@@ -12,15 +14,23 @@ import {Order} from '../../../model/order/order';
   styleUrls: ['./order-detail.component.css']
 })
 export class OrderDetailComponent implements OnInit {
+  private userName = 'Vu';
   createForm: FormGroup;
   services: Services[];
   orders: Order[];
   OrderObj: OrderDetail = new OrderDetail();
   orderList: OrderDetail[];
-  public  changeType ;
+  customers: Customer;
+  public changeType;
+
   constructor(private formBuilder: FormBuilder,
               private  router: Router,
-              private orderDetailService: OrderDetailService) {
+              private orderDetailService: OrderDetailService,
+              private orderService: OrderService,
+              private  accountService: AcountServcies) {
+    this.accountService.findByUserName(this.userName).subscribe(data => {
+      this.customers = data;
+    });
   }
 
   ngOnInit(): void {
@@ -49,18 +59,22 @@ export class OrderDetailComponent implements OnInit {
       prices: ['', [Validators.required]]
     });
   }
-createOrder() {
+
+  createOrder() {
     if (this.createForm.valid) {
       this.OrderObj = Object.assign({}, this.createForm.value);
       this.OrderObj.totalPrices = this.OrderObj.prices * this.OrderObj.quantity;
     }
-    this.orderDetailService.createOrderDetail(this.OrderObj).subscribe(data => {
-    }, error => {
-      console.log('Loi create' + error);
-    });
+    this.orderList.push(this.OrderObj);
   }
 
   Finish() {
+    let order = new Order();
+    order.customer = this.customers;
+    this.orderService.createOrder(order).subscribe(data => {
+      order = data;
+      this.orderDetailService.createOrderDetail(this.orderList, order.orderId).subscribe();
+    });
     this.router.navigateByUrl('/list');
   }
 }

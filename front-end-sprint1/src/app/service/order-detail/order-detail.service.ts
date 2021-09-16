@@ -25,7 +25,7 @@ export class OrderDetailService {
     return this.http.get<Order[]>(this.API_URL_ORDER);
   }
 
-  createOrderDetail(orderDetail: OrderDetail): Observable<OrderDetail> {
-    return this.http.post<OrderDetail>(this.API_URL_ORDER_DETAIL + '/create-detail', orderDetail);
+  createOrderDetail(orderDetail: OrderDetail[], id: number): Observable<OrderDetail> {
+    return this.http.post<OrderDetail>(this.API_URL_ORDER_DETAIL + '/create-detail/' + id, orderDetail);
   }
 }
