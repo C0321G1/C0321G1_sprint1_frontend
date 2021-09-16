@@ -42,21 +42,21 @@
   </h3>
   <div class="row d-flex justify-content-center pr-5 pl-5">
     <div class="zoom card bg-dark text-white col-4 mt-5">
-      <img src="{{top2}}" class="imgz card-img img-thumbnail" style="position: relative; z-index: 1;width: 100%;height: 100%"
+      <img src="{{top2}}" class="card-img img-thumbnail" style="position: relative; z-index: 1;width: 100%;height: 100%"
            alt="...">
       <img class="imgrp rounded-circle"
            style=" position: absolute; z-index: 1; top: -45px; left: -10%; width: 35%"
            src="assets/image/thuy/hc2.png">
     </div>
     <div class="zoom card bg-dark text-white col-4 mb-5">
-      <img src="{{top1}}" class="imgz card-img img-thumbnail" style="position: relative; z-index: 1;width: 100%;height: 100%"
+      <img src="{{top1}}" class="card-img img-thumbnail" style="position: relative; z-index: 1;width: 100%;height: 100%"
            alt="...">
       <img class="imgrp rounded-circle"
            style=" position: absolute; z-index: 1; top: -45px; left: -10%; width: 35%"
            src="assets/image/thuy/hc1.png">
     </div>
     <div class="zoom card bg-dark text-white col-4 mt-5">
-      <img src="{{top3}}" class="imgz card-img img-thumbnail"
+      <img src="{{top3}}" class="card-img img-thumbnail"
            style="position: relative; z-index: 1;width: 100%;height: 100%"
            alt="...">
       <img class="imgrp rounded-circle" style="position: absolute; z-index: 1; top: -45px; left: -10%; width: 35%"
@@ -152,7 +152,6 @@
         <div class="card-body">
           <h5 class="card-title text-light">{{game.name}}</h5>
           <p class="card-text text-light">Game type: {{game.gameType.name}}</p>
-          <p class="card-text text-light">Gaming: {{game.gaming}}<span> lượt chơi</span></p>
           <button class="btn mt-3 btn-warning mr-2" [routerLink]="['/game-edit', game.gameId]">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi
                           bi-pencil-square" viewBox="0 0 16 16">

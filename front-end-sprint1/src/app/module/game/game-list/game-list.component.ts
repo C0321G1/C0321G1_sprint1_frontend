@@ -82,7 +82,7 @@ export class GameListComponent implements OnInit {
     this.gameService.getById(id).subscribe(data => {
       const dialogRef = this.dialog.open(GameDetailComponent, {
         width: '500px',
-        height: '400px',
+        height: '450px',
         data: {game: data},
         disableClose: true
       });
