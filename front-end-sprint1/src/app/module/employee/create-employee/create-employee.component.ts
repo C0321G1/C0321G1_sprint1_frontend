@@ -13,7 +13,8 @@ import {AngularFireStorage} from '@angular/fire/storage';
 import {formatDate} from '@angular/common';
 import {finalize} from 'rxjs/operators';
 import {ToastrService} from 'ngx-toastr';
-import {Address} from '../../../model/address/address';
+import Swal from 'sweetalert2';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-create-employee',
@@ -38,7 +39,17 @@ export class CreateEmployeeComponent implements OnInit {
               private addressService: AddressService,
               private genderService: GenderService,
               private router: Router,
-              private toasts: ToastrService) {
+              private toasts: ToastrService,
+              private titleService: Title) {
+    this.titleService.setTitle('Create Employee');
+  }
+
+  ngOnInit(): void {
+    this.getPositionList();
+    this.getGenderList();
+    this.getProvinceList();
+    this.getDistrictList();
+    this.getCommuneList();
     this.employeeForm = new FormGroup({
       code: new FormControl('', [Validators.required, Validators.pattern('^EMP-\\d{4}$')]),
       fullName: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(50)]),
@@ -58,17 +69,10 @@ export class CreateEmployeeComponent implements OnInit {
       image: new FormControl(''),
       account: new FormGroup({
         username: new FormControl(''),
-        password: new FormControl('', [Validators.required, Validators.pattern('abc')])
+        password: new FormControl('', [Validators.required, Validators.pattern('[A-Za-z0-9]{6,}')]),
+        confirmPassword: new FormControl('')
       })
     });
-  }
-
-  ngOnInit(): void {
-    this.getPositionList();
-    this.getGenderList();
-    this.getProvinceList();
-    this.getDistrictList();
-    this.getCommuneList();
   }
 
   getPositionList() {
@@ -105,8 +109,12 @@ export class CreateEmployeeComponent implements OnInit {
     this.employeeForm.value.account.username = this.employeeForm.value.email;
     console.log(this.employeeForm.value);
     this.employeeService.save(this.employeeForm.value).subscribe(() => {
-      this.isImage = false;
-      this.toasts.success('Create new employee successfully !');
+      this.router.navigateByUrl('/employee/list');
+      this.toasts.success('Create new employee successfully !', 'Notify');
+    }, error => {
+      if (error.status === 406) {
+        this.toasts.error('Email already used, please input again email', 'Notify');
+      }
     });
   }
 
@@ -133,7 +141,6 @@ export class CreateEmployeeComponent implements OnInit {
     if (newPassword !== confirmPassword) {
       return this.msgConfirmPass = 'New password not match with confirm password';
     } else {
-      // this.employeeForm.value.account.password = confirmPassword;
       return  this.msgConfirmPass = '';
     }
   }
@@ -160,5 +167,40 @@ export class CreateEmployeeComponent implements OnInit {
       return {inValidDate: true};
     }
     return null;
+  }
+
+  resetCreateForm() {
+    Swal.fire({
+      title: 'Are you sure clear to information entered ?',
+      text: 'The task cannot be undone !',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#de992a',
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+      allowOutsideClick: false
+    }).then((result) => {
+      if (result.value) {
+        this.isImage = false;
+        this.ngOnInit();
+      }
+    });
+  }
+
+  backEmployeeList() {
+    Swal.fire({
+      title: 'Are you sure back to employee list ?',
+      text: 'Changes will not be saved !',
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#de992a',
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+      allowOutsideClick: false
+    }).then((result) => {
+      if (result.value) {
+        this.router.navigateByUrl('/employee/list');
+      }
+    });
   }
 }

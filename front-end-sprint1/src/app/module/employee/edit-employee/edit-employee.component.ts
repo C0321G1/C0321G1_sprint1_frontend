@@ -13,6 +13,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {formatDate} from '@angular/common';
 import {finalize} from 'rxjs/operators';
+import Swal from 'sweetalert2';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-edit-employee',
@@ -29,9 +31,10 @@ export class EditEmployeeComponent implements OnInit {
   communeList: Commune[] = [];
   image: string;
   selectedImage: any;
-  isImage = false;
+  isImage = true;
   msgConfirmPass: string;
   id: number;
+  valueConfirmPass: string;
 
   constructor(@Inject(AngularFireStorage) private storage: AngularFireStorage,
               private employeeService: EmployeeService,
@@ -39,7 +42,9 @@ export class EditEmployeeComponent implements OnInit {
               private genderService: GenderService,
               private activatedRoute: ActivatedRoute,
               private router: Router,
-              private toasts: ToastrService) {
+              private toasts: ToastrService,
+              private titleService: Title ) {
+    this.titleService.setTitle('Edit Employee');
     this.id = Number(this.activatedRoute.snapshot.params.id);
     this.employeeForm = new FormGroup({
       employeeId: new FormControl(''),
@@ -54,15 +59,19 @@ export class EditEmployeeComponent implements OnInit {
       level: new FormControl('', [Validators.required, this.checkLevel]),
       yearOfExp: new FormControl('', [Validators.required, this.checkYearOfExp]),
       address: new FormGroup({
+        addressId: new FormControl(''),
         province: new FormControl('', [Validators.required]),
         district: new FormControl('', [Validators.required]),
         commune: new FormControl('', [Validators.required])
       }),
       image: new FormControl(''),
       account: new FormGroup({
+        accountId: new FormControl(),
         username: new FormControl(''),
-        password: new FormControl('', [Validators.required, Validators.pattern('abc')])
-      })
+        password: new FormControl('', [Validators.required, Validators.pattern('[A-Za-z0-9]{6,}')]),
+        confirmPassword: new FormControl('')
+      }),
+      flagDel: new FormControl()
     });
   }
 
@@ -77,6 +86,8 @@ export class EditEmployeeComponent implements OnInit {
   getEmployee(id: number) {
     this.employeeService.findById(id).subscribe(data => {
       this.employeeForm.patchValue(data);
+      this.image = this.employeeForm.value.image;
+      this.valueConfirmPass = this.employeeForm.value.account.password;
     });
   }
 
@@ -115,8 +126,8 @@ export class EditEmployeeComponent implements OnInit {
     this.employeeForm.value.account.username = this.employeeForm.value.email;
     console.log(this.employeeForm.value);
     this.employeeService.edit(this.employeeForm.value).subscribe(() => {
-      this.isImage = false;
-      this.toasts.success('Edit employee successfully !');
+      this.router.navigateByUrl('/employee/list');
+      this.toasts.success('Edit employee successfully !', 'Notify');
     });
   }
 
@@ -133,7 +144,6 @@ export class EditEmployeeComponent implements OnInit {
         fileRef.getDownloadURL().subscribe((url) => {
           this.employeeForm.value.image = url;
           this.image = url;
-          this.isImage = true;
         });
       })
     ).subscribe();
@@ -143,7 +153,6 @@ export class EditEmployeeComponent implements OnInit {
     if (newPassword !== confirmPassword) {
       return this.msgConfirmPass = 'New password not match with confirm password';
     } else {
-      // this.employeeForm.value.account.password = confirmPassword;
       return  this.msgConfirmPass = '';
     }
   }
@@ -170,6 +179,40 @@ export class EditEmployeeComponent implements OnInit {
       return {inValidDate: true};
     }
     return null;
+  }
+
+  resetEditForm() {
+    Swal.fire({
+      title: 'Are you sure clear to information entered ?',
+      text: 'The task cannot be undone !',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#de992a',
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+      allowOutsideClick: false
+    }).then((result) => {
+      if (result.value) {
+        this.getEmployee(this.id);
+      }
+    });
+  }
+
+  backEmployeeList() {
+    Swal.fire({
+      title: 'Are you sure back to employee list ?',
+      text: 'Changes will not be saved !',
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#de992a',
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+      allowOutsideClick: false
+    }).then((result) => {
+      if (result.value) {
+        this.router.navigateByUrl('/employee/list');
+      }
+    });
   }
 
 }

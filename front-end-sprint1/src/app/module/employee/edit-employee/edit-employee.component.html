@@ -2,15 +2,14 @@
 <div style="background-image: url('assets/image/bg.jpg');background-size: cover;background-repeat: no-repeat;height: 100%">
   <div class="container py-5" style="border-radius: 5px">
     <div style="padding: 15px 10%; background: rgba(0, 0, 0, 0.5);">
-      <h2 style="text-align: center;color: #FFC312; font-family: Averta">Add New Employee</h2>
+      <h2 style="text-align: center;color: #FFC312; font-family: Averta">Edit Employee</h2>
       <hr>
       <form [formGroup]="employeeForm" (ngSubmit)="editEmployee()">
-        <input type="hidden" formControlName="employeeId">
         <div class="row mt-3">
           <div class="col-6">
             <label for="id" class="fontFamily">Employee ID</label>
             <span style="color: red">(*)</span>
-            <input readonly="readonly" type="text" class="form-control" id="id" formControlName="code">
+            <input readonly="readonly" type="text" class="form-control" id="id" formControlName="code" placeholder="Employee ID">
             <div class="fontError mt-1"
                  *ngIf="employeeForm.controls.code.hasError('required') &&
                  employeeForm.controls.code.touched">Please input employee id.</div>
@@ -22,7 +21,7 @@
           <div class="col-6">
             <label for="name" class="fontFamily">Full Name</label>
             <span style="color: red">(*)</span>
-            <input type="text" class="form-control" id="name" formControlName="fullName">
+            <input type="text" class="form-control" id="name" formControlName="fullName" placeholder="Full Name">
             <div class="fontError mt-1"
                  *ngIf="employeeForm.controls.fullName.hasError('required') &&
                  employeeForm.controls.fullName.touched">Please input employee name.</div>
@@ -80,12 +79,12 @@
             <label for="startWorkDate" class="fontFamily">Start Work Date</label>
             <span style="color: red">(*)</span>
             <input type="date" class="form-control" id="startWorkDate" formControlName="startWorkDate">
-            <div class="fontError mt-1"
+            <span class="fontError mt-1"
                  *ngIf="employeeForm.controls.startWorkDate.hasError('required') &&
-                 employeeForm.controls.startWorkDate.touched">Please choose start work date.</div>
-            <div class="fontError mt-1"
+                 employeeForm.controls.startWorkDate.touched">Please choose start work date, </span>
+            <span class="fontError mt-1"
                  *ngIf="employeeForm.controls.startWorkDate.hasError('inValidDate') &&
-                 employeeForm.controls.startWorkDate.touched">Please choose start work date, not past date.</div>
+                 employeeForm.controls.startWorkDate.dirty">Start work date not past date.</span>
           </div>
         </div>
 
@@ -93,7 +92,7 @@
           <div class="col-6">
             <label for="phone" class="fontFamily">Phone</label>
             <span style="color: red">(*)</span>
-            <input type="text" class="form-control" id="phone" formControlName="phone">
+            <input type="text" class="form-control" id="phone" formControlName="phone" placeholder="Phone">
             <div class="fontError mt-1"
                  *ngIf="employeeForm.controls.phone.hasError('required') &&
                  employeeForm.controls.phone.touched">Please input phone.</div>
@@ -104,7 +103,7 @@
           <div class="col-6">
             <label for="email" class="fontFamily">Email</label>
             <span style="color: red">(*)</span>
-            <input type="text" class="form-control" id="email" formControlName="email">
+            <input type="text" class="form-control" id="email" formControlName="email" placeholder="Email">
             <div class="fontError mt-1"
                  *ngIf="employeeForm.controls.email.hasError('required') &&
                  employeeForm.controls.email.touched">Please input email.</div>
@@ -158,18 +157,18 @@
             <div class="col-6">
               <label for="password" class="fontFamily">New Password</label>
               <span style="color: red">(*)</span>
-              <input #newPassword type="text" class="form-control" id="password" (change)="checkPassword(newPassword.value, confirmPassword.value)" formControlName="password">
+              <input #newPassword type="password" class="form-control" id="password" (change)="checkPassword(newPassword.value, confirmPassword.value)" formControlName="password" placeholder="New Password">
               <div class="fontError mt-1"
                    *ngIf="employeeForm.controls.account.get('password').hasError('required') &&
                  employeeForm.controls.account.touched">Please input new password.</div>
               <div class="fontError mt-1"
                    *ngIf="employeeForm.controls.account.get('password').hasError('pattern') &&
-                 employeeForm.controls.account.touched">Please input min 6 character, include uppercase, lowercase, numbers and special characters.</div>
+                 employeeForm.controls.account.touched">Please input min 6 character, include uppercase, lowercase, numbers.</div>
             </div>
             <div class="col-6">
               <label for="confirmPassword" class="fontFamily">Confirm Password</label>
               <span style="color: red">(*)</span>
-              <input #confirmPassword type="text" class="form-control" id="confirmPassword" (change)="checkPassword(newPassword.value, confirmPassword.value)">
+              <input #confirmPassword type="password" class="form-control" id="confirmPassword" value="{{valueConfirmPass}}" (change)="checkPassword(newPassword.value, confirmPassword.value)" placeholder="Confirm Password">
               <div class="fontError" *ngIf="msgConfirmPass">New password not match with confirm password</div>
             </div>
           </div>
@@ -179,10 +178,7 @@
           <div class="col-6">
             <label for="level" class="fontFamily">Level</label>
             <span style="color: red">(*)</span>
-            <input type="number" class="form-control" id="level" formControlName="level">
-            <div class="fontError mt-1"
-                 *ngIf="employeeForm.controls.level.hasError('required') &&
-                 employeeForm.controls.level.touched">Please input level.</div>
+            <input type="number" class="form-control" id="level" formControlName="level" placeholder="Level">
             <div class="fontError mt-1"
                  *ngIf="employeeForm.controls.level.hasError('invalidLevel') &&
                  employeeForm.controls.level.touched">Please input level > 0.</div>
@@ -190,10 +186,10 @@
           <div class="col-6">
             <label for="yearOfExp" class="fontFamily">Year Of Experiences</label>
             <span style="color: red">(*)</span>
-            <input type="number" class="form-control" id="yearOfExp" formControlName="yearOfExp">
+            <input type="number" class="form-control" id="yearOfExp" formControlName="yearOfExp" placeholder="Year Of Experiences">
             <div class="fontError mt-1"
                  *ngIf="employeeForm.controls.yearOfExp.hasError('required') &&
-                 employeeForm.controls.yearOfExp.touched">Please input year of experiences</div>
+                 employeeForm.controls.yearOfExp.touched">Please input year of experiences >=0.</div>
             <div class="fontError mt-1"
                  *ngIf="employeeForm.controls.yearOfExp.hasError('invalidYearOfExp') &&
                  employeeForm.controls.yearOfExp.touched">Please input year of experiences >=0.</div>
@@ -217,17 +213,17 @@
         </div>
         <hr>
         <div class="text-center">
-          <button class="btn btn-warning fontButton">
+          <a class="btn btn-warning fontButton" (click)="backEmployeeList()">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-left" viewBox="0 0 16 16">
               <path fill-rule="evenodd" d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z"/>
             </svg>Back
-          </button>
-          <button class="btn btn-secondary mx-3 fontButton">
+          </a>
+          <a class="btn btn-secondary mx-3 fontButton" (click)="resetEditForm()">
             <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
               <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
               <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
             </svg>Reset
-          </button>
+          </a>
           <button [disabled]="employeeForm.invalid" type="submit" class="btn btn-warning fontButton">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bibi-pencil-square" viewBox="0 0 16 16">
               <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.752.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.50 0 0.196-.12l6.813-6.814z"/>
