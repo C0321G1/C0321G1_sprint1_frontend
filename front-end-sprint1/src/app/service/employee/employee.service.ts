@@ -9,6 +9,7 @@ const API_POSITION = 'http://localhost:8080/position';
 const API_PROVINCE = 'http://localhost:8080/province';
 const API_EMPLOYEE = 'http://localhost:8080/employee';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -33,10 +34,10 @@ export class EmployeeService {
 
   // creator: linhnv
   edit(employee: any): Observable<Employee> {
-    return this.http.patch<Employee>(API_EMPLOYEE, employee);
+    return this.http.put<Employee>(API_EMPLOYEE, employee);
   }
 
-    // khue create method get list position
+  // khue create method get list position
     getAllPosition(): Observable<Position[]> {
       return this.http.get<Position[]>(API_POSITION);
     }
