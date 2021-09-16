@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
         if (this.roles == "ROLE_USER") {
           this.router.navigateByUrl('/guest-homepage');
         }
-        
+
         console.log(data)
       },
       err => {
