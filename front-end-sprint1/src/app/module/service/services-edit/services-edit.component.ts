@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Unit} from '../../../model/service/unit';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -27,6 +27,12 @@ export class ServicesEditComponent implements OnInit {
   listError: any = '';
   serviceForm: any;
 
+  @ViewChild('nameinput') private elementRef: ElementRef;
+
+  // tslint:disable-next-line:use-lifecycle-interface
+  public ngAfterViewInit(): void {
+    this.elementRef.nativeElement.focus();
+  }
 
   constructor(private service: ServiceService,
               private activatedRoute: ActivatedRoute,
