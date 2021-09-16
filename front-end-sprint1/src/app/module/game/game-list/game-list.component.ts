@@ -9,6 +9,7 @@ import {FormControl, FormGroup} from '@angular/forms';
 import {ToastrService} from 'ngx-toastr';
 import {GameTrailerComponent} from '../game-trailer/game-trailer.component';
 import {GameDetailComponent} from '../game-detail/game-detail.component';
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-game-list',
@@ -32,7 +33,8 @@ export class GameListComponent implements OnInit {
   checkSearch: number;
 
   constructor(private gameService: GameService, private dialog: MatDialog, private gameTypeService: GameTypeService,
-              private toast: ToastrService) {
+              private toast: ToastrService, private titleService: Title) {
+    this.titleService.setTitle('C03 Gaming');
   }
 
   ngOnInit(): void {
