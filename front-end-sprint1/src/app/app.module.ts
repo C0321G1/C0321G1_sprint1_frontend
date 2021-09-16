@@ -4,6 +4,13 @@ import {NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {CustomerModule} from './module/customer/customer.module';
+import {ServiceModule} from './module/service/service.module';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {CommonModule} from '@angular/common';
+import {environment} from '../environments/environment';
+import {AngularFireModule} from '@angular/fire';
+import {AngularFireStorageModule} from '@angular/fire/storage';
+import {HttpClientModule} from '@angular/common/http';
 import {AccountModule} from './module/account/account.module';
 import {ComputerModule} from './module/computer/computer.module';
 import {EmployeeModule} from './module/employee/employee.module';
@@ -15,6 +22,7 @@ import {StatisticModule} from './module/statistic/statistic.module';
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,6 +31,12 @@ import {StatisticModule} from './module/statistic/statistic.module';
     BrowserModule,
     AppRoutingModule,
     CustomerModule,
+    HttpClientModule,
+    ServiceModule,
+    BrowserAnimationsModule,
+    CommonModule,
+    AngularFireStorageModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig)
     AccountModule,
     ComputerModule,
     EmployeeModule,
