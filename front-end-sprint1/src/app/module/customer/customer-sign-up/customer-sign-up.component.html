@@ -24,9 +24,13 @@
                  customerForm.controls.account.get('username').touched">Please input username
               </div>
               <div class="fontError mt-1"
-                   *ngIf="customerForm.controls.account.get('username').hasError('usernameExists')">Duplicate username. Please input
-                another
+                   *ngIf="customerForm.controls.account.get('username').hasError('pattern') &&
+                 customerForm.controls.account.get('username').touched">Please don't input special character
               </div>
+              <!--              <div class="fontError mt-1"-->
+              <!--                   *ngIf="customerForm.controls.account.get('username').hasError('usernameExists')">-->
+              <!--                Duplicate username. Please input another-->
+              <!--              </div>-->
             </div>
           </div>
 
@@ -37,6 +41,11 @@
                    *ngIf="customerForm.controls.account.get('password').hasError('required') &&
                  customerForm.controls.account.get('password').touched">Please input password
               </div>
+              <div class="fontError mt-1"
+                   *ngIf="customerForm.controls.account.get('password').hasError('pattern') &&
+                 customerForm.controls.account.get('password').touched">Password must have at least 1
+                special character , number and alphabet
+              </div>
             </div>
             <div class="col-6"><span class="fontFamily">Confirm Password<span style="color: red"
                                                                               class="asterisk-red">(*)</span></span>
@@ -45,7 +54,11 @@
                    *ngIf="customerForm.controls.account.get('confirmPassword').hasError('required') &&
                  customerForm.controls.account.get('confirmPassword').touched">Please input confirm password
               </div>
-
+              <div class="fontError mt-1"
+                   *ngIf="customerForm.controls.account.get('confirmPassword').hasError('pattern') &&
+                 customerForm.controls.account.get('confirmPassword').touched">Password must have at
+                least 1 special character , number and alphabet
+              </div>
               <div class="fontError mt-1"
                    *ngIf="customerForm.controls.account.hasError('invalidPassword') &&
                  customerForm.controls.account.get('password').touched&&
@@ -60,6 +73,10 @@
               <div class="fontError mt-1"
                    *ngIf="customerForm.controls.phone.hasError('required') &&
                  customerForm.controls.phone.touched">Please input phone
+              </div>
+              <div class="fontError mt-1"
+                   *ngIf="customerForm.controls.phone.hasError('pattern') &&
+                 customerForm.controls.phone.touched">Must have 10 -12 number
               </div>
             </div>
             <div class="col-4">
@@ -83,19 +100,19 @@
             <div class="row">
               <div class="col-4">
                 <select class="form-control" style="font-size: 18px" formControlName="province">
-                  <option selected value="">Choose province</option>
+                  <option selected value="null">Choose province</option>
                   <option *ngFor="let p of provinceList" [ngValue]="p">{{p.name}}</option>
                 </select>
               </div>
               <div class="col-4">
                 <select class="form-control" style="font-size: 18px" formControlName="district">
-                  <option selected value="">Choose district</option>
+                  <option selected value="null">Choose district</option>
                   <option *ngFor="let d of districtList" [ngValue]="d">{{d.name}}</option>
                 </select>
               </div>
               <div class="col-4">
                 <select class="form-control" style="font-size: 18px" formControlName="commune">
-                  <option selected value="">Choose commune</option>
+                  <option selected value="null">Choose commune</option>
                   <option *ngFor="let c of communeList" [ngValue]="c">{{c.name}}</option>
                 </select>
               </div>
