@@ -7,7 +7,6 @@ import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/form
 import {InputStatistic} from '../../../model/statistic/input-statistic';
 import {DatePipe} from '@angular/common';
 import {Chart, registerables} from 'chart.js';
-import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 
 Chart.register(...registerables);

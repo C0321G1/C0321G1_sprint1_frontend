@@ -1,4 +1,6 @@
-<div class="container my-5 content">
+<body style="background-image: url('../../../../assets/image/hinh-nen-da-dang-nhap.jpg')">
+
+<div class="container">
   <div class="row" style="font-family: Averta;">
     <div class="col-lg-4 col-sm-12 pr-5 " style="padding-right: 10px">
       <form [formGroup]="statisticForm" (ngSubmit)="onSubmit()">
@@ -73,11 +75,11 @@
       <div class="fontError" [hidden]="notError">Unable to connect to database or data empty!</div>
     </div>
 
-    <div class="col-lg-8 col-sm-12" style="padding: 30px">
-      <canvas style="background-color: white" id="myChart"></canvas>
+    <div class="col-lg-8 col-sm-12" style="padding: 30px" [hidden]="!notError">
+      <canvas style="background-color: white; padding-right: 20px" id="myChart"></canvas>
     </div>
   </div>
 </div>
-
+</body>
 
 
