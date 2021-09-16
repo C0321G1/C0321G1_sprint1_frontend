@@ -171,12 +171,14 @@ export class ListEmployeeComponent implements OnInit {
         this.searchEmpoyee(this.page);
       }
     }else {
-      this.toast.warning('Request to enter the number of pages in the list', 'massage search page');
-      if (this.flagSearch == 0){
-        console.log(page);
-        this.getAllEmployee(this.page);
-      }else {
-        this.searchEmpoyee(this.page);
+      if (page != -1){
+        this.toast.warning('Request to enter the number of pages in the list', 'massage search page');
+        if (this.flagSearch == 0){
+          console.log(page);
+          this.getAllEmployee(this.page);
+        }else {
+          this.searchEmpoyee(this.page);
+        }
       }
     }
   }
@@ -197,5 +199,4 @@ export class ListEmployeeComponent implements OnInit {
         this.toast.info('delete ' + this.nameDelete + 'failure', 'massage delete');
       });
   }
-
 }
