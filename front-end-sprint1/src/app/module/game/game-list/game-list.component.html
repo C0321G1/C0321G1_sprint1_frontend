@@ -115,10 +115,10 @@
 
 <!--    Hiển thị list game-->
     <div class="row ">
-      <div class="show card col-md-3 col-sm-6 col-12 bg-dark mb-3 thumbnail" style="width: 18rem;"
+      <div class="show card col-md-3 col-sm-6 col-6 bg-dark mb-3 thumbnail" style="width: 18rem;"
            *ngFor="let game of games">
         <a class="detailButton position-relative " href="#" role="button">
-          <img src="{{game.image}}" class="card-img-top" alt="...">
+          <img src="{{game.image}}" class="imageHeight card-img-top" alt="..." width="100%" height="150px">
           <div class="overlay">
             <div class="text">
               <button class="btn btn-warning" (click)="detail(game.gameId)">

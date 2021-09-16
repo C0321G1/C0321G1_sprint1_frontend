@@ -42,6 +42,18 @@
   }
 }
 
+@media only screen and (min-width: 400px) and (max-width: 860px) {
+  .imageHeight {
+    height: 100px;
+  }
+}
+
+@media only screen and (min-width: 200px) and (max-width: 400px) {
+  .imageHeight {
+    height: 50px;
+  }
+}
+
 .show {
   position: relative;
   width: 100%;

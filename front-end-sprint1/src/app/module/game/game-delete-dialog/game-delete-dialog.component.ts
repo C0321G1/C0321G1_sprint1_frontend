@@ -29,11 +29,9 @@ export class GameDeleteDialogComponent implements OnInit {
   delete() {
     this.gameService.deleteGame(this.id).subscribe(() => {
       this.dialogRef.close();
-      this.alert();
+      this.toast.success('Delete game successfully!', 'Delete game');
+    }, error => {
+      this.toast.success('Delete failed game.', 'Delete game');
     });
-  }
-
-  alert() {
-    this.toast.success('Delete game successfully!', 'title');
   }
 }

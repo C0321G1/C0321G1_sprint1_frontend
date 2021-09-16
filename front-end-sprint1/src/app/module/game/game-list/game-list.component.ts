@@ -105,6 +105,8 @@ export class GameListComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         this.ngOnInit();
       });
+    }, error => {
+      this.toast.success('Delete failed game.', 'Delete game');
     });
   }
 
