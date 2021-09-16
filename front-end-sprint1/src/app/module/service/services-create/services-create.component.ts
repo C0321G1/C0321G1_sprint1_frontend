@@ -25,7 +25,7 @@ export class ServicesCreateComponent implements OnInit {
   selectedImage: any = null;
   services: Services;
   urlImage: string;
-  require: any;
+  serviceForm: any;
   public isImage = false;
   page: number;
   name: string;
@@ -69,7 +69,7 @@ export class ServicesCreateComponent implements OnInit {
       id: new FormControl(),
       code: new FormControl(this.code),
       name: new FormControl('', Validators.required),
-      prices: new FormControl('', [Validators.required, Validators.min(1000)]),
+      prices: new FormControl('', [Validators.required, Validators.min(1000), Validators.pattern('^\\d+$')]),
       quantity: new FormControl('', [Validators.required, this.validateInterger]),
       unit: new FormControl('', Validators.required),
       image: new FormControl('', Validators.required)
@@ -77,6 +77,7 @@ export class ServicesCreateComponent implements OnInit {
   }
 
   create() {
+    this.createForm.value.image = this.urlImage;
     this.serviceService.create(this.createForm.value).subscribe(data => {
       console.log(this.createForm.value);
       this.router.navigateByUrl('');
@@ -143,8 +144,42 @@ export class ServicesCreateComponent implements OnInit {
     return this.createForm.get('image');
   }
 
+
   reset() {
-    this.isImage = false;
-    this.urlImage = '';
+    this.serviceForm = this.createForm.value;
+    Swal.fire({
+      title: 'Are you sure to Reset?',
+      text: 'This action cannot be undone !',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#DD6B55',
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+      allowOutsideClick: false
+    }).then((result) => {
+      if (result.value) {
+        this.isImage = false;
+        this.urlImage = '';
+        this.getInit();
+      }
+    });
+  }
+
+  back() {
+    this.serviceForm = this.createForm.value;
+    Swal.fire({
+      title: 'Are you sure back to home ?',
+      text: 'Changes will not be saved !',
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#DD6B55',
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+      allowOutsideClick: false
+    }).then((result) => {
+      if (result.value) {
+        this.router.navigateByUrl('');
+      }
+    });
   }
 }
