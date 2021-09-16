@@ -12,6 +12,7 @@ import {finalize} from 'rxjs/operators';
 import {formatDate} from '@angular/common';
 import Swal from 'sweetalert2';
 import {Game} from '../../../model/game/game';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-game-create',
@@ -32,11 +33,14 @@ export class GameCreateComponent implements OnInit {
   public ngAfterViewInit(): void {
     this.elementRef.nativeElement.focus();
   }
+
   constructor(@Inject(AngularFireStorage) private storage: AngularFireStorage,
               private appComponent: AppComponent,
               private gameService: GameService,
               private gameTypeService: GameTypeService,
-              public router: Router, private toastr: ToastrService) {
+              public router: Router, private toastr: ToastrService,
+              private titleService: Title) {
+    this.titleService.setTitle('Create game');
   }
 
   ngOnInit(): void {
