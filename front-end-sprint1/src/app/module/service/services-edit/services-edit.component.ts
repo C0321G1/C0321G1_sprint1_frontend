@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {ServiceService} from '../../../service/service/service.service';
 import Swal from 'sweetalert2';
+import Swal2 from 'sweetalert2';
 import {finalize} from 'rxjs/operators';
 import {formatDate} from '@angular/common';
 import {AngularFireStorage} from '@angular/fire/storage';
@@ -23,6 +24,8 @@ export class ServicesEditComponent implements OnInit {
   services: Services;
   urlImage: any;
   isImage = false;
+  listError: any = '';
+  serviceForm: any;
 
 
   constructor(private service: ServiceService,
@@ -48,6 +51,7 @@ export class ServicesEditComponent implements OnInit {
       this.unitList = data;
     });
   }
+
 // Khanh create
   initForm() {
     this.editForm = new FormGroup({
@@ -71,8 +75,8 @@ export class ServicesEditComponent implements OnInit {
 
   loadImg() {
     Swal.fire({
-      title: 'Đang gửi dữ liệu',
-      text: 'Vui lòng chờ ...',
+      title: 'Sending data',
+      text: 'Please wait ...',
       imageUrl: '../../../../../assets/image/spin.gif',
       imageWidth: '100px',
       showConfirmButton: false,
@@ -109,6 +113,9 @@ export class ServicesEditComponent implements OnInit {
           Swal.close();
       });
     }, e => {
+      if (e.status === 400) {
+        this.listError = e.error;
+      }
       this.showError();
     });
   }
@@ -126,14 +133,66 @@ export class ServicesEditComponent implements OnInit {
   }
 
   showSuccess() {
-    this.toast.success('Chỉnh sửa thành công !', 'Thông báo : ');
+    this.toast.success('Editing is successful !', 'Notify : ');
   }
 
   showError() {
-    this.toast.error('Chỉnh sửa thất bại !', 'Cảnh báo : ');
+    this.toast.error('Edit failed !', 'Warning: ');
   }
 
   get newsImageName() {
     return this.editForm.get('image');
   }
+
+  eedit($event: any) {
+    this.edit();
+  }
+
+  reset1() {
+    console.log('sdfsdfsd');
+    this.serviceForm = this.editForm.value;
+
+    Swal.fire({
+      title: 'Are you sure to Reset?',
+      text: 'This action cannot be undone !',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#DD6B55',
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+      allowOutsideClick: false
+    }).then((result) => {
+      if (result.value) {
+        this.isImage = false;
+        this.urlImage = '';
+        this.getService();
+
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        this.editForm.patchValue(this.serviceForm);
+        console.log(this.serviceForm);
+        console.log(this.editForm.value);
+      }
+    });
+  }
+
+  back() {
+    this.serviceForm = this.editForm.value;
+    Swal2.fire({
+      title: 'Are you sure back to home ?',
+      text: 'Changes will not be saved !',
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#DD6B55',
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+      allowOutsideClick: false
+    }).then((result) => {
+      if (result.value) {
+        this.route.navigateByUrl('');
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        this.editForm.patchValue(this.serviceForm);
+      }
+    });
+  }
+
 }

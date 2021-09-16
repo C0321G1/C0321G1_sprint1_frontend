@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Unit} from '../../model/service/unit';
 import {Services} from '../../model/service/services';
 
@@ -13,15 +13,18 @@ export class ServiceService {
   constructor(public http: HttpClient) {
 
   }
+
   //phap
-  getAllServices(name: string,page: number): Observable<any> {
-    return this.http.get<any>(this.API + '/services?name='+name+'&page='+page);
+  getAllServices(name: string, page: number): Observable<any> {
+    return this.http.get<any>(this.API + '/services?name=' + name + '&page=' + page);
   }
+
   //phap
-  searchNameCode( code: string ,name: string, prices: string, page: number): Observable<any> {
+  searchNameCode(code: string, name: string, prices: string, page: number): Observable<any> {
     return this.http.get<any>(this.API + '/services/searchNameCodePrices?code=' + code + '&name=' + name);
 
   }
+// Khanh code
   getAllUnit(): Observable<Unit[]> {
     return this.http.get<Unit[]>(this.API + '/units');
   }
@@ -30,7 +33,7 @@ export class ServiceService {
     // @ts-ignore
     return this.http.patch<>(this.API + '/services/delete/' + id);
   }
-
+// Khanh code
   findById(id: number) {
     return this.http.get<Services>(this.API + '/services' + '/' + id);
   }
