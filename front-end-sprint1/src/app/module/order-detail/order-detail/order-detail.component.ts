@@ -27,10 +27,11 @@ export class OrderDetailComponent implements OnInit {
               private  router: Router,
               private orderDetailService: OrderDetailService,
               private orderService: OrderService,
-              private  accountService: AcountServcies) {
-    this.accountService.findByUserName(this.userName).subscribe(data => {
-      this.customers = data;
-    });
+              //private  accountService: AcountServcies
+               ) {
+    // this.accountService.findByUserName(this.userName).subscribe(data => {
+    //   this.customers = data;
+    // });
   }
 
   ngOnInit(): void {
