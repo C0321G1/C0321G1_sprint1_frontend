@@ -95,7 +95,7 @@
           <thead>
           <tr class="text-center">
             <th scope="col">Employee ID</th>
-            <th scope="col">Full name</th>
+            <th scope="col" >Full name</th>
             <th scope="col">Gender</th>
             <th scope="col">Address</th>
             <th scope="col">Date of Birth</th>
@@ -110,17 +110,40 @@
           </thead>
           <tbody>
           <tr *ngFor="let e of listEmployee">
-            <td scope="row">{{e.code}}</td>
-            <td>{{e.fullName}}</td>
-            <td>{{e.gender.name}}</td>
-            <td>{{e.address.province.name}}</td>
-            <td>{{e.dateOfBirth}}</td>
-            <td>{{e.email}}</td>
-            <td>{{e.phone}}</td>
-            <td>{{e.position.name}}</td>
-            <td>{{e.startWorkDate}}</td>
-            <td>{{e.level}}</td>
-            <td>{{e.yearOfExp}}</td>
+            <td scope="row">
+              <div style="width:100px; overflow:hidden;">{{e.code}}</div>
+            </td>
+            <td>
+              <div style="width:150px; overflow:hidden;">
+                {{e.fullName}}
+              </div></td>
+            <td>
+              <div style="width:50px; overflow:hidden;">{{e.gender.name}}</div>
+            </td>
+            <td>
+              <div style="width:120px; overflow:hidden;">{{e.address.province.name}}</div>
+            </td>
+            <td>
+              <div style="width:120px; overflow:hidden;">{{e.dateOfBirth}}</div>
+            </td>
+            <td>
+              <div style="width:150px; overflow:hidden;">{{e.email}}</div>
+            </td>
+            <td class="text-right">
+              <div style="width:120px; overflow:hidden;">{{e.phone}}</div>
+            </td>
+            <td>
+              <div style="width:100px; overflow:hidden;">{{e.position.name}}</div>
+            </td>
+            <td>
+              <div style="width:120px; overflow:hidden;">{{e.startWorkDate}}</div>
+            </td>
+            <td class="text-right">
+              <div style="width:50px; overflow:hidden;">{{e.level}}</div>
+            </td>
+            <td class="text-right">
+              <div style="width:100px; overflow:hidden;">{{e.yearOfExp}}</div>
+            </td>
             <td class="text-center m-2">
               <button class="btn btn-warning m-2" style="color: #fff028" [routerLink]="['/employee/edit',e.employeeId]">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black"
@@ -155,7 +178,7 @@
             Add Employee
           </a>
         </div>
-        <div class="float-right">
+        <div class="float-right" *ngIf="listEmployee.length > 0">
           <ul class="pagination ">
             <li class="page-item ">
               <input min="1" max="{{totalPage}}" class="page-link bg-dark" type="number"
