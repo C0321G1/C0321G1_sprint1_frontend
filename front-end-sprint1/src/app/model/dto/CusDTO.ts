@@ -11,4 +11,5 @@ export interface CusDTO {
   customerStatusId: number;
   password: string;
   username: string;
+  flag:number;
 }

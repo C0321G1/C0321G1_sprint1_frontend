@@ -1,5 +1,5 @@
 import {Address} from '../address/address';
-import {CustomerStatus} from './customer-status';
+import {CustomerStatus} from './customerStatus';
 import {Gender} from './gender';
 
 export interface Customer {

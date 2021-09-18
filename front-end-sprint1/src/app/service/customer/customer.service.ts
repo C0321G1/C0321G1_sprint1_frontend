@@ -5,8 +5,9 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Province} from '../../model/address/province';
 import {District} from '../../model/address/district';
 import {Commune} from '../../model/address/commune';
-import {CustomerStatus} from '../../model/customer/customer-status';
+import {CustomerStatus} from '../../model/customer/customerStatus';
 import {CusDTO} from '../../model/dto/CusDTO';
+import {Customer} from '../../model/customer/customer';
 
 @Injectable({
   providedIn: 'root'
@@ -47,6 +48,15 @@ export class CustomerService {
   }
 
   saveCusDto(cusDTO: CusDTO): Observable<any> {
+    console.log(this.API_URL + '/create',cusDTO,this.httpOptions)
     return this.httpClient.post<any>(this.API_URL + '/create',cusDTO,this.httpOptions);
+  }
+
+  findByIdCustomer(id: number): Observable<any> {
+    return this.httpClient.get<any>(this.API_URL + '/'+id,this.httpOptions);
+  }
+
+  updateCusDto(cusDTO: CusDTO): Observable<any> {
+    return this.httpClient.post<any>(this.API_URL + '/edit',cusDTO,this.httpOptions);
   }
 }
