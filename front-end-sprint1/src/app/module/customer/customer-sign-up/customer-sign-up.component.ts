@@ -10,8 +10,6 @@ import {Commune} from '../../../model/address/commune';
 import {GenderService} from '../../../service/gender/gender.service';
 import {AddressService} from '../../../service/address/address.service';
 import {AccountService} from '../../../service/account/account.service';
-import {Account} from '../../../model/account/account';
-import {color} from 'chart.js/helpers';
 
 @Component({
   selector: 'app-customer-sign-up',
@@ -24,7 +22,6 @@ export class CustomerSignUpComponent implements OnInit {
   districtList: District[] = [];
   communeList: Commune[] = [];
   customerForm: FormGroup;
-  accountList: Account[];
   password: string;
 
   constructor(private customerService: CustomerService,
@@ -37,14 +34,11 @@ export class CustomerSignUpComponent implements OnInit {
     this.getProvinceList();
     this.getDistrictList();
     this.getCommuneList();
-    // this.getAccountList();
-
-
   }
 
   ngOnInit(): void {
     this.customerForm = new FormGroup({
-      fullName: new FormControl('', [Validators.required]),
+      fullName: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z]+$')]),
       account: new FormGroup({
         username: new FormControl('', [Validators.required,
           Validators.pattern('^[A-Za-z0-9 ]+$')]),
@@ -55,30 +49,31 @@ export class CustomerSignUpComponent implements OnInit {
       }, [this.checkConfirmPassword]),
       phone: new FormControl('', [Validators.required, Validators.pattern('\\d{10,12}')]),
       gender: new FormControl('', [Validators.required]),
-      dateOfBirth: new FormControl(''),
+      dateOfBirth: new FormControl('', [Validators.required, this.checkDateOfBirth]),
       address: new FormGroup({
-        province: new FormControl(null),
-        district: new FormControl(null),
-        commune: new FormControl(null)
+        province: new FormControl('', [Validators.required]),
+        district: new FormControl('', [Validators.required]),
+        commune: new FormControl('', [Validators.required])
       })
     });
   }
 
   // creator: vinhdn
   createCustomer() {
-    console.log(this.customerForm.value);
+    this.customerService.checkUsername(this.customerForm.value.account).subscribe(value => {
+    }, error => {
+      this.snackBar.open('Username is used, Please input another', 'Ok', {duration: 3000});
+    });
+
     this.customerService.save(this.customerForm.value).subscribe(value => {
       this.snackBar.open('Sign Up Complete', 'Ok', {duration: 3000});
     }, error => {
-      this.snackBar.open('Error, Please input again', 'Ok', {duration: 3000});
+      this.snackBar.open('System maintained, please connect to Admin !!!', 'Ok', {duration: 3000});
     });
   }
 
-  // creator: vinhdn
-  getAccountList() {
-    this.accountService.getAccountList().subscribe(data => {
-      this.accountList = data;
-    });
+  checkUsername() {
+
   }
 
   // creator: vinhdn
@@ -115,5 +110,13 @@ export class CustomerSignUpComponent implements OnInit {
       return {invalidPassword: true};
     }
     return null;
+  }
+
+  // creator: vinhdn
+  checkDateOfBirth(data: AbstractControl): any {
+    const dateOfBirth = data.value;
+    const birthOfYear = Number(dateOfBirth.substr(0, 4));
+    const currentYear = new Date().getFullYear();
+    return currentYear - birthOfYear >= 16 ? null : {invalidAge: true};
   }
 }
