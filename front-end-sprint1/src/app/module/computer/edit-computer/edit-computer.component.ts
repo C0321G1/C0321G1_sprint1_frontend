@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ComputerService} from "../../../service/computer/computer.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-edit-computer',
@@ -14,7 +15,9 @@ export class EditComputerComponent implements OnInit {
 
   constructor(private computerService: ComputerService,
               private activatedRoute: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private title: Title) {
+    this.title.setTitle('Computer Update');
     this.id = Number(activatedRoute.snapshot.params.id);
     computerService.getComputerById(this.id).subscribe(value => {
       this.formComputer.patchValue(value);
