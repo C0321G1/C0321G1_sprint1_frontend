@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {Services} from '../../model/service/services';
-import {HttpClient, HttpEvent, HttpHeaders} from '@angular/common/http';
+import {HttpClient,HttpHeaders} from '@angular/common/http';
 import {OrderDetail} from '../../model/order/order-detail';
 
 @Injectable({
@@ -22,11 +21,7 @@ export class OrderDetailService {
       'Access-Control-Allow-Credentials': 'true'
     };
   }
-
-  // createOrderDetail(orderDetail): Observable<HttpEvent<OrderDetail>> {
-  //   return this.http.post<OrderDetail>(this.API_URL_ORDER_DETAIL + '/create-detail', orderDetail, this.httpOptions);
-  // }
   createOrderDetail(orderDetail: OrderDetail[], id: number): Observable<OrderDetail> {
-    return this.http.post<OrderDetail>(this.API_URL_ORDER_DETAIL + '/create-detail/' + id, orderDetail);
+    return this.http.post<OrderDetail>(this.API_URL_ORDER_DETAIL + '/create-detail/' + id, {orderDetailDtoList: orderDetail});
   }
 }

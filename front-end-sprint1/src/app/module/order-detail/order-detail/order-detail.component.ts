@@ -54,7 +54,7 @@ export class OrderDetailComponent implements OnInit {
 
   initForm() {
     this.createForm = this.formBuilder.group({
-      service: ['', [Validators.required]],
+      services: ['', [Validators.required]],
       quantity: ['', [Validators.required]],
     });
   }
@@ -63,9 +63,10 @@ export class OrderDetailComponent implements OnInit {
     if (this.createForm.valid) {
       this.OrderObj = Object.assign({}, this.createForm.value);
 
-      this.OrderObj.totalPrices = this.OrderObj.quantity * this.OrderObj.service.prices;
+      this.OrderObj.totalPrices = this.OrderObj.quantity * this.OrderObj.services.prices;
     }
     this.orderList.push(this.OrderObj);
+    console.log(this.orderList);
 
   }
 
@@ -74,22 +75,24 @@ export class OrderDetailComponent implements OnInit {
     order.customer = this.customers;
     this.orderService.createOrder(order).subscribe(data => {
       order = data;
-      console.log(order.orderId);
-     // this.orderDetailService.createOrderDetail(this.orderList, order.orderId).subscribe();
+      console.log(data);
+      this.orderDetailService.createOrderDetail(this.orderList, order.orderId).subscribe();
     });
-   // this.router.navigateByUrl('/list');
+
+
+    // this.router.navigateByUrl('/list');
   }
 
-    // for (let i = 0; i < this.orderList.length; i++) {
-    //   console.log(this.orderList[i]);
-    //   this.orderDetailService.createOrderDetail(this.orderList[i]).subscribe(value => {
-    //       alert('da thanh cong');
-    //
-    //     }, error => {
-    //       console.log('loi finish' + error);
-    //     }
-    //   );
-    //
-    // }
+  // for (let i = 0; i < this.orderList.length; i++) {
+  //   console.log(this.orderList[i]);
+  //   this.orderDetailService.createOrderDetail(this.orderList[i]).subscribe(value => {
+  //       alert('da thanh cong');
+  //
+  //     }, error => {
+  //       console.log('loi finish' + error);
+  //     }
+  //   );
+  //
+  // }
 
 }

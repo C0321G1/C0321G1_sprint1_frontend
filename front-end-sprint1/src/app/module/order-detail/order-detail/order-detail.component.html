@@ -10,7 +10,7 @@
         <div class="search row d-flex mb-4 text-center">
           <div class="col-auto col-md-2 col-sm-6">
             <label>ServiceName:</label>
-            <select [(ngModel)]="changeType" class="custom-select" formControlName="service" >
+            <select [(ngModel)]="changeType" class="custom-select" formControlName="services" >
               <option  *ngFor="let type of services" [ngValue]="type">{{type.name}}</option>
             </select>
           </div>
@@ -58,10 +58,10 @@
           <tbody>
           <tr *ngFor="let order of orderList , index as i " class="text-color">
             <td class="pl-1 pr-0 align-middle" >{{i+1}}</td>
-            <td class="pl-1 pr-0 align-middle">{{order.service.name}}</td>
+            <td class="pl-1 pr-0 align-middle">{{order.services.name}}</td>
             <td class="pl-1 pr-0 align-middle">{{order.quantity}}</td>
-            <td class="pl-1 pr-0 align-middle">{{order.service.unit.name}}</td>
-            <td class="pl-1 pr-0 align-middle">{{order.service.prices}}</td>
+            <td class="pl-1 pr-0 align-middle">{{order.services.unit.name}}</td>
+            <td class="pl-1 pr-0 align-middle">{{order.services.prices}}</td>
             <td class="pl-1 pr-0 align-middle">{{order.totalPrices}}</td>
           </tr>
           </tbody>
