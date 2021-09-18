@@ -18,4 +18,9 @@ export interface Employee {
   yearOfExp: number;
   flagDel: number;
   image: string;
+  msgStartWorkDate?: string;
+  msgDateOfBirth?: string;
+  msgCode?: string;
+  msgEmail?: string;
+  status?: boolean;
 }

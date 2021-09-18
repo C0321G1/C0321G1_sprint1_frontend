@@ -33,6 +33,13 @@ export class CreateEmployeeComponent implements OnInit {
   selectedImage: any;
   isImage = false;
   msgConfirmPass: string;
+  msgEmail = '';
+  msgCode = '';
+  msgDateOfBirth = '';
+  msgStartWorkDate = '';
+  positionDot = 0;
+  msgImage = '';
+  arrayFileExt: Array<string>;
 
   constructor(@Inject(AngularFireStorage) private storage: AngularFireStorage,
               private employeeService: EmployeeService,
@@ -107,15 +114,21 @@ export class CreateEmployeeComponent implements OnInit {
 
   createEmployee() {
     this.employeeForm.value.account.username = this.employeeForm.value.email;
-    console.log(this.employeeForm.value);
-    this.employeeService.save(this.employeeForm.value).subscribe(() => {
+    this.employeeForm.value.image = this.image;
+    this.employeeService.save(this.employeeForm.value).subscribe( data => {
+      if (data.status === false) {
+        this.msgEmail = data.msgEmail;
+        this.msgCode = data.msgCode;
+        this.msgDateOfBirth = data.msgDateOfBirth;
+        this.msgStartWorkDate = data.msgStartWorkDate;
+        this.toasts.error('Add new employee fail, please check information input', 'Notify');
+      } else {
       this.router.navigateByUrl('/employee/list');
       this.toasts.success('Create new employee successfully !', 'Notify');
-    }, error => {
-      if (error.status === 406) {
-        this.toasts.error('Email already used, please input again email', 'Notify');
       }
-    });
+    }, () => {
+        this.toasts.error('Add new employee fail, please check information input', 'Notify');
+      });
   }
 
   getCurrentDateTime(): string {
@@ -123,18 +136,43 @@ export class CreateEmployeeComponent implements OnInit {
   }
 
   showPreview(event: any) {
+    this.isImage = false;
     this.selectedImage = event.target.files[0];
-    const nameImg = this.getCurrentDateTime() + this.selectedImage.name;
-    const fileRef = this.storage.ref(nameImg);
-    this.storage.upload(nameImg, this.selectedImage).snapshotChanges().pipe(
-      finalize(() => {
-        fileRef.getDownloadURL().subscribe((url) => {
-          this.employeeForm.value.image = url;
-          this.image = url;
-          this.isImage = true;
-        });
-      })
-    ).subscribe();
+    this.checkImageFile(this.selectedImage.name);
+    if (this.msgImage === '') {
+      const nameImg = this.getCurrentDateTime() + this.selectedImage.name;
+      const fileRef = this.storage.ref(nameImg);
+      this.storage.upload(nameImg, this.selectedImage).snapshotChanges().pipe(
+        finalize(() => {
+          fileRef.getDownloadURL().subscribe((url) => {
+            this.employeeForm.value.image = url;
+            this.image = url;
+            this.isImage = true;
+          });
+        })
+      ).subscribe();
+    }
+  }
+
+  checkImageFile(imageFile: string) {
+    // tslint:disable-next-line:prefer-for-of
+    for (let i = imageFile.length - 1; i > 0; i--) {
+      if (imageFile[i] === '.') {
+        this.positionDot = i;
+      }
+    }
+    if (this.positionDot === 0) {
+        return this.msgImage = 'Image not right format, please choose again image';
+    }
+    this.arrayFileExt = ['jpg', 'png', 'jpeg', 'gif', 'raw', 'tiff', 'psd', 'eps', 'pdf', 'ai'];
+    const fileExtend = imageFile.substr(this.positionDot + 1);
+    // tslint:disable-next-line:prefer-for-of
+    for (let j = 0; j < this.arrayFileExt.length; j++) {
+      if (fileExtend === this.arrayFileExt[j]) {
+        return this.msgImage = '';
+      }
+    }
+    return this.msgImage = 'Image not right format, please choose again image';
   }
 
   checkPassword(newPassword: string, confirmPassword: string) {
@@ -154,11 +192,22 @@ export class CreateEmployeeComponent implements OnInit {
   }
 
   checkDateOfBirth(data: AbstractControl): any {
-    const dateOfBirth = data.value;
-    const birthOfYear = Number(dateOfBirth.substr(0, 4));
-    const currentYear = new Date().getFullYear();
-    return currentYear - birthOfYear >= 18 ? null : {invalidAge : true};
-  }
+    const date = data.value;
+    const today = new Date();
+    const dateOfBirth = new Date(date);
+    const age = today.getFullYear() - dateOfBirth.getFullYear();
+    if (age >= 19 ) {
+      return null;
+    } else if (age === 18) {
+      const m = today.getMonth() - dateOfBirth.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < dateOfBirth.getDate())) {
+        return {invalidAge: true};
+      }
+      return null;
+    } else {
+      return {invalidAge: true};
+    }
+ }
 
   checkStartWorkDate(data: AbstractControl): any {
     const startWorkDate = data.value;
@@ -202,5 +251,21 @@ export class CreateEmployeeComponent implements OnInit {
         this.router.navigateByUrl('/employee/list');
       }
     });
+  }
+
+  resetMsgEmail() {
+    this.msgEmail = '';
+  }
+
+  resetMsgCode() {
+    this.msgCode = '';
+  }
+
+  resetMsgDateOfBirth() {
+    this.msgEmail = '';
+  }
+
+  resetMsgStartWorkDate() {
+    this.msgStartWorkDate = '';
   }
 }
