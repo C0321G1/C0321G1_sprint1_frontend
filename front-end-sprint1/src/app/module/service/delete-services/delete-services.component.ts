@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, EventEmitter, Inject, OnInit, Output} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {ToastrService} from 'ngx-toastr';
 import {ServiceService} from '../../../service/service/service.service';
@@ -13,9 +13,12 @@ class ServicesDeleteComponent {
 })
 export class DeleteServicesComponent implements OnInit {
 
-  public code: string;
-  public id: number;
 
+  public code: string;
+  public listCode: Array<String> = [];
+  public id: number;
+  public listId: Array<number> = [];
+public check=false;
   constructor(public dialogRef: MatDialogRef<ServicesDeleteComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
               private toast: ToastrService,
@@ -23,23 +26,45 @@ export class DeleteServicesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.data.name);
-    this.code=this.data.name.code;
-    this.id=this.data.name.servicesId;
-    console.log(this.id);
+    if (this.data.id==null){
+      this.id=this.data.name.servicesId;
+      this.code=this.data.name.code;
+      this.check=false;
+      console.log("id "+this.id);
+    }else {
+      this.listCode=this.data.code;
+      this.listId=this.data.id;
+      this.check=true;
+      console.log(this.listId);
+    }
 
+    console.log("code "+this.listCode);
+    console.log("id "+this.listId);
 
   }
+
 
   onNoClick(): void {
-    this.dialogRef.close();
+    this.listCode=[];
+    this.listId=[];
+    this.dialogRef.close(false);
+
   }
 
+  // phap
   delete() {
-    console.log(this.id);
-    this.serviceService.deleteServices(this.id).subscribe(dataDialog => {
-    this.dialogRef.close();
+      this.serviceService.deleteServices(this.id).subscribe(dataDialog => {
+        this.dialogRef.close();
+        this.toast.success('delete success fully');
+      });
+  }
+  // phap
+  deleteServicesArr() {
+    for (let i = 0; i < this.listId.length; i++) {
+      this.serviceService.deleteServices(this.listId[i]).subscribe(dataDialog => {
+        this.dialogRef.close(true);
+      });
+    }
     this.toast.success('delete success fully');
-    });
   }
 }

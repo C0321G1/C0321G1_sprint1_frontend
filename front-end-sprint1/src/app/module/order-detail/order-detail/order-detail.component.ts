@@ -7,6 +7,7 @@ import {OrderDetailService} from '../../../service/order-detail/order-detail.ser
 import {Order} from '../../../model/order/order';
 import {OrderService} from '../../../service/order/order.service';
 import {Customer} from '../../../model/customer/customer';
+import {ServiceService} from '../../../service/service/service.service';
 
 @Component({
   selector: 'app-order-detail',
@@ -17,18 +18,21 @@ export class OrderDetailComponent implements OnInit {
   private userName = 'Vu';
   createForm: FormGroup;
   services: Services[];
-  orders: Order[];
+  order: Order[];
   OrderObj: OrderDetail = new OrderDetail();
-  orderList: OrderDetail[];
+  orderList: OrderDetail[] = [];
   customers: Customer;
-  public changeType;
+  public service: Services;
+  public changeType?: Services;
+  public name = '';
 
   constructor(private formBuilder: FormBuilder,
               private  router: Router,
               private orderDetailService: OrderDetailService,
               private orderService: OrderService,
-              //private  accountService: AcountServcies
-               ) {
+              private  servicesService: ServiceService
+              // private  accountService: AcountServcies
+  ) {
     // this.accountService.findByUserName(this.userName).subscribe(data => {
     //   this.customers = data;
     // });
@@ -40,33 +44,29 @@ export class OrderDetailComponent implements OnInit {
   }
 
   initData() {
-    this.orderDetailService.getService().subscribe(data => {
+    this.servicesService.getListServices().subscribe(data => {
       this.services = data;
+      this.changeType = data[0];
     }, error => {
       console.log('Loi services:' + error);
-    });
-    this.orderDetailService.getOrder().subscribe(data => {
-      this.orders = data;
-    }, error => {
-      console.log('Loi order' + error);
     });
   }
 
   initForm() {
     this.createForm = this.formBuilder.group({
-      servicesName: ['', [Validators.required]],
-      servicesUnit: ['', [Validators.required]],
+      service: ['', [Validators.required]],
       quantity: ['', [Validators.required]],
-      prices: ['', [Validators.required]]
     });
   }
 
   createOrder() {
     if (this.createForm.valid) {
       this.OrderObj = Object.assign({}, this.createForm.value);
-      this.OrderObj.totalPrices = this.OrderObj.prices * this.OrderObj.quantity;
+
+      this.OrderObj.totalPrices = this.OrderObj.quantity * this.OrderObj.service.prices;
     }
     this.orderList.push(this.OrderObj);
+
   }
 
   Finish() {
@@ -74,8 +74,22 @@ export class OrderDetailComponent implements OnInit {
     order.customer = this.customers;
     this.orderService.createOrder(order).subscribe(data => {
       order = data;
-      this.orderDetailService.createOrderDetail(this.orderList, order.orderId).subscribe();
+      console.log(order.orderId);
+     // this.orderDetailService.createOrderDetail(this.orderList, order.orderId).subscribe();
     });
-    this.router.navigateByUrl('/list');
+   // this.router.navigateByUrl('/list');
   }
+
+    // for (let i = 0; i < this.orderList.length; i++) {
+    //   console.log(this.orderList[i]);
+    //   this.orderDetailService.createOrderDetail(this.orderList[i]).subscribe(value => {
+    //       alert('da thanh cong');
+    //
+    //     }, error => {
+    //       console.log('loi finish' + error);
+    //     }
+    //   );
+    //
+    // }
+
 }

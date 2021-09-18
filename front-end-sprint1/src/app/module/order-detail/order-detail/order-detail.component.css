@@ -21,4 +21,9 @@ legend.scheduler-border {
 }
 body{
   font-family: Averta;
+ background-image: url('../../../../assets/image/background.jpg');
 }
+.text-color{
+  color: #fff028;
+}
+

@@ -47,7 +47,7 @@ export class ServicesCreateComponent implements OnInit {
     this.serviceService.getAllServices(this.name, this.page).subscribe(data => {
       this.servicesList = data;
       if (this.servicesList && this.servicesList.length < 1) {
-        this.lastId = this.servicesList[this.servicesList.length - 1].serviceId;
+        this.lastId = this.servicesList[this.servicesList.length - 1].servicesId;
         if (this.lastId < 10) {
           this.code = 'SV-000' + this.lastId;
         } else if (this.lastId < 100) {

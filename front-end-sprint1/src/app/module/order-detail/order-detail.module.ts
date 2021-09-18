@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OrderDetailComponent } from './order-detail/order-detail.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {OrderDetailRoutingModule} from './order-detail-routing.module';
 
 
 
@@ -10,7 +11,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    OrderDetailRoutingModule,
   ]
 })
 export class OrderDetailModule { }
