@@ -8,13 +8,14 @@ import {ComputerManufacturer} from '../../../model/computer/manufacturer-compute
 import {ComputerDeleteComponent} from '../computer-delete/computer-delete.component';
 import {ComputerListDeleteComponent} from '../computer-list-delete/computer-list-delete.component';
 import {ToastrService} from 'ngx-toastr';
-import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/forms";
+import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Title} from '@angular/platform-browser';
 
 
 @Component({
   selector: 'app-computer-list',
   templateUrl: './computer-list.component.html',
-  styleUrls: ['./computer-list.component.css']
+  styleUrls: ['./computer-list.component.css'],
 })
 
 export class ComputerListComponent implements OnInit {
@@ -35,13 +36,14 @@ export class ComputerListComponent implements OnInit {
   p = 0;
   ps: Array<any> = [];
   check = 0;
-
   searchComputerForm: FormGroup;
 
   constructor(private computerService: ComputerService,
               private dialog: MatDialog,
-              private toastrService: ToastrService
+              private toastrService: ToastrService,
+              private title: Title
   ) {
+    this.title.setTitle('Computer List');
     this.searchComputerForm = new FormGroup({
       computerId: new FormControl('', [Validators.pattern('^CP[0-9]{4}$')]),
       startUsedDateFrom: new FormControl('', [Validators.required, this.checkDateFrom]),
@@ -158,7 +160,7 @@ export class ComputerListComponent implements OnInit {
         }
       });
       dialogRef.afterClosed().subscribe(result => {
-        if (result){
+        if (result) {
           this.listComputerId = [];
           this.listComputerCode = [];
           this.ngOnInit();
@@ -220,5 +222,7 @@ export class ComputerListComponent implements OnInit {
       computerStatus: new FormControl('', [Validators.required]),
       computerType: new FormControl('', [Validators.required]),
     }, {validators: (this.checkDate)});
+    this.check = 0;
+    this.ngOnInit();
   }
 }

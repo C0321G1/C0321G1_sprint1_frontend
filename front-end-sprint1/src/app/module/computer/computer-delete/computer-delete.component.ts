@@ -30,7 +30,7 @@ export class ComputerDeleteComponent implements OnInit {
     }
     , error => {
         if (error.status === 406) {
-          this.toastrService.error(error.error);
+          this.toastrService.error('Delete fail: Computer ' + this.data.nameComputer + ' is online');
           this.dialog.close(true);
         }
       });
