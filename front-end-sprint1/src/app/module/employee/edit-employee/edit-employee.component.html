@@ -67,24 +67,26 @@
           <div class="col-6">
             <label for="dateOfBirth" class="fontFamily">Date Of Birth</label>
             <span style="color: red">(*)</span>
-            <input type="date" class="form-control" id="dateOfBirth" formControlName="dateOfBirth">
+            <input type="date" class="form-control" id="dateOfBirth" formControlName="dateOfBirth" (click)="resetMsgDateOfBirth()">
             <div class="fontError mt-1"
                  *ngIf="employeeForm.controls.dateOfBirth.hasError('required') &&
                  employeeForm.controls.dateOfBirth.touched">Please choose date of birth.</div>
             <div class="fontError mt-1"
                  *ngIf="employeeForm.controls.dateOfBirth.hasError('invalidAge') &&
                  employeeForm.controls.dateOfBirth.touched">Please choose date of birth, enough 18 age.</div>
+            <div class="fontError">{{msgDateOfBirth}}</div>
           </div>
           <div class="col-6">
             <label for="startWorkDate" class="fontFamily">Start Work Date</label>
             <span style="color: red">(*)</span>
-            <input type="date" class="form-control" id="startWorkDate" formControlName="startWorkDate">
+            <input type="date" class="form-control" id="startWorkDate" formControlName="startWorkDate" (click)="resetMsgStartWorkDate()">
             <span class="fontError mt-1"
                  *ngIf="employeeForm.controls.startWorkDate.hasError('required') &&
                  employeeForm.controls.startWorkDate.touched">Please choose start work date, </span>
             <span class="fontError mt-1"
                  *ngIf="employeeForm.controls.startWorkDate.hasError('inValidDate') &&
                  employeeForm.controls.startWorkDate.dirty">Start work date not past date.</span>
+            <span class="fontError">{{msgStartWorkDate}}</span>
           </div>
         </div>
 
@@ -103,13 +105,14 @@
           <div class="col-6">
             <label for="email" class="fontFamily">Email</label>
             <span style="color: red">(*)</span>
-            <input type="text" class="form-control" id="email" formControlName="email" placeholder="Email">
+            <input type="text" class="form-control" id="email" formControlName="email" placeholder="Email" (click)="resetMsgEmail()">
             <div class="fontError mt-1"
                  *ngIf="employeeForm.controls.email.hasError('required') &&
                  employeeForm.controls.email.touched">Please input email.</div>
             <div class="fontError mt-1"
                  *ngIf="employeeForm.controls.email.hasError('email') &&
                  employeeForm.controls.email.touched">Please input right format, a@b.c .</div>
+            <div class="fontError">{{msgEmail}}</div>
           </div>
         </div>
 
@@ -203,6 +206,7 @@
               <div class="col-8">
                 <div class="form-group">
                   <input type="file" class="form-control-file text-danger" (change)="showPreview($event)">
+                  <div class="fontError">{{msgImage}}</div>
                 </div>
               </div>
               <div class="col-4">
