@@ -4,14 +4,14 @@ import {Gender} from './gender';
 
 export interface Customer {
   customerId: number;
-  code: string;
-  account: Account;
-  fullName: string;
   email: string;
+  code: string;
   dateOfBirth: string;
-  address: Address;
-  phone: string;
-  customerStatus: CustomerStatus;
+  fullName: string;
   flag: number;
+  phone: string;
+  address: Address;
+  customerStatus: CustomerStatus;
+  account: Account;
   gender: Gender;
 }

@@ -31,6 +31,7 @@ export class CreateCustomerComponent implements OnInit {
               private titleService: Title
   ) {
     this.titleService.setTitle('Create Customer');
+    this.titleService.setTitle('Create Customer');
 
     this.customerForm = new FormGroup({
       fullName: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(50)]),

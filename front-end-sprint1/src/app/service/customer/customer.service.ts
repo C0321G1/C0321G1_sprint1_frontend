@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Gender} from '../../model/customer/gender';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpEvent, HttpHeaders} from '@angular/common/http';
 import {Province} from '../../model/address/province';
 import {District} from '../../model/address/district';
 import {Commune} from '../../model/address/commune';
@@ -52,11 +52,12 @@ export class CustomerService {
     return this.httpClient.post<any>(this.API_URL + '/create',cusDTO,this.httpOptions);
   }
 
-  findByIdCustomer(id: number): Observable<any> {
-    return this.httpClient.get<any>(this.API_URL + '/'+id,this.httpOptions);
+  findByIdCustomer(id: number): Observable<Customer> {
+    return this.httpClient.get<Customer>(this.API_URL + '/'+id);
   }
 
   updateCusDto(cusDTO: CusDTO): Observable<any> {
+    console.log(this.API_URL + '/edit',cusDTO,this.httpOptions);
     return this.httpClient.post<any>(this.API_URL + '/edit',cusDTO,this.httpOptions);
   }
 }

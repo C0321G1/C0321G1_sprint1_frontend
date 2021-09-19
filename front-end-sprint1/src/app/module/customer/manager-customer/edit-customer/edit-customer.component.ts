@@ -9,6 +9,8 @@ import {CustomerService} from '../../../../service/customer/customer.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {Title} from '@angular/platform-browser';
+import {CusDTO} from '../../../../model/dto/CusDTO';
+import {Customer} from '../../../../model/customer/customer';
 
 @Component({
   selector: 'app-edit-customer',
@@ -22,7 +24,8 @@ export class EditCustomerComponent implements OnInit {
   districtList: District[] = [];
   communeList: Commune[] = [];
   statusList: CustomerStatus[] = [];
-  id: number =2;
+  id: number = 1;
+
 
   constructor(private customerService: CustomerService,
               private router: Router,
@@ -31,12 +34,11 @@ export class EditCustomerComponent implements OnInit {
               private activatedRoute: ActivatedRoute,) {
     // this.id = Number(this.activatedRoute.snapshot.params.id);
     this.titleService.setTitle('Edit Customer');
-
     this.customerEditForm = new FormGroup({
       fullName: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(50)]),
       username: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
-      dateOfBirth: new FormControl('', [Validators.required,this.checkDateOfBirth]),
+      dateOfBirth: new FormControl('', [Validators.required, this.checkDateOfBirth]),
       phone: new FormControl('', [Validators.required, Validators.pattern('^0\\d{9,10}$')]),
       password: new FormControl('', [Validators.required, Validators.pattern('[A-Za-z0-9]{6,}')]),
       genderId: new FormControl('', [Validators.required]),
@@ -51,7 +53,7 @@ export class EditCustomerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getCustomerId();
+    this.getCustomerById();
     this.getGenderList();
     this.getProvinceList();
     this.getDistrictList();
@@ -68,13 +70,13 @@ export class EditCustomerComponent implements OnInit {
   }
 
 
-  getCustomerId() {
-    console.log("this.id"+this.id);
+  getCustomerById() {
+    console.log('this.id' + this.id);
     this.customerService.findByIdCustomer(this.id).subscribe(data => {
-      console.log("data"+data);
       this.customerEditForm.patchValue(data);
-    },error => {
-      console.log(error);
+      console.log('data' + data);
+      }, error => {
+      console.log("GetInfoCustomer"+ error+ "BackEnd" );
     });
   }
 
@@ -113,7 +115,7 @@ export class EditCustomerComponent implements OnInit {
     const dateOfBirth = data.value;
     const birthOfYear = Number(dateOfBirth.substr(0, 4));
     const currentYear = new Date().getFullYear();
-    return currentYear - birthOfYear >= 18 ? null : {invalidAge : true};
+    return currentYear - birthOfYear >= 18 ? null : {invalidAge: true};
   }
 
 }
