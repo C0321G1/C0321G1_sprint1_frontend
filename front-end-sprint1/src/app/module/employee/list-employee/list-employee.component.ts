@@ -6,6 +6,7 @@ import {EmployeeService} from '../../../service/employee/employee.service';
 import {Employee} from '../../../model/employee/employee';
 import {Province} from '../../../model/address/province';
 import {ToastrService} from 'ngx-toastr';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-list-employee',
@@ -25,7 +26,9 @@ export class ListEmployeeComponent implements OnInit {
   listEmployee: Employee[] = [];
 
   constructor(private employeeService: EmployeeService,
-              private toast: ToastrService) {
+              private toast: ToastrService,
+              private titleService: Title) {
+    this.titleService.setTitle('List Employee');
   }
 
   ngOnInit(): void {
@@ -46,12 +49,10 @@ export class ListEmployeeComponent implements OnInit {
 
   getData() {
     this.employeeService.getAllPosition().subscribe(value => {
-      console.log(value);
       // @ts-ignore
       this.listPositon = value;
     });
     this.employeeService.getAllProvince().subscribe(value => {
-      console.log(value);
       this.listProvince = value;
     });
   }
@@ -59,10 +60,8 @@ export class ListEmployeeComponent implements OnInit {
 // get list employee
   getAllEmployee(page: number) {
     this.employeeService.getAllEmployee(page).subscribe(value => {
-      console.log(value.content);
       this.listEmployee = value.content;
       this.totalPage = value.totalPages;
-      console.log(this.totalPage);
     }, error => {
       this.toast.error('No data found', 'message error');
     });
@@ -72,16 +71,14 @@ export class ListEmployeeComponent implements OnInit {
     if (this.searchForm.value.employeeId === '' && this.searchForm.value.dateOfBirthFrom === '' &&
       this.searchForm.value.dateOfBirthTo === '' && this.searchForm.value.startWorkDateFrom === '' && this.searchForm.value.startWorkDateTo
       === '' && this.searchForm.value.positon === '' && this.searchForm.value.address === '') {
-      this.toast.info('Please enter if you want to search', 'massage search');
+      this.toast.info('Please enter if you want to search', 'message search');
     }else {
       this.flagSearch = 1;
-      console.log(this.searchForm.value);
       this.employeeService.searchEmployee(page, this.searchForm.value.employeeId, this.searchForm.value.dateOfBirthFrom,
         this.searchForm.value.dateOfBirthTo, this.searchForm.value.startWorkDateFrom, this.searchForm.value.startWorkDateTo,
         this.searchForm.value.positon, this.searchForm.value.address).subscribe(value => {
         this.totalPage = value.totalPages;
         this.listEmployee = value.content;
-        console.log(this.totalPage);
       }, error => {
         this.toast.error('not found employee', 'message search');
         this.flagSearch = 0;
@@ -165,7 +162,6 @@ export class ListEmployeeComponent implements OnInit {
     if (page < this.totalPage && page >= 0) {
       this.page = page;
       if (this.flagSearch == 0){
-        console.log(page);
         this.getAllEmployee(this.page);
       }else {
         this.searchEmpoyee(this.page);
@@ -174,7 +170,6 @@ export class ListEmployeeComponent implements OnInit {
       if (page != -1){
         this.toast.warning('Request to enter the number of pages in the list', 'massage search page');
         if (this.flagSearch == 0){
-          console.log(page);
           this.getAllEmployee(this.page);
         }else {
           this.searchEmpoyee(this.page);
@@ -187,16 +182,15 @@ export class ListEmployeeComponent implements OnInit {
   showDelete(name: string, id: number) {
     this.nameDelete = name;
     this.idDelete = id;
-    console.log(this.nameDelete, this.idDelete);
   }
   // khuê create method delete employee
   deleteEmployee() {
     this.employeeService.deleteEmployee(this.idDelete).subscribe(value => {
         this.reset();
-        this.toast.success('delete ' + this.nameDelete + ' success', 'massage delete');
+        this.toast.success('delete ' + this.nameDelete + ' success', 'message delete');
       },
       error => {
-        this.toast.info('delete ' + this.nameDelete + 'failure', 'massage delete');
+        this.toast.info('delete ' + this.nameDelete + 'failure', 'message delete');
       });
   }
 }

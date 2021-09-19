@@ -104,7 +104,7 @@ export class EditEmployeeComponent implements OnInit {
   }
 
   getGenderList() {
-    this.genderService.getAll().subscribe(data => {
+    this.genderService.getGenderList().subscribe(data => {
       this.genderList = data;
     });
   }
@@ -130,7 +130,6 @@ export class EditEmployeeComponent implements OnInit {
 
   editEmployee() {
     this.employeeForm.value.account.username = this.employeeForm.value.email;
-    console.log(this.employeeForm.value);
     this.employeeService.edit(this.employeeForm.value).subscribe(data => {
       if (data.status === false) {
         this.msgEmail = data.msgEmail;
