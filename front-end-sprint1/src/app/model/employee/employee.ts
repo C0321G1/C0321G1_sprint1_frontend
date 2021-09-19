@@ -1,5 +1,6 @@
 import {Address} from '../address/address';
 import {Gender} from '../customer/gender';
+import {Position} from './position';
 
 export interface Employee {
   employeeId: number;
@@ -17,4 +18,9 @@ export interface Employee {
   yearOfExp: number;
   flagDel: number;
   image: string;
+  msgStartWorkDate?: string;
+  msgDateOfBirth?: string;
+  msgCode?: string;
+  msgEmail?: string;
+  status?: boolean;
 }
