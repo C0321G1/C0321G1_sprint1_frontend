@@ -1,10 +1,10 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { LoginComponent } from './login/login.component';
-import {AccountRoutingModule} from "./account-routing.module";
-import {HttpClientModule} from "@angular/common/http";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {ToastrModule, ToastrService} from "ngx-toastr";
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {LoginComponent} from './login/login.component';
+import {AccountRoutingModule} from './account-routing.module';
+import {HttpClientModule} from '@angular/common/http';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {ToastrModule, ToastrService} from 'ngx-toastr';
 
 @NgModule({
   declarations: [LoginComponent],
@@ -17,4 +17,5 @@ import {ToastrModule, ToastrService} from "ngx-toastr";
     ReactiveFormsModule,
   ]
 })
-export class AccountModule { }
+export class AccountModule {
+}

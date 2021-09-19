@@ -61,19 +61,15 @@ export class CustomerSignUpComponent implements OnInit {
   // creator: vinhdn
   createCustomer() {
     this.customerService.checkUsername(this.customerForm.value.account).subscribe(value => {
+      this.customerService.save(this.customerForm.value).subscribe(data => {
+        this.snackBar.open('Sign Up Complete', 'Ok', {duration: 3000});
+        this.customerForm.reset();
+      }, error => {
+        this.snackBar.open('System maintained, please connect to Admin !!!', 'Ok', {duration: 3000});
+      });
     }, error => {
       this.snackBar.open('Username is used, Please input another', 'Ok', {duration: 3000});
     });
-
-    this.customerService.save(this.customerForm.value).subscribe(value => {
-      this.snackBar.open('Sign Up Complete', 'Ok', {duration: 3000});
-    }, error => {
-      this.snackBar.open('System maintained, please connect to Admin !!!', 'Ok', {duration: 3000});
-    });
-  }
-
-  checkUsername() {
-
   }
 
   // creator: vinhdn

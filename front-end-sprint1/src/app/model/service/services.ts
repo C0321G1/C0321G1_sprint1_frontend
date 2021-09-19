@@ -6,8 +6,6 @@ export interface Services {
   name: string;
   prices: number;
   serviceId: number;
-  code: string;
-  name: string;
   price: number;
   quantity: number;
   image: string;
