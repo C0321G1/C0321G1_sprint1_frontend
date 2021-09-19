@@ -21,6 +21,10 @@ const routes: Routes = [
   {
   path: 'computer',
   loadChildren: () => import('./module/computer/computer.module').then(module => module.ComputerModule)
+  },
+  {
+    path: 'statistic',
+    loadChildren: () => import('./module/statistic/statistic.module').then(module => module.StatisticModule)
   }
 ];
 
