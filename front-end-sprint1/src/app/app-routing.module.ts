@@ -17,6 +17,10 @@ const routes: Routes = [
   {
     path: 'guest-homepage',
     loadChildren: () => import ('./module/client/client.module').then(module => module.ClientModule)
+  },
+  {
+  path: 'computer',
+  loadChildren: () => import('./module/computer/computer.module').then(module => module.ComputerModule)
   }
 ];
 
