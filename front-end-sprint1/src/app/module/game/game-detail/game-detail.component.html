@@ -1,0 +1,26 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title font-weight-bold">Game details</h5>
+    </div>
+    <div class="modal-body">
+      <strong>Game name: </strong><span>{{nameGame}}</span>
+      <br>
+      <strong>Game type: </strong><span>{{nameGameType}}</span>
+      <br>
+      <strong>Content: </strong><span [innerHTML]="contentGame"></span>
+      <br>
+      <strong>Gaming: </strong><span>{{gamingGame}}</span><span> lượt chơi</span>
+      <br>
+      <strong>Trailer: </strong>
+      <iframe width="100%" [src]="urlSafe"
+              title="YouTube video player" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen></iframe>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="close()">Close</button>
+    </div>
+  </div>
+</div>
+
