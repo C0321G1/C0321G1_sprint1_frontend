@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Services} from '../../../model/service/services';
 import {Router} from '@angular/router';
 import {OrderDetail} from '../../../model/order/order-detail';
@@ -55,10 +55,12 @@ export class OrderDetailComponent implements OnInit {
   initForm() {
     this.createForm = this.formBuilder.group({
       services: ['', [Validators.required]],
-      quantity: ['', [Validators.required]],
+      quantity: ['', [Validators.required, this.validateInterger]],
     });
   }
-
+  validateInterger(abstractControl: AbstractControl) {
+    return (abstractControl.value > 0 && abstractControl.value % 1 === 0) ? null : {checkInterger: true};
+  }
   createOrder() {
     if (this.createForm.valid) {
       this.OrderObj = Object.assign({}, this.createForm.value);
@@ -78,21 +80,5 @@ export class OrderDetailComponent implements OnInit {
       console.log(data);
       this.orderDetailService.createOrderDetail(this.orderList, order.orderId).subscribe();
     });
-
-
-    // this.router.navigateByUrl('/list');
   }
-
-  // for (let i = 0; i < this.orderList.length; i++) {
-  //   console.log(this.orderList[i]);
-  //   this.orderDetailService.createOrderDetail(this.orderList[i]).subscribe(value => {
-  //       alert('da thanh cong');
-  //
-  //     }, error => {
-  //       console.log('loi finish' + error);
-  //     }
-  //   );
-  //
-  // }
-
 }

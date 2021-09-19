@@ -4,7 +4,6 @@ import {NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {CustomerModule} from './module/customer/customer.module';
-import {OrderModule} from './module/order/order.module';
 import {AccountModule} from './module/account/account.module';
 import {ComputerModule} from './module/computer/computer.module';
 import {EmployeeModule} from './module/employee/employee.module';
@@ -43,7 +42,6 @@ import {environment} from '../environments/environment';
     EmployeeModule,
     GameModule,
     OrderDetailModule,
-    OrderModule,
     ServiceModule,
     RouterModule,
     StatisticModule

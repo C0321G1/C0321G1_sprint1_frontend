@@ -20,9 +20,10 @@
           </div>
           <div class="col-auto col-md-2 col-sm-6">
             <label>Quanlity:</label>
-            <label>
               <input class="form-control" type="number" formControlName="quantity">
-            </label>
+            <div [hidden]="createForm.controls.quantity.errors.required" class="style-error" *ngIf="createForm.controls.quantity.hasError('checkInterger') &&
+           createForm.controls.quantity.touched "> Please enter the quantity as a positive integer
+            </div>
           </div>
           <div  class="col-auto col-md-2 col-sm-6">
             <label>Price:</label>
