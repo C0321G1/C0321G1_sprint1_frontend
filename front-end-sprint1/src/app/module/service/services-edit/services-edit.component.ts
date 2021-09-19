@@ -108,7 +108,7 @@ export class ServicesEditComponent implements OnInit {
     this.services = this.editForm.value;
     console.log(this.services);
     this.service.update(this.id, this.services).subscribe(() => {
-      this.route.navigateByUrl('').then(s => {
+      this.route.navigateByUrl('/list-services').then(s => {
         this.showSuccess(),
           Swal.close();
       });
@@ -188,7 +188,7 @@ export class ServicesEditComponent implements OnInit {
       allowOutsideClick: false
     }).then((result) => {
       if (result.value) {
-        this.route.navigateByUrl('');
+        this.route.navigateByUrl('/list-services');
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         this.editForm.patchValue(this.serviceForm);
       }

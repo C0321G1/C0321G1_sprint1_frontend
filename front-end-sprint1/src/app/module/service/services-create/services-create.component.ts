@@ -80,7 +80,7 @@ export class ServicesCreateComponent implements OnInit {
     this.createForm.value.image = this.urlImage;
     this.serviceService.create(this.createForm.value).subscribe(data => {
       console.log(this.createForm.value);
-      this.router.navigateByUrl('');
+      this.router.navigateByUrl('/list-services');
       this.showSuccess();
     }, error => {
       if (error.status === 400) {
@@ -178,7 +178,7 @@ export class ServicesCreateComponent implements OnInit {
       allowOutsideClick: false
     }).then((result) => {
       if (result.value) {
-        this.router.navigateByUrl('');
+        this.router.navigateByUrl('/list-services');
       }
     });
   }
