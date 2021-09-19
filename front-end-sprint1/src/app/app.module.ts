@@ -22,6 +22,7 @@ import {ServiceModule} from './module/service/service.module';
 import {RouterModule} from '@angular/router';
 import {StatisticModule} from './module/statistic/statistic.module';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,7 +32,6 @@ import {StatisticModule} from './module/statistic/statistic.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    GameModule,
     HttpClientModule,
     BrowserAnimationsModule,
     AngularFireStorageModule,
@@ -39,7 +39,6 @@ import {StatisticModule} from './module/statistic/statistic.module';
     AccountModule,
     BrowserAnimationsModule,
     ClientModule,
-    ServiceModule,
     BrowserAnimationsModule,
     CommonModule,
     AngularFireStorageModule,
