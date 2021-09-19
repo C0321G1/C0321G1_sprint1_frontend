@@ -6,12 +6,14 @@ import {AppComponent} from './app.component';
 import {HeaderComponent} from './layout/header/header.component';
 import {FooterComponent} from './layout/footer/footer.component';
 import {GameModule} from './module/game/game.module';
+// @ts-ignore
 import {AngularFireStorageModule} from '@angular/fire/storage';
 import {environment} from '../environments/environment';
 import {ClientModule} from './module/client/client.module';
 import {CustomerModule} from './module/customer/customer.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CommonModule} from '@angular/common';
+// @ts-ignore
 import {AngularFireModule} from '@angular/fire';
 import {HttpClientModule} from '@angular/common/http';
 import {AccountModule} from './module/account/account.module';
@@ -22,6 +24,7 @@ import {ServiceModule} from './module/service/service.module';
 import {RouterModule} from '@angular/router';
 import {StatisticModule} from './module/statistic/statistic.module';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,7 +34,6 @@ import {StatisticModule} from './module/statistic/statistic.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    GameModule,
     HttpClientModule,
     BrowserAnimationsModule,
     AngularFireStorageModule,
@@ -39,7 +41,6 @@ import {StatisticModule} from './module/statistic/statistic.module';
     AccountModule,
     BrowserAnimationsModule,
     ClientModule,
-    ServiceModule,
     BrowserAnimationsModule,
     CommonModule,
     AngularFireStorageModule,
@@ -51,7 +52,8 @@ import {StatisticModule} from './module/statistic/statistic.module';
     ServiceModule,
     RouterModule,
     StatisticModule,
-    CustomerModule
+    CustomerModule,
+    ComputerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

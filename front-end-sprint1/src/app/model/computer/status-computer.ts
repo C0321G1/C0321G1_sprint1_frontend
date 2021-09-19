@@ -1,4 +1,4 @@
-export interface StatusComputer {
-  id: number;
-  nameStatus: string;
+export interface ComputerStatus {
+  computerStatusId: number;
+  name: string;
 }
