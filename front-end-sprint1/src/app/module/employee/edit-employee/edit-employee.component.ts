@@ -104,7 +104,7 @@ export class EditEmployeeComponent implements OnInit {
   }
 
   getGenderList() {
-    this.genderService.getAll().subscribe(data => {
+    this.genderService.getGenderList().subscribe(data => {
       this.genderList = data;
     });
   }

@@ -181,8 +181,8 @@
         <div class="float-right" *ngIf="listEmployee.length > 0">
           <ul class="pagination ">
             <li class="page-item ">
-              <input min="1" max="{{totalPage}}" class="page-link bg-dark" type="number"
-                     style="color: #fff028;width: 70px" (change)="toPage($event.target.value -1)">
+              <input min="1" max="{{totalPage}}" class="page-link" type="number"
+                     style="color: black;width: 70px" (change)="toPage($event.target.value -1)">
             </li>
             <li class="page-item "><a class="page-link bg-dark" style="color: #fff028" (click)="firstPage()">First</a>
             </li>

@@ -6,6 +6,7 @@ import {EmployeeService} from '../../../service/employee/employee.service';
 import {Employee} from '../../../model/employee/employee';
 import {Province} from '../../../model/address/province';
 import {ToastrService} from 'ngx-toastr';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-list-employee',
@@ -25,7 +26,9 @@ export class ListEmployeeComponent implements OnInit {
   listEmployee: Employee[] = [];
 
   constructor(private employeeService: EmployeeService,
-              private toast: ToastrService) {
+              private toast: ToastrService,
+              private titleService: Title) {
+    this.titleService.setTitle('List Employee');
   }
 
   ngOnInit(): void {
