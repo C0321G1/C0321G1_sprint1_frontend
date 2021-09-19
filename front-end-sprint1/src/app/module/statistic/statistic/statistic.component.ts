@@ -7,6 +7,7 @@ import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/form
 import {InputStatistic} from '../../../model/statistic/input-statistic';
 import {DatePipe} from '@angular/common';
 import {Chart, registerables} from 'chart.js';
+import {Title} from '@angular/platform-browser';
 
 
 Chart.register(...registerables);
@@ -20,7 +21,9 @@ Chart.register(...registerables);
 export class StatisticComponent implements OnInit {
 
   constructor(private statisticService: StatisticService,
-              private datePipe: DatePipe) {
+              private datePipe: DatePipe,
+              private title: Title) {
+    this.title.setTitle('Statistic');
   }
 
   listStatisticByComputer: StatisticByComputer[];
