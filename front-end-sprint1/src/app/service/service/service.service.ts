@@ -46,4 +46,7 @@ export class ServiceService {
     return this.http.post<Services>(this.API + '/services' + '/create', service);
   }
 
+  getListServices(): Observable<Services[]> {
+    return this.http.get<Services[]>(this.API + '/services/listAllServices');
+  }
 }

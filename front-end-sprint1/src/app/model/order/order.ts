@@ -1,6 +1,7 @@
 import {Customer} from '../customer/customer';
 
-export interface Orders {
+export class Order {
   orderId: number;
   customer: Customer;
 }
+
