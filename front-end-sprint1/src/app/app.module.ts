@@ -32,7 +32,6 @@ import {StatisticModule} from './module/statistic/statistic.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    GameModule,
     HttpClientModule,
     BrowserAnimationsModule,
     AngularFireStorageModule,
@@ -40,7 +39,6 @@ import {StatisticModule} from './module/statistic/statistic.module';
     AccountModule,
     BrowserAnimationsModule,
     ClientModule,
-    ServiceModule,
     BrowserAnimationsModule,
     CommonModule,
     AngularFireStorageModule,
