@@ -11,17 +11,14 @@ import {environment} from '../environments/environment';
 import {AngularFireModule} from '@angular/fire';
 import {AngularFireStorageModule} from '@angular/fire/storage';
 import {HttpClientModule} from '@angular/common/http';
+import {OrderModule} from "./module/order/order.module";
 import {AccountModule} from './module/account/account.module';
 import {ComputerModule} from './module/computer/computer.module';
 import {EmployeeModule} from './module/employee/employee.module';
 import {GameModule} from './module/game/game.module';
 import {OrderDetailModule} from './module/order-detail/order-detail.module';
-import {ServiceModule} from './module/service/service.module';
 import {RouterModule} from '@angular/router';
 import {StatisticModule} from './module/statistic/statistic.module';
-
-
-
 
 @NgModule({
   declarations: [
@@ -32,11 +29,12 @@ import {StatisticModule} from './module/statistic/statistic.module';
     AppRoutingModule,
     CustomerModule,
     HttpClientModule,
-    ServiceModule,
+    OrderModule,
+    OrderDetailModule,
     BrowserAnimationsModule,
     CommonModule,
     AngularFireStorageModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig)
+    AngularFireModule.initializeApp(environment.firebaseConfig),
     AccountModule,
     ComputerModule,
     EmployeeModule,

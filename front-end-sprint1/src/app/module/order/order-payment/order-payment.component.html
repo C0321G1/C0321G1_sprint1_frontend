@@ -1,0 +1,9 @@
+<div class="container-dialog">
+      <h5 class="modal-title">Xác nhận thanh toán</h5>
+      <p>Tên khách hàng <span style="color:red;">{{nameCustomer}}</span></p>
+      <p>Số tiền thanh toán <span style="color:red;">{{totalMoneys}}</span></p>
+  <div class="button">
+    <button type="button" class="btn btn-secondary" (click)="close()">Close</button>
+    <button type="button" class="btn btn-primary" (click)="confirm()">Confirm</button>
+  </div>
+</div>

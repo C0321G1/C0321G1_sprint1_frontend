@@ -1,0 +1,14 @@
+.container-choose-payment{
+border-radius: 10px;
+}
+.button{
+  display: flex;
+  justify-content: space-evenly;
+}
+.content{
+  text-align: center;
+  margin-bottom: 15px;
+}
+p{
+  text-align: center;
+}
