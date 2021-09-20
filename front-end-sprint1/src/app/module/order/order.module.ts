@@ -13,11 +13,12 @@ import {OrderListCustomerComponent} from "./order-list-customer/order-list-custo
 import {OrderRoutingModule} from "./order-routing.module";
 import {OrderDetailRoutingModule} from "../order-detail/order-detail-routing.module";
 import {OrderDetailListComponent} from "./order-detail-list/order-detail-list.component";
+import { OrderChoosePaymentComponent } from './order-choose-payment/order-choose-payment.component';
 
 
-
+// huynh code
 @NgModule({
-  declarations: [OrderPaymentComponent,OrderListComponent,OrderListCustomerComponent,OrderDetailListComponent],
+  declarations: [OrderPaymentComponent,OrderListComponent,OrderListCustomerComponent,OrderDetailListComponent, OrderChoosePaymentComponent],
   exports: [
     OrderListComponent,OrderListCustomerComponent,OrderPaymentComponent
   ],  imports: [

@@ -1,0 +1,14 @@
+<div class="container-choose-payment">
+  <div class="content">
+    <h3>Chọn phương thức thanh toán</h3>
+  </div>
+  <p>Số tiền thanh toán <span style="color:red;">{{totalMoneys}} USD</span></p>
+  <div class="button">
+    <div>
+      <button type="button" class="btn btn-outline-success" (click)="payment()"> Thanh toán trực tiếp</button>
+    </div>
+    <div>
+      <button type="button" class="btn btn-outline-info" (click)="payPal(totalMoneys)"> Thanh toán qua Paypal</button>
+    </div>
+  </div>
+</div>

@@ -7,7 +7,7 @@
       <hr>
 
 
-      <form [formGroup]="editForm" (ngSubmit)="edit()">
+      <form [formGroup]="editForm" >
 
         <div class="mt-4">
           <label class="style-span">Services Name (<span style="color: red">*</span>)</label>
@@ -16,6 +16,9 @@
                  formControlName="name">
           <div class="style-error" *ngIf="editForm.controls.name.hasError('required') &&
            editForm.controls.name.touched"> Please enter service name
+          </div>
+          <div class="style-error">
+            {{listError.name}}
           </div>
         </div>
 
@@ -88,7 +91,7 @@
         </div>
         <hr>
         <div class="text-center">
-          <button class="btn btn-warning" [routerLink]="''">
+          <button class="btn btn-warning" (click)="back()"  >
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                  class="bi bi-arrow-return-left" viewBox="0 0 16 16">
               <path fill-rule="evenodd"
@@ -96,7 +99,7 @@
             </svg>
             <span style="font-family: Averta">Back</span>
           </button>
-          <button class="btn btn-secondary mx-3" type="reset">
+          <button class="btn btn-secondary mx-3" (click)="reset1()">
             <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor"
                  class="bi bi-arrow-repeat" viewBox="0 0 16 16">
               <path
@@ -106,7 +109,7 @@
             </svg>
             <span style="font-family: Averta">Reset</span>
           </button>
-          <button class="btn btn-warning" type="submit" (keyup.enter)="$event" >
+          <button class="btn btn-warning" type="submit" (keyup.enter)="$event" (click)="edit()">
             <svg xmlns
                    ="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi
         bi-pencil-square" viewBox="0 0 16 16">

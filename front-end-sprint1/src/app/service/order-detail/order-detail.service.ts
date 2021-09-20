@@ -11,7 +11,7 @@ export class OrderDetailService {
 
   constructor(public http: HttpClient) {
   }
-
+// huynh code
   getAllOderDetailByIdOder(idOder: number): Observable<any> {
     return this.http.get<any>(this.API + '/' + idOder);
   }

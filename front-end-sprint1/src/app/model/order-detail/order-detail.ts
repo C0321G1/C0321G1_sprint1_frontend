@@ -8,5 +8,5 @@ export interface OrderDetail {
   order: Order;
   quantity: number;
   totalPrices: number;
-  service: Services;
+  services: Services;
 }

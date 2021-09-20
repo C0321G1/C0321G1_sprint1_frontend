@@ -1,36 +1,9 @@
-#service-detail {
-  width: 50%;
-  height: 50%;
-  margin: 7% 25%;
-  border: solid black 1px;
-  border-radius: 15px;
-  background-color: darkgray;
-  color: #ffc107;
-}
-#content{
-  text-align: center;
-  padding: 20px;
-  color: #ffc107;
-}
-#table{
-  margin: 0 10%;
-  width: 80%;
-  color: #ffc107;
-}
-#button{
-  margin-left: 80%;
-  display: inline-block;
-  width: 80px;
-  color: #ffc107;
-  background-color: #1b1e21;
-}
-#button-container{
-  padding: 25px;
-  color: #ffc107;
 
-}
 body{
   color: #fff028;
   font-family: Averta;
   font-size: 18px;
+}
+.order{
+  background-image: url("src/assets/image/background.jpg");
 }

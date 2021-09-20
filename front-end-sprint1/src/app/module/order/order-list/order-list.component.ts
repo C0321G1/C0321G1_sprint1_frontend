@@ -5,6 +5,8 @@ import {OrderDetailService} from "../../../service/order-detail/order-detail.ser
 import {OrderDetail} from "../../../model/order-detail/order-detail";
 import {MatDialog} from "@angular/material/dialog";
 import {OrderDetailListComponent} from "../order-detail-list/order-detail-list.component";
+import {OrderPaymentComponent} from "../order-payment/order-payment.component";
+import {ToastrService} from "ngx-toastr";
 
 // huynh code
 @Component({
@@ -14,15 +16,18 @@ import {OrderDetailListComponent} from "../order-detail-list/order-detail-list.c
 })
 export class OrderListComponent implements OnInit {
   public p = 0;
-  public orderPage: Order[];
-  po: Array<any> = [];
+  public orderPage: Order[]=[];
+  ps: Array<any> = [];
+  message:string;
+
 
   listTotalMoney = [];
   orderDetailList: OrderDetail[]
 
   constructor(private orderService: OrderService,
               private orderDetailService: OrderDetailService,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+            ) {
 
   }
 
@@ -43,18 +48,16 @@ export class OrderListComponent implements OnInit {
 
   getAllOrderPage() {
     this.orderService.getAllOder(this.p).subscribe(value => {
-
       if (value == null) {
         this.orderPage = [];
+        this.message = 'List is empty';
       } else {
         this.orderPage = value.content;
-        this.p = 0;
         for (let order of this.orderPage) {
           this.getTotalMoney(order.orderId)
         }
       }
-      this.po = new Array<any>(value.totalPage);
-      console.log(this.po.length);
+      this.ps = new Array<any>(value.totalPages);
     }, error => {
       console.log(error);
     });
@@ -62,10 +65,12 @@ export class OrderListComponent implements OnInit {
 
   first() {
     this.p = 0;
+    this.getAllOrderPage()
   }
 
   last() {
-    this.p = this.po.length - 1;
+    this.p = this.ps.length - 1;
+    this.getAllOrderPage()
   }
 
   previous() {
@@ -77,11 +82,13 @@ export class OrderListComponent implements OnInit {
   }
 
   next() {
-    if (this.p > this.po.length - 2) {
-      this.p = this.po.length - 1;
+    if (this.p > this.ps.length - 2) {
+      this.p = this.ps.length - 1;
+      this.getAllOrderPage();
+    }else {
+      this.p = this.p + 1;
+      this.getAllOrderPage();
     }
-    this.p = this.p + 1;
-    this.getAllOrderPage();
   }
 
   openDialog(id: any) {
@@ -89,6 +96,20 @@ export class OrderListComponent implements OnInit {
       const dialogRef = this.dialog.open(OrderDetailListComponent, {
         data: {oderDetailList: data},
         width: '700px',
+        height:'auto',
+        disableClose: true
+      });
+      dialogRef.afterClosed().subscribe(() => {
+        this.ngOnInit();
+      });
+    });
+  }
+
+  openDialogConfirmPayment(orderId: number) {
+    this.orderService.getOrderById(orderId).subscribe(data => {
+      const dialogRef = this.dialog.open(OrderPaymentComponent, {
+        data: {order: data},
+        width: '500px',
         height:'auto',
         disableClose: true
       });

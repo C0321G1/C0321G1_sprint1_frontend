@@ -17,13 +17,10 @@
     <tbody>
     <tr *ngFor="let orderDetail of listOderDetail,index as i">
       <th scope="row">{{i+1}}</th>
-      <td></td>
-<!--      <td><label>{{orderDetail.service.name}}</label></td>-->
+      <td><label>{{orderDetail.services.name}}</label></td>
       <td><label>{{orderDetail.quantity}}</label></td>
-      <td></td>
-      <td></td>
-<!--      <td><label>{{orderDetail.service.unit.name}}</label></td>-->
-<!--      <td><label>{{orderDetail.service.prices}}</label></td>-->
+      <td><label>{{orderDetail.services.unit.name}}</label></td>
+      <td><label>{{orderDetail.services.prices}}</label></td>
       <td><label>{{orderDetail.totalPrices}}</label></td>
     </tr>
     </tbody>

@@ -1,0 +1,13 @@
+.container-dialog{
+  text-align: center;
+  width: 400px;
+  height: auto;
+  margin-left: 8%;
+}
+.button{
+  display: flex;
+  justify-content: space-evenly;
+}
+h5{
+  margin-bottom: 3%;
+}
