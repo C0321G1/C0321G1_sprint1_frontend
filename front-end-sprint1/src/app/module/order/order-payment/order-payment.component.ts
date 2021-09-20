@@ -35,7 +35,7 @@ export class OrderPaymentComponent implements OnInit {
   close() {
     this.dialogRef.close();
   }
-
+// huynh code
   confirm() {
     this.orderService.confirmPayment(this.orderId).subscribe(()=>{
       this.toast.success('thanh toán thành công ');
