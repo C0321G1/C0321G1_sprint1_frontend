@@ -11,14 +11,13 @@ import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
 import {HttpClientModule} from '@angular/common/http';
 import {MatDialogModule} from '@angular/material/dialog';
 import {ToastrModule} from 'ngx-toastr';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {GameTrailerComponent} from './game-trailer/game-trailer.component';
 import {GameDetailComponent} from './game-detail/game-detail.component';
-import {BrowserModule} from "@angular/platform-browser";
 
 
 @NgModule({
-  declarations: [GameEditComponent, GameCreateComponent, GameListComponent, GameDeleteDialogComponent, GameTrailerComponent, GameDetailComponent],
+  declarations: [GameEditComponent, GameCreateComponent, GameListComponent, GameDeleteDialogComponent,
+    GameTrailerComponent, GameDetailComponent],
   exports: [
     GameCreateComponent,
     GameEditComponent,
