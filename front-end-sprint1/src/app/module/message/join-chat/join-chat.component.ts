@@ -1,13 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {FormControl, FormGroupDirective, FormBuilder, FormGroup, NgForm, Validators} from '@angular/forms';
+import {FormControl, FormGroupDirective, NgForm} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
-import * as firebase from 'firebase';
-import {snapshotToArray} from '../room-list/room-list.component';
 import {DatePipe} from '@angular/common';
 import {AccountService} from '../../../service/account/account.service';
-import {Account} from '../../../model/account/account';
-import {Role} from '../../../model/account/role';
+import {AngularFireDatabase} from '@angular/fire/database';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -22,17 +19,17 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./join-chat.component.css']
 })
 export class JoinChatComponent implements OnInit {
-  nickname = 'Admin';
-  refRooms = firebase.database().ref('rooms/');
-  refUsers = firebase.database().ref('users/');
+  nickname = 'vinhdn';
+  refRooms = this.storage.database.ref('rooms/');
+  refUsers = this.storage.database.ref('users/');
   matcher = new MyErrorStateMatcher();
   role: string;
 
   constructor(private router: Router, public datepipe: DatePipe,
               private accountService: AccountService,
+              @Inject(AngularFireDatabase) private storage: AngularFireDatabase
               // private tokenStorage: TokenStorage
   ) {
-      // this.findUser();
   }
 
   ngOnInit(): void {
@@ -50,7 +47,7 @@ export class JoinChatComponent implements OnInit {
       chat.date = this.datepipe.transform(new Date(), 'dd/MM/yyyy HH:mm:ss');
       chat.message = `${this.nickname} enter the room`;
       chat.type = 'join';
-      const newMessage = firebase.database().ref('chats/').push();
+      const newMessage = this.storage.database.ref('chats/').push();
       newMessage.set(chat);
 
       this.router.navigate(['/chatRoom', roomname]);
@@ -64,7 +61,7 @@ export class JoinChatComponent implements OnInit {
     room.roomname = roomName;
     this.refRooms.orderByChild('roomname').equalTo(room.roomname).once('value', (snapshot: any) => {
       if (!snapshot.exists()) {
-        const newRoom = firebase.database().ref('rooms/').push();
+        const newRoom = this.storage.database.ref('rooms/').push();
         newRoom.set(room);
       }
     });
@@ -76,7 +73,7 @@ export class JoinChatComponent implements OnInit {
       if (snapshot.exists()) {
         localStorage.setItem('nickname', user.nickname);
       } else {
-        const newUser = firebase.database().ref('users/').push();
+        const newUser = this.storage.database.ref('users/').push();
         newUser.set(user);
         localStorage.setItem('nickname', user.nickname);
       }

@@ -19,6 +19,8 @@ import {JoinChatComponent} from './join-chat/join-chat.component';
 import {ChatRoomComponent} from './chat-room/chat-room.component';
 import {RoomListComponent} from './room-list/room-list.component';
 import {RouterModule} from '@angular/router';
+import {environment} from '../../../environments/environment';
+import {AngularFireModule} from '@angular/fire';
 
 
 @NgModule({
@@ -42,6 +44,7 @@ import {RouterModule} from '@angular/router';
     MatSidenavModule,
     MatButtonModule,
     RouterModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig)
   ],
   providers: [DatePipe],
   exports: [

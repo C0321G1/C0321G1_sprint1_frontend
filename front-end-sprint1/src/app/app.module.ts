@@ -7,6 +7,8 @@ import {CustomerModule} from './module/customer/customer.module';
 import {MessageModule} from './module/message/message.module';
 import {MessageRoutingModule} from './module/message/message-routing.module';
 import {DatePipe} from '@angular/common';
+import {environment} from '../environments/environment';
+import {AngularFireModule} from '@angular/fire';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,8 @@ import {DatePipe} from '@angular/common';
     AppRoutingModule,
     CustomerModule,
     MessageModule,
-    MessageRoutingModule
+    MessageRoutingModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
   ],
   providers: [],
   bootstrap: [AppComponent]
