@@ -29,7 +29,6 @@ import {StatisticModule} from './module/statistic/statistic.module';
     AppRoutingModule,
     CustomerModule,
     HttpClientModule,
-    ServiceModule,
     OrderModule,
     OrderDetailModule,
     BrowserAnimationsModule,
