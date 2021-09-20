@@ -1,10 +1,11 @@
 import {Component, Inject, OnInit} from '@angular/core';
+import {OrderDetail} from "../../../model/order-detail/order-detail";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {Router} from "@angular/router";
 import {PaymentService} from "../../../service/paypal/payment.service";
 import {OrderDetailService} from "../../../service/order-detail/order-detail.service";
-import {OrderDetail} from "../../../model/order-detail/order-detail";
+import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
+
 
 @Component({
   selector: 'app-order-choose-payment',
@@ -14,7 +15,7 @@ import {ToastrService} from "ngx-toastr";
 // huynh code
 export class OrderChoosePaymentComponent implements OnInit {
   totalMoneys: number;
-  orderDetailList: OrderDetail[]
+  orderDetailList: OrderDetail[];
   constructor(public dialogRef: MatDialogRef<OrderChoosePaymentComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
               public paymentService: PaymentService,

@@ -18,7 +18,6 @@ const routes: Routes = [
   {
     path: 'statistic',
     loadChildren: () => import ('./module/statistic/statistic.module').then(value => value.StatisticModule)
-
   }
 ];
 
