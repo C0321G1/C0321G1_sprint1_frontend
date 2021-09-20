@@ -14,6 +14,7 @@ import {ToastrModule} from 'ngx-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {GameTrailerComponent} from './game-trailer/game-trailer.component';
 import {GameDetailComponent} from './game-detail/game-detail.component';
+import {BrowserModule} from "@angular/platform-browser";
 
 
 @NgModule({
@@ -33,8 +34,7 @@ import {GameDetailComponent} from './game-detail/game-detail.component';
     HttpClientModule,
     MatDialogModule,
     ToastrModule.forRoot(),
-    BrowserAnimationsModule,
-    FormsModule
+    FormsModule,
   ]
 })
 export class GameModule {

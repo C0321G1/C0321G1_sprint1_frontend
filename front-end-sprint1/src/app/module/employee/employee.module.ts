@@ -28,11 +28,9 @@ import {environment} from '../../../environments/environment';
     FormsModule,
     HttpClientModule,
     ToastrModule.forRoot(),
-    BrowserAnimationsModule,
     RouterModule,
-    BrowserModule,
     EmployeeRoutingModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig)
+    AngularFireModule.initializeApp(environment.firebaseConfig),
   ]
 })
 export class EmployeeModule { }

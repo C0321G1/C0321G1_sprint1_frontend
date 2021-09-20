@@ -23,6 +23,8 @@ import {OrderDetailModule} from './module/order-detail/order-detail.module';
 import {ServiceModule} from './module/service/service.module';
 import {RouterModule} from '@angular/router';
 import {StatisticModule} from './module/statistic/statistic.module';
+import {MessageModule} from "./module/message/message.module";
+import {MessageRoutingModule} from "./module/message/message-routing.module";
 
 
 @NgModule({
@@ -39,13 +41,9 @@ import {StatisticModule} from './module/statistic/statistic.module';
     AngularFireStorageModule,
     AngularFireModule.initializeApp(environment.firebaseConfig, 'cloud'),
     AccountModule,
-    BrowserAnimationsModule,
     ClientModule,
-    BrowserAnimationsModule,
     CommonModule,
-    AngularFireStorageModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    ComputerModule,
     EmployeeModule,
     GameModule,
     OrderDetailModule,
@@ -53,7 +51,9 @@ import {StatisticModule} from './module/statistic/statistic.module';
     RouterModule,
     StatisticModule,
     CustomerModule,
-    ComputerModule
+    ComputerModule,
+    MessageModule,
+    MessageRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

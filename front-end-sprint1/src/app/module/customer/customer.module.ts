@@ -4,6 +4,9 @@ import {CustomerSignUpComponent} from './customer-sign-up/customer-sign-up.compo
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {BrowserModule} from "@angular/platform-browser";
+import {CustomerRoutingModule} from "./customer-routing.module";
+import {RouterModule} from "@angular/router";
 
 
 
@@ -14,10 +17,11 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     CustomerSignUpComponent
   ],
   imports: [
-    BrowserAnimationsModule,
     CommonModule,
     ReactiveFormsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    CustomerRoutingModule,
+    RouterModule
   ]
 })
 export class CustomerModule { }

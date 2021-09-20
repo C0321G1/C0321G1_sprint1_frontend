@@ -7,7 +7,7 @@ const routes: Routes = [
     loadChildren: () => import('./module/service/service.module').then(module => module.ServiceModule)
   },
   {
-    path: 'game',
+    path: '',
     loadChildren: () => import('./module/game/game.module').then(module => module.GameModule)
   },
   {

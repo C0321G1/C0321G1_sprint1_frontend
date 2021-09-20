@@ -17,6 +17,9 @@
             <div [hidden]="!gameForm.controls.name.errors.required">
               <p style="color: red">Name is required !</p>
             </div>
+            <div [hidden]="!gameForm.controls.name.errors.maxlength">
+              <p style="color: red">Name cannot be longer than 40 characters !</p>
+            </div>
           </div>
           <div style="color: red">{{listError.name}}</div>
         </div>
@@ -86,9 +89,6 @@
             *ngIf="!gameForm.controls.gaming?.valid && (gameForm.controls.gaming?.dirty || gameForm.controls.gaming?.touched)">
             <div [hidden]="!gameForm.controls.gaming.errors.required">
               <p style="color: red">Gaming is required !</p>
-            </div>
-            <div [hidden]="!gameForm.controls.gaming.errors.min">
-              <p style="color: red">Gaming must be greater than or equal to 0 !</p>
             </div>
             <div [hidden]="!gameForm.controls.gaming.errors.pattern">
               <p style="color: red">Gaming must be a integer !</p>

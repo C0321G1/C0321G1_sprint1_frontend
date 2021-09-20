@@ -18,20 +18,21 @@
         <a class="nav-link" style="color: #fff028;" [routerLink]="'/employee/list'"><h5>Employee</h5></a>
       </li>
       <li class="nav-item link-1 px-lg-3">
-        <a class="nav-link" style="color: #fff028;" href="#"><h5>Service</h5></a>
+        <a class="nav-link" style="color: #fff028;" [routerLink]="'/services'"><h5>Service</h5></a>
       </li>
       <li class="nav-item link-1 px-lg-3">
-        <a class="nav-link" style="color: #fff028;" href="#"><h5>Statistical</h5></a>
+        <a class="nav-link" style="color: #fff028;" [routerLink]="'/statistic'"><h5>Statistical</h5></a>
       </li>
       <li class="nav-item link-1 px-lg-3">
-        <a class="nav-link" style="color: #fff028;" href="#"><h5>Computer</h5></a>
+        <a class="nav-link" style="color: #fff028;" [routerLink]="'/computer-list'"><h5>Computer</h5></a>
       </li>
       <li class="nav-item link-1 px-lg-3">
         <a class="nav-link" style="color: #fff028;" href="#"><h5>Payment</h5></a>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <button class="btn  btn-warning mr-3">
+    <form class="form-inline my-2 my-lg-0 ml-5">
+      <div style="width: 250px; overflow: hidden" colspan="2">
+      <button class="btn  btn-warning mr-3" [routerLink]="'/login'">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
              class="bi bi-person-check" viewBox="0 0 16 16">
           <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
@@ -40,7 +41,7 @@
         </svg>
         <span>Login</span>
       </button>
-      <button class="btn  btn-warning mr-3 ">
+      <button class="btn  btn-warning mr-3 " [routerLink]="'/signUp'">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
              class="bi bi-person-plus" viewBox="0 0 16 16">
           <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
@@ -49,6 +50,7 @@
         </svg>
         <span>Register</span>
       </button>
+      </div>
     </form>
   </div>
 </nav>
