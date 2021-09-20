@@ -51,11 +51,11 @@ export class GameCreateComponent implements OnInit {
 
   initfrom() {
     this.gameForm = new FormGroup({
-      name: new FormControl('', [Validators.required]),
+      name: new FormControl('', [Validators.required, Validators.maxLength(40)]),
       trailer: new FormControl('', [Validators.required]),
       content: new FormControl('', [Validators.required, Validators.maxLength(2007)]),
       image: new FormControl('', [Validators.required]),
-      gaming: new FormControl('', [Validators.required, Validators.min(0), Validators.pattern("^\\d+$")]),
+      gaming: new FormControl('', [Validators.required, Validators.pattern("^\\d+$")]),
       gameType: new FormControl('', [Validators.required]),
     });
   }
@@ -79,7 +79,6 @@ export class GameCreateComponent implements OnInit {
     this.storage.upload(nameImg, this.selectedImage).snapshotChanges().pipe(
       finalize(() => {
         fileRef.getDownloadURL().subscribe((url) => {
-          console.log(url);
           this.gameForm.value.image = url;
           this.image = url;
           this.isImage = true;
@@ -94,13 +93,15 @@ export class GameCreateComponent implements OnInit {
       this.gameForm.value.image = this.image;
       this.gameService.saveGame(this.gameForm.value).subscribe(data => {
         this.router.navigateByUrl('');
-        this.toastr.success('Thanks!', 'Create new game successfully !');
+        this.toastr.success('Thanks!', 'Create new game successfully!');
       }, error => {
         if (error.status === 400) {
           this.listError = error.error;
         }
-        this.toastr.error('Warning!', 'Create new game fail !');
+        this.toastr.error('Warning!', 'Create new game fail!');
       });
+    } else {
+      this.toastr.error('Warning!', 'Please enter full information!');
     }
   }
 
@@ -121,7 +122,6 @@ export class GameCreateComponent implements OnInit {
 
   resetValue() {
     this.game = this.gameForm.value;
-    console.log(this.game);
     Swal.fire({
       title: 'Are you sure to Reset?',
       text: 'This action cannot be undone !',
@@ -130,7 +130,8 @@ export class GameCreateComponent implements OnInit {
       confirmButtonText: 'Yes',
       cancelButtonText: 'No',
       allowOutsideClick: false,
-      confirmButtonColor: '#DD6B55'
+      confirmButtonColor: '#DD6B55',
+      cancelButtonColor: '#D0D2DE'
     }).then((result) => {
       if (result.value) {
         this.isImage = false;
@@ -150,7 +151,8 @@ export class GameCreateComponent implements OnInit {
       confirmButtonText: 'Yes',
       cancelButtonText: 'No',
       allowOutsideClick: false,
-      confirmButtonColor: '#DD6B55'
+      confirmButtonColor: '#DD6B55',
+      cancelButtonColor: '#D0D2DE'
     }).then((result) => {
       if (result.value) {
         this.router.navigateByUrl('');

@@ -9,7 +9,7 @@ import {FormControl, FormGroup} from '@angular/forms';
 import {ToastrService} from 'ngx-toastr';
 import {GameTrailerComponent} from '../game-trailer/game-trailer.component';
 import {GameDetailComponent} from '../game-detail/game-detail.component';
-import {Title} from "@angular/platform-browser";
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-game-list',
@@ -108,13 +108,13 @@ export class GameListComponent implements OnInit {
         this.ngOnInit();
       });
     }, error => {
-      this.toast.success('Delete failed game.', 'Delete game');
+      this.toast.error('Delete failed game.', 'Delete game');
     });
   }
 
   searchGame(page: number) {
     if (this.gameSearch.value.nameGame === '' && this.gameSearch.value.gameType === '') {
-      this.toast.error('Please enter the field you want to search!', 'Search game');
+      this.toast.error('Page search failed.', 'Search game');
     } else {
       this.checkSearch = 1;
       this.gameService.searchGame(page, this.gameSearch.value.nameGame, this.gameSearch.value.gameType).subscribe(value => {
@@ -179,7 +179,7 @@ export class GameListComponent implements OnInit {
       }
     } else {
       if (this.searchPageInput !== '') {
-        this.toast.error('please enter page number!', 'Search page');
+        this.toast.error('Please enter page number!', 'Search page');
       }
     }
   }
