@@ -1,9 +1,10 @@
 
-<body style="background-image: url('../../../../assets/image/hinh-nen-da-dang-nhap.jpg')">
+<body style="background-image: url('../../../../assets/image/background.jpg')">
 
 <div class="container">
+  <h3 style="color: #fff028; text-align: center" >Statistical</h3>
   <div class="row" style="font-family: Averta;">
-    <div class="col-lg-4 col-sm-12 pr-5 " style="padding-right: 10px">
+    <div class="col-xl-4 col-lg-12 pr-5" style="padding-right: 10px">
       <form [formGroup]="statisticForm" (ngSubmit)="onSubmit()">
         <table class="justify-content-center">
           <tr>
@@ -66,7 +67,8 @@
           <tr>
             <td></td>
             <td>
-              <button type="submit" class="btn btn-warning m-3 " style="width: 35%">
+              <button type="submit" class="btn btn-warning m-3 " style="width: 35%"
+              [disabled]="statisticForm.invalid">
                 OK
               </button>
             </td>
@@ -76,7 +78,7 @@
       <div class="fontError" [hidden]="notError">Unable to connect to database or data empty!</div>
     </div>
 
-    <div class="col-lg-8 col-sm-12" style="padding: 30px" [hidden]="!notError">
+    <div class="col-xl-8 col-lg-12" style="padding: 30px" [hidden]="!notError">
       <canvas style="background-color: white; padding-right: 20px" id="myChart"></canvas>
     </div>
   </div>

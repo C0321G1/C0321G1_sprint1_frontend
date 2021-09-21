@@ -1,4 +1,4 @@
-export interface ManufacturerComputer {
-  id: string;
-  nameManufacturer: string;
+export interface ComputerManufacturer {
+  computerManufacturerId: string;
+  name: string;
 }
