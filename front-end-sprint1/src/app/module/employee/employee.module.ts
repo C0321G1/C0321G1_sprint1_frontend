@@ -1,4 +1,3 @@
-
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ListEmployeeComponent} from './list-employee/list-employee.component';
@@ -13,10 +12,12 @@ import {CreateEmployeeComponent} from './create-employee/create-employee.compone
 import {EditEmployeeComponent} from './edit-employee/edit-employee.component';
 import {AngularFireModule} from '@angular/fire';
 import {environment} from '../../../environments/environment';
+import {DeleteEmployeeComponent} from './delete-employee/delete-employee.component';
+import {MatDialogModule} from "@angular/material/dialog";
 
 
 @NgModule({
-  declarations: [ListEmployeeComponent, CreateEmployeeComponent, EditEmployeeComponent],
+  declarations: [ListEmployeeComponent, CreateEmployeeComponent, EditEmployeeComponent, DeleteEmployeeComponent],
   exports: [
     ListEmployeeComponent,
     CreateEmployeeComponent,
@@ -28,11 +29,12 @@ import {environment} from '../../../environments/environment';
     FormsModule,
     HttpClientModule,
     ToastrModule.forRoot(),
-    BrowserAnimationsModule,
+    MatDialogModule,
     RouterModule,
-    BrowserModule,
     EmployeeRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig)
-  ]
+  ],
+  entryComponents: [DeleteEmployeeComponent],
 })
-export class EmployeeModule { }
+export class EmployeeModule {
+}

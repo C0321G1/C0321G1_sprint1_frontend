@@ -4,6 +4,11 @@ import {DeleteServicesComponent} from '../delete-services/delete-services.compon
 import {ToastrService} from 'ngx-toastr';
 import {Services} from '../../../model/service/services';
 import {ServiceService} from '../../../service/service/service.service';
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {TokenStorageService} from "../../../service/account/token-storage.service";
+import {GameService} from "../../../service/game/game.service";
+import {GameTypeService} from "../../../service/game/gameType/game-type.service";
+import {Title} from "@angular/platform-browser";
 
 
 @Component({
@@ -12,7 +17,7 @@ import {ServiceService} from '../../../service/service/service.service';
   styleUrls: ['./services-list.component.css']
 })
 export class ServicesListComponent implements OnInit {
-  public servicesPage: Services[] = [];
+  public servicesPage: any;
   public name = '';
   public name2 = '';
   public p = 0;
@@ -21,22 +26,50 @@ export class ServicesListComponent implements OnInit {
   public messenger = '';
   public check = 0;
   public checkNumber = true;
-  public checkbox = false;
-  public checkbox2 = true;
   public inputPage = '';
   public deleteServicesId: Array<number> = [];
   public deleteServicesCode: Array<string> = [];
-
+  searchAllForm: FormGroup;
+  searchNameCodePrice: FormGroup;
   ps: Array<any> = [];
+  private roles: string[];
+  isLogged = false;
+  showAdminBoard = false;
 
-  constructor(private dialog: MatDialog,
+  constructor(private tokenStorageService: TokenStorageService, private dialog: MatDialog,
               private toast: ToastrService,
               private serviceService: ServiceService) {
 
+    this.getSearchAllFrom();
+    this.getSearchCodeNamePrice();
   }
 
   ngOnInit(): void {
-    this.getAllServicesList();
+    this.isLogged = !!this.tokenStorageService.getToken();
+
+    if (this.isLogged) {
+      const user = this.tokenStorageService.getUser();
+      this.roles = user.roles;
+      if (this.roles.includes('ROLE_ADMIN') || this.roles.includes('ROLE_MODERATOR')){
+        this.showAdminBoard = true;
+      }
+      this.getAllServicesList();
+    }
+  }
+
+  getSearchAllFrom() {
+    this.searchAllForm = new FormGroup({
+        name: new FormControl('', Validators.maxLength(50))
+      }
+    )
+  }
+
+  getSearchCodeNamePrice() {
+    this.searchNameCodePrice = new FormGroup({
+      name2: new FormControl('', Validators.maxLength(50)),
+      code: new FormControl('', Validators.maxLength(50)),
+      prices: new FormControl('', Validators.maxLength(50))
+    })
   }
 
   // phap
@@ -50,19 +83,28 @@ export class ServicesListComponent implements OnInit {
     }
     this.deleteServicesId.push(id);
     this.deleteServicesCode.push(code);
-    console.log('code ' + this.deleteServicesCode);
-    console.log('id ' + this.deleteServicesId);
+    console.log("code " + this.deleteServicesCode);
+    console.log("id " + this.deleteServicesId);
   }
 
 
 // phap
   getAllServicesList() {
+    console.log(this.name);
     this.serviceService.getAllServices(this.name, this.p).subscribe(value => {
       this.check = 0;
       if (value == null) {
+        this.ps = [];
         this.servicesPage = [];
-        this.messenger = 'List is empty';
+        this.messenger = "List is empty";
         this.p = 0;
+        return;
+      } else if (value.content.length == 0 && value.totalPages > 0) {
+        this.servicesPage = [];
+        console.log(value);
+        this.p = 0;
+        this.getAllServicesList();
+
       }
       this.servicesPage = value.content;
       for (let i = 0; i < this.servicesPage.length; i++) {
@@ -74,7 +116,6 @@ export class ServicesListComponent implements OnInit {
         }
       }
       this.ps = new Array<any>(value.totalPages);
-      this.name = '';
       console.log(this.servicesPage);
     }, error => {
       console.log(error);
@@ -85,10 +126,18 @@ export class ServicesListComponent implements OnInit {
   searchNameCodePrices() {
     this.serviceService.searchNameCode(this.code, this.name2, this.prices, this.p).subscribe(value => {
       this.check = 1;
-      if (value == null) {
+      console.log(value);
+      if (value.content.length == 0 && value.totalPages == 0) {
+        this.ps = [];
         this.servicesPage = [];
         this.messenger = 'List is empty';
         this.p = 0;
+      } else if (value.content.length == 0 && value.totalPages > 0) {
+        console.log(value);
+        this.servicesPage = [];
+        this.messenger = 'List is empty';
+        this.p = 0;
+        this.searchNameCodePrices();
       }
       this.servicesPage = value.content;
       for (let i = 0; i < this.servicesPage.length; i++) {
@@ -180,24 +229,12 @@ export class ServicesListComponent implements OnInit {
 
   }
 
-  // phap
-  openDialog(id: any): void {
-    this.serviceService.findById(id).subscribe(dataDialog => {
-      const dialogRef = this.dialog.open(DeleteServicesComponent, {
-        width: '500px',
-        data: {name: dataDialog},
-        disableClose: true
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        this.ngOnInit();
-      });
-    });
-  }
-
 // phap
   openDialogAll(): void {
     const dialogRef = this.dialog.open(DeleteServicesComponent, {
       width: '500px',
+      height: '360px',
+      panelClass: 'config-dialog',
       data: {id: this.deleteServicesId, code: this.deleteServicesCode},
       disableClose: true
     });
@@ -209,6 +246,24 @@ export class ServicesListComponent implements OnInit {
         this.deleteServicesCode = [];
       }
       this.ngOnInit();
+    }, error => {
+      this.toast.error('Delete failed.', 'Delete Services')
+    });
+  }
+
+
+  // phap
+  openDialog(id: any): void {
+    this.serviceService.findById(id).subscribe(dataDialog => {
+      const dialogRef = this.dialog.open(DeleteServicesComponent, {
+        width: '500px',
+        height: '360px',
+        data: {name: dataDialog},
+        disableClose: true
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        this.ngOnInit();
+      });
     });
   }
 
@@ -231,9 +286,25 @@ export class ServicesListComponent implements OnInit {
   }
 
   resetForm() {
+
     this.code = '';
     this.name2 = '';
     this.prices = '';
     this.name = '';
+    this.p = 0;
+    this.searchAllForm = new FormGroup({
+      name: new FormControl('', Validators.maxLength(50))
+    })
+    this.searchNameCodePrice = new FormGroup({
+      name2: new FormControl('', Validators.maxLength(50)),
+      code: new FormControl('', Validators.maxLength(50)),
+      prices: new FormControl('', Validators.maxLength(50))
+    })
+    this.getAllServicesList();
+  }
+
+  changePrice2(event: KeyboardEvent) {
+    // @ts-ignore
+    this.changePrice = event.target.value;
   }
 }

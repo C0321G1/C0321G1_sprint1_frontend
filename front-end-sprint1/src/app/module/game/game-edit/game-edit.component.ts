@@ -23,12 +23,13 @@ export class GameEditComponent implements OnInit {
   public Editor = ClassicEditor;
   public gameForm: FormGroup;
   public game: Game;
-  public gameType: GameType[] = [];
+  public gameType: any;
   private gameId: number;
   imageGame: string;
   private selectedImage: any;
   listError: any = '';
   @ViewChild('nameinput') private elementRef: ElementRef;
+  changeGaming = '';
 
   public ngAfterViewInit(): void {
     this.elementRef.nativeElement.focus();
@@ -52,11 +53,11 @@ export class GameEditComponent implements OnInit {
 
   initfrom() {
     this.gameForm = new FormGroup({
-      name: new FormControl('', [Validators.required]),
+      name: new FormControl('', [Validators.required, Validators.maxLength(40)]),
       trailer: new FormControl('', [Validators.required]),
       content: new FormControl('', [Validators.required, Validators.maxLength(2000)]),
       image: new FormControl('', [Validators.required]),
-      gaming: new FormControl('', [Validators.required, Validators.min(0), Validators.pattern("^\\d+$")]),
+      gaming: new FormControl('', [Validators.required, Validators.pattern("^\\d+$")]),
       gameType: new FormControl('', [Validators.required]),
     });
   }
@@ -81,19 +82,18 @@ export class GameEditComponent implements OnInit {
 
   loadImg() {
     Swal.fire({
-      title: 'Please wait !',
-      imageUrl: '../../../../../assets/image/swal-nhung.gif',
-      imageWidth: '170px',
+      title: 'Sending data',
+      text: 'Please wait ...',
+      imageUrl: '../../../../../assets/image/spin.gif',
+      imageWidth: '100px',
       showConfirmButton: false,
-      allowOutsideClick: false,
-      confirmButtonColor: '#DD6B55'
+      allowOutsideClick: false
     });
     const nameImg = this.getCurrentDateTime() + this.selectedImage?.name;
     const fileRef = this.storage.ref(nameImg);
     this.storage.upload(nameImg, this.selectedImage).snapshotChanges().pipe(
       finalize(() => {
         fileRef.getDownloadURL().subscribe((url) => {
-          console.log(url);
           this.gameForm.value.image = url;
           this.imageGame = url;
           Swal.close();
@@ -104,19 +104,15 @@ export class GameEditComponent implements OnInit {
 
 
   editGame() {
-    if (this.gameForm.valid) {
-      this.gameService.updateGame(this.gameId, this.gameForm.value,).subscribe(data => {
-        console.log(this.gameForm.value);
-        this.router.navigateByUrl('');
-        this.toastrEdit();
-      }, error => {
-        console.log(error);
-        if (error.status === 400) {
-          this.listError = error.error;
-        }
-        this.toastr.error('Warning!', 'Edit game fail !');
-      });
-    }
+    this.gameService.updateGame(this.gameId, this.gameForm.value,).subscribe(data => {
+      this.router.navigateByUrl('');
+      this.toastr.success('Thanks!', 'Edit game successfully!');
+    }, error => {
+      if (error.status === 400) {
+        this.listError = error.error;
+      }
+      this.toastr.error('Warning!', 'Edit game fail!');
+    });
   }
 
   getCurrentDateTime(): string {
@@ -137,21 +133,21 @@ export class GameEditComponent implements OnInit {
   reset() {
     this.game = this.gameForm.value;
     Swal.fire({
-      title: 'Are you sure to Reset?',
+      title: 'Are you sure to reset?',
       text: 'This action cannot be undone !',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Yes',
       cancelButtonText: 'No',
       allowOutsideClick: false,
-      confirmButtonColor: '#DD6B55'
+      confirmButtonColor: '#DD6B55',
+      cancelButtonColor: '#768394'
     }).then((result) => {
       if (result.value) {
         this.findGame();
+        this.toastr.success('Thanks!', 'Reset game successfully!');
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         this.gameForm.patchValue(this.game);
-        console.log(this.game);
-        console.log(this.gameForm.value);
       }
     });
   }
@@ -161,17 +157,17 @@ export class GameEditComponent implements OnInit {
   }
 
   back() {
-    console.log('back1');
     this.game = this.gameForm.value;
     Swal.fire({
-      title: 'Are you sure back to Home?',
+      title: 'Are you sure back to home?',
       text: 'Changes will not be saved !',
-      icon: 'warning',
+      icon: 'info',
       showCancelButton: true,
       confirmButtonText: 'Yes',
       cancelButtonText: 'No',
       allowOutsideClick: false,
-      confirmButtonColor: '#DD6B55'
+      confirmButtonColor: '#DD6B55',
+      cancelButtonColor: '#768394'
     }).then((result) => {
       if (result.value) {
         this.router.navigateByUrl('');
@@ -179,9 +175,5 @@ export class GameEditComponent implements OnInit {
         this.gameForm.patchValue(this.game);
       }
     });
-  }
-
-  toastrEdit() {
-    this.toastr.success('Thanks!', 'Edit game successfully !');
   }
 }

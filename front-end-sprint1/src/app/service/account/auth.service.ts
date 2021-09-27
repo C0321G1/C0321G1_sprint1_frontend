@@ -18,5 +18,7 @@ export class AuthService {
   login(user) {
     return this.http.post<any>(AUTH_API + 'signin', user, httpOptions);
   }
-
+  logout() {
+    return this.http.patch<any>(AUTH_API + 'singout',httpOptions);
+  }
 }

@@ -23,4 +23,5 @@ export interface Employee {
   msgCode?: string;
   msgEmail?: string;
   status?: boolean;
+  msgPassword?: string;
 }

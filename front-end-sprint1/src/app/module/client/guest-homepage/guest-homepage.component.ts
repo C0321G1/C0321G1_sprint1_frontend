@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {TokenStorageService} from "../../../service/account/token-storage.service";
 import {Category} from "../../../model/category/category";
 import {CategoryService} from "../../../service/category/category.service";
@@ -12,20 +12,27 @@ import {Customer} from "../../../model/customer/customer";
 })
 export class GuestHomepageComponent implements OnInit {
   //create: Tra
-  category: Category;
-  customer: Customer;
+  category: any;
+  customer: any;
+id: number;
   constructor(private tokenStorage: TokenStorageService,
               private categoryService: CategoryService,
-              private router: Router) { }
+              private router: Router) {
+  }
 
   ngOnInit(): void {
-    this.getCategory()
-    this.customer =this.tokenStorage.getUser().customer;
+    this.getCategory();
+    this.customer = this.tokenStorage.getUser().customer;
+   this.id = this.tokenStorage.getUser().id;
   }
 
   getCategory() {
     this.categoryService.findById(this.tokenStorage.getUser().category).subscribe(data => {
-        this.category = data;
+      this.category = data;
     })
+  }
+
+  payment() {
+    localStorage.setItem("idCustomer",String(this.id))
   }
 }

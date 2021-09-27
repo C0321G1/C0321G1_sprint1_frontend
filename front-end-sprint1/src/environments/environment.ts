@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   firebaseConfig: {
     apiKey: 'AIzaSyBrjEvvlV9o8oSF5GUFtcKtdmm6vP5sZ7s',
-    authDomain: 'c0321g1-sprint1.firebaseapp.com',
+    databaseURL: 'https://c0321g1-sprint1-default-rtdb.asia-southeast1.firebasedatabase.app',
     projectId: 'c0321g1-sprint1',
     storageBucket: 'c0321g1-sprint1.appspot.com',
     messagingSenderId: '809945127073',

@@ -18,8 +18,8 @@ import Swal from 'sweetalert2';
 })
 export class ServicesCreateComponent implements OnInit {
   createForm: FormGroup;
-  servicesList: Services[] = [];
-  unitList: Unit[] = [];
+  servicesList: any;
+  unitList: any;
   code = 'SV-0001';
   lastId: number;
   selectedImage: any = null;
@@ -30,7 +30,7 @@ export class ServicesCreateComponent implements OnInit {
   page: number;
   name: string;
   listError: any = '';
-
+  changePrice = '';
   constructor(private serviceService: ServiceService,
               private toast: ToastrService,
               private router: Router,
@@ -79,8 +79,7 @@ export class ServicesCreateComponent implements OnInit {
   create() {
     this.createForm.value.image = this.urlImage;
     this.serviceService.create(this.createForm.value).subscribe(data => {
-      console.log(this.createForm.value);
-      this.router.navigateByUrl('');
+      this.router.navigateByUrl('/services/list');
       this.showSuccess();
     }, error => {
       if (error.status === 400) {
@@ -148,7 +147,7 @@ export class ServicesCreateComponent implements OnInit {
   reset() {
     this.serviceForm = this.createForm.value;
     Swal.fire({
-      title: 'Are you sure to Reset?',
+      title: 'Are you sure to reset?',
       text: 'This action cannot be undone !',
       icon: 'warning',
       showCancelButton: true,
@@ -168,7 +167,7 @@ export class ServicesCreateComponent implements OnInit {
   back() {
     this.serviceForm = this.createForm.value;
     Swal.fire({
-      title: 'Are you sure back to home ?',
+      title: 'Are you sure back to service list?',
       text: 'Changes will not be saved !',
       icon: 'info',
       showCancelButton: true,
@@ -178,8 +177,12 @@ export class ServicesCreateComponent implements OnInit {
       allowOutsideClick: false
     }).then((result) => {
       if (result.value) {
-        this.router.navigateByUrl('');
+        this.router.navigateByUrl('/services/list');
       }
     });
+  }
+  changePrice2(event: KeyboardEvent) {
+    // @ts-ignore
+    this.changePrice = event.target.value;
   }
 }

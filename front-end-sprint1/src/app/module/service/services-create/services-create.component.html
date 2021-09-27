@@ -58,10 +58,11 @@
         <div class="mt-4">
           <label class="style-span">Prices (VND) (<span style="color: red">*</span>)</label>
           <input type="text" class="form-control" placeholder="Enter Prices " formControlName="prices"
-                 [ngClass]="createForm.controls.prices.valid? 'is-valid':'is-invalid'">
+                 [ngClass]="createForm.controls.prices.valid? 'is-valid':'is-invalid'" (keyup)="changePrice2($event)">
           <div class="style-error" *ngIf="createForm.controls.prices.hasError('required') &&
            createForm.controls.prices.touched">Please enter price
           </div>
+          <div class="style-span" *ngIf="changePrice!=''"> ( Price : {{changePrice | number}} )</div>
           <div [hidden]="createForm.controls.prices.errors.required" class="style-error" *ngIf="createForm.controls.prices.hasError('min') &&
            createForm.controls.prices.touched"> Please enter a price greater than 1000
           </div>

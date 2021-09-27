@@ -1,8 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {StatisticService} from '../../../service/statistic/statistic.service';
-import {StatisticByComputer} from '../../../model/statistic/statistic-by-computer';
-import {StatisticByMonth} from '../../../model/statistic/statistic-by-month';
-import {StatisticByAccount} from '../../../model/statistic/statistic-by-account';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {InputStatistic} from '../../../model/statistic/input-statistic';
 import {DatePipe} from '@angular/common';
@@ -26,9 +23,9 @@ export class StatisticComponent implements OnInit {
     this.title.setTitle('Statistic');
   }
 
-  listStatisticByComputer: StatisticByComputer[];
-  listStatisticByMonth: StatisticByMonth[];
-  listStatisticByAccount: StatisticByAccount[];
+  listStatisticByComputer: any;
+  listStatisticByMonth: any;
+  listStatisticByAccount: any;
   statisticInput: InputStatistic;
   pastDay = this.datePipe.transform(new Date().setDate(new Date().getDate() - 30), 'yyyy-MM-dd');
   today = this.datePipe.transform(new Date(), 'yyyy-MM-dd');

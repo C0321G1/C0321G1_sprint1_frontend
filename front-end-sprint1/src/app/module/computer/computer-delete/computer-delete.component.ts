@@ -24,13 +24,17 @@ export class ComputerDeleteComponent implements OnInit {
 
   delete() {
     this.computerService.delete(this.data.idComputer).subscribe(() => {
-      this.dialog.close(true);
-      /*this.router.navigateByUrl('');*/
-      this.toastrService.info('Delete computer ' + this.data.nameComputer + ' Success.');
-    }
-    , error => {
+        this.dialog.close(true);
+        /*this.router.navigateByUrl('');*/
+        this.toastrService.info('Delete computer ' + this.data.nameComputer + ' Success.');
+      }
+      , error => {
         if (error.status === 406) {
-          this.toastrService.error('Delete fail: Computer ' + this.data.nameComputer + ' is online');
+          this.toastrService.error('Delete fail: Computer ' + this.data.nameComputer + ' is online.');
+          this.dialog.close(true);
+        }
+        if (error.status === 404) {
+          this.toastrService.error('Delete fail: Computer ' + this.data.nameComputer + ' not found.');
           this.dialog.close(true);
         }
       });

@@ -10,6 +10,9 @@ import {ComputerListDeleteComponent} from '../computer-list-delete/computer-list
 import {ToastrService} from 'ngx-toastr';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Title} from '@angular/platform-browser';
+import {TokenStorageService} from "../../../service/account/token-storage.service";
+import {GameService} from "../../../service/game/game.service";
+import {GameTypeService} from "../../../service/game/gameType/game-type.service";
 
 
 @Component({
@@ -19,11 +22,11 @@ import {Title} from '@angular/platform-browser';
 })
 
 export class ComputerListComponent implements OnInit {
-  listComputer: Computer[] = [];
-  listComputerType: ComputerType[] = [];
-  listComputerStatus: ComputerStatus[] = [];
-  listComputerManufacturer: ComputerManufacturer[] = [];
-  listComputerPage: Computer[] = [];
+  listComputer: any;
+  listComputerType: any;
+  listComputerStatus: any;
+  listComputerManufacturer: any;
+  listComputerPage: any;
   searchPageInput: any;
   listComputerId = [];
   listComputerCode = [];
@@ -37,25 +40,38 @@ export class ComputerListComponent implements OnInit {
   ps: Array<any> = [];
   check = 0;
   searchComputerForm: FormGroup;
+  private roles: string[];
+  isLogged = false;
+  showAdminBoard = false;
 
-  constructor(private computerService: ComputerService,
+  constructor(private tokenStorageService: TokenStorageService,
+      private computerService: ComputerService,
               private dialog: MatDialog,
               private toastrService: ToastrService,
               private title: Title
   ) {
     this.title.setTitle('Computer List');
     this.searchComputerForm = new FormGroup({
-      computerId: new FormControl('', [Validators.pattern('^CP[0-9]{4}$')]),
+      computerId: new FormControl('', [Validators.pattern('^CP[0-9]*$')]),
       startUsedDateFrom: new FormControl('', [Validators.required, this.checkDateFrom]),
       // @ts-ignore
       startUsedDateTo: new FormControl('', [Validators.required, this.checkDateTo]),
-      location: new FormControl('', [Validators.pattern('^[A,B,C]{1}[0-9]{4}$')]),
+      location: new FormControl('', [Validators.pattern('^[A,B,C]{1}[0-9]*$')]),
       computerStatus: new FormControl('', [Validators.required]),
       computerType: new FormControl('', [Validators.required]),
     }, {validators: (this.checkDate)});
   }
 
   ngOnInit(): void {
+      this.isLogged = !!this.tokenStorageService.getToken();
+
+      if (this.isLogged) {
+      const user = this.tokenStorageService.getUser();
+      this.roles = user.roles;
+        if (this.roles.includes('ROLE_ADMIN') || this.roles.includes('ROLE_MODERATOR')){
+          this.showAdminBoard = true;
+        }
+    }
     this.computerService.getAllComputer().subscribe(value => this.listComputer = value);
     this.computerService.getAllComputerType().subscribe(value => this.listComputerType = value);
     this.computerService.getAllComputerStatus().subscribe(value => this.listComputerStatus = value);
@@ -68,6 +84,7 @@ export class ComputerListComponent implements OnInit {
     if (this.check == 1) {
       this.computerService.searchComputer(this.computerId, this.location, this.computerTypeSearch, this.statusSearch,
         this.startDateFrom, this.startDateTo, this.p).subscribe(value => {
+        // @ts-ignore
         this.listComputerPage = value.content;
         for (let i = 0; i < this.listComputerPage.length; i++) {
           for (let j = 0; j < this.listComputerId.length; j++) {
@@ -76,6 +93,7 @@ export class ComputerListComponent implements OnInit {
             }
           }
         }
+        // @ts-ignore
         this.ps = new Array<any>(value.totalPages);
       });
     } else {
@@ -116,6 +134,7 @@ export class ComputerListComponent implements OnInit {
   deleteComputer(computerId: number, computerCode: string) {
     const dialogRef = this.dialog.open(ComputerDeleteComponent, {
       width: '500px',
+      height: '360px',
       data: {
         idComputer: computerId,
         nameComputer: computerCode
@@ -131,6 +150,18 @@ export class ComputerListComponent implements OnInit {
   }
 
   searchPage() {
+    if (this.searchPageInput == null) {
+      this.getAll();
+      return;
+    }
+    if (Number(this.searchPageInput) > this.ps.length) {
+      this.toastrService.error('Error: page need to show > total page.');
+      return;
+    }
+    if (Number(this.searchPageInput) < 1) {
+      this.toastrService.error('Error: Input page > 0 please.');
+      return;
+    }
     this.p = Number(this.searchPageInput) - 1;
     this.getAll();
   }
@@ -149,11 +180,12 @@ export class ComputerListComponent implements OnInit {
 
   deleteComputers() {
     if (this.listComputerId.length === 0) {
-      this.toastrService.error('Choose computer need to delete, please!!');
+      this.toastrService.error('Choose computer need to delete, please.');
       return;
     } else {
       const dialogRef = this.dialog.open(ComputerListDeleteComponent, {
         width: '500px',
+        height: '360px',
         data: {
           idComputer: this.listComputerId,
           nameComputer: this.listComputerCode
@@ -174,22 +206,24 @@ export class ComputerListComponent implements OnInit {
     const mesDate = new Date();
     this.p = 0;
     if (dateFrom > new Date()) {
-      this.toastrService.error('Input Start date from < ' + mesDate + ' please!!');
+      this.toastrService.error('Input Start date from < ' + mesDate + ' please.');
       return;
     }
     const dateTo = new Date(this.startDateTo);
     if (dateTo > new Date()) {
-      this.toastrService.error('Input Start date to < ' + mesDate + ' please!!');
+      this.toastrService.error('Input Start date to < ' + mesDate + ' please.');
       return;
     }
     this.computerService.searchComputer(this.computerId.trim(), this.location.trim(), this.computerTypeSearch, this.statusSearch,
       this.startDateFrom, this.startDateTo, this.p).subscribe(value => {
+      // @ts-ignore
       this.listComputerPage = value.content;
+      // @ts-ignore
       this.ps = new Array<any>(value.totalPages);
       this.check = 1;
     }, error => {
       if (error.status === 404) {
-        this.toastrService.error('Not found computer!!');
+        this.toastrService.error('Not found computer.');
       }
     });
   }
@@ -214,7 +248,7 @@ export class ComputerListComponent implements OnInit {
 
   resetForm() {
     this.searchComputerForm = new FormGroup({
-      computerId: new FormControl('', [Validators.pattern('^CP[0-9]{4}$')]),
+      computerId: new FormControl('', [Validators.pattern('^CP[0-9]*$')]),
       startUsedDateFrom: new FormControl('', [Validators.required, this.checkDateFrom]),
       // @ts-ignore
       startUsedDateTo: new FormControl('', [Validators.required, this.checkDateTo]),
@@ -223,6 +257,12 @@ export class ComputerListComponent implements OnInit {
       computerType: new FormControl('', [Validators.required]),
     }, {validators: (this.checkDate)});
     this.check = 0;
-    this.ngOnInit();
+    this.computerId = '';
+    this.location = '';
+    this.startDateFrom = '';
+    this.startDateTo = '';
+    this.statusSearch = '';
+    this.computerTypeSearch = '';
+    this.getAll();
   }
 }

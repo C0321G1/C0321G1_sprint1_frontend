@@ -31,7 +31,11 @@ export class ComputerListDeleteComponent implements OnInit {
         }
         , error => {
           if (error.status === 406) {
-            this.toastrService.error(error.error);
+            this.toastrService.error('Delete fail: Computer ' + this.data.nameComputer[i] + ' is online.');
+            this.dialog.close(true);
+          }
+          if (error.status === 404) {
+            this.toastrService.error('Delete fail: Computer ' + this.data.nameComputer[i] + ' not found.');
             this.dialog.close(true);
           }
         });

@@ -1,6 +1,7 @@
 import {Address} from '../address/address';
 import {CustomerStatus} from './customer-status';
 import {Gender} from './gender';
+import {Account} from "../account/account";
 
 export interface Customer {
   customerId: number;

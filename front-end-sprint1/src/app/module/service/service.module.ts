@@ -12,6 +12,8 @@ import { ServicesListComponent } from './services-list/services-list.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { DrectiveServiceDirective } from './drective-service.directive';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {BrowserModule} from "@angular/platform-browser";
 
 
 @NgModule({
@@ -33,7 +35,7 @@ import { DrectiveServiceDirective } from './drective-service.directive';
     MatDialogModule,
     FormsModule,
     MatSnackBarModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
   ]
 })
 export class ServiceModule { }

@@ -15,6 +15,7 @@ export class GameDetailComponent implements OnInit {
   public gamingGame: string;
   @Input()
   public traileGame: string;
+  public image: string;
   urlSafe: SafeResourceUrl;
 
   constructor(public dialogRef: MatDialogRef<GameDetailComponent>, @Inject(MAT_DIALOG_DATA) public data: any,
@@ -28,6 +29,7 @@ export class GameDetailComponent implements OnInit {
     this.gamingGame = this.data.game.gaming;
     this.nameGame = this.data.game.name;
     this.traileGame = this.data.game.trailer;
+    this.image = this.data.game.image;
     this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.traileGame);
   }
 

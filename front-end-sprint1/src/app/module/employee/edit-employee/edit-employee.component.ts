@@ -1,10 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Position} from '../../../model/employee/position';
-import {Gender} from '../../../model/customer/gender';
-import {Province} from '../../../model/address/province';
-import {District} from '../../../model/address/district';
-import {Commune} from '../../../model/address/commune';
 import {AngularFireStorage} from '@angular/fire/storage';
 import {EmployeeService} from '../../../service/employee/employee.service';
 import {AddressService} from '../../../service/address/address.service';
@@ -24,11 +19,11 @@ import {Title} from '@angular/platform-browser';
 export class EditEmployeeComponent implements OnInit {
 
   employeeForm: FormGroup;
-  positionList: Position[] = [];
-  genderList: Gender[] = [];
-  provinceList: Province[] = [];
-  districtList: District[] = [];
-  communeList: Commune[] = [];
+  positionList: any;
+  genderList: any;
+  provinceList: any;
+  districtList: any;
+  communeList: any;
   image: string;
   selectedImage: any;
   isImage = true;
@@ -41,6 +36,9 @@ export class EditEmployeeComponent implements OnInit {
   positionDot = 0;
   msgImage = '';
   arrayFileExt: Array<string>;
+  msgPassword = '';
+  provinceId: number;
+  districtId: number;
 
   constructor(@Inject(AngularFireStorage) private storage: AngularFireStorage,
               private employeeService: EmployeeService,
@@ -49,7 +47,7 @@ export class EditEmployeeComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               private router: Router,
               private toasts: ToastrService,
-              private titleService: Title ) {
+              private titleService: Title) {
     this.titleService.setTitle('Edit Employee');
     this.id = Number(this.activatedRoute.snapshot.params.id);
     this.employeeForm = new FormGroup({
@@ -58,10 +56,10 @@ export class EditEmployeeComponent implements OnInit {
       fullName: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(50)]),
       position: new FormControl('', [Validators.required]),
       gender: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required, Validators.email]),
+      email: new FormControl('', [Validators.required, Validators.email, Validators.maxLength(50)]),
       dateOfBirth: new FormControl('', [Validators.required, this.checkDateOfBirth]),
       startWorkDate: new FormControl('', [Validators.required, this.checkStartWorkDate]),
-      phone: new FormControl('', [Validators.required, Validators.pattern('^0\\d{9,10}$')]),
+      phone: new FormControl('', [Validators.required, Validators.pattern('^\\+84\\d{9,10}$')]),
       level: new FormControl('', [Validators.required, this.checkLevel]),
       yearOfExp: new FormControl('', [Validators.required, this.checkYearOfExp]),
       address: new FormGroup({
@@ -74,19 +72,36 @@ export class EditEmployeeComponent implements OnInit {
       account: new FormGroup({
         accountId: new FormControl(),
         username: new FormControl(''),
-        password: new FormControl('', [Validators.required, Validators.pattern('[A-Za-z0-9]{6,}')]),
+        // tslint:disable-next-line:max-line-length
+        password: new FormControl('', [Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()_+~])[A-Za-z\\d!@#$%^&*()_+~]{6,}')]),
         confirmPassword: new FormControl('')
       }),
       flagDel: new FormControl()
     });
   }
 
+
+  compareFnP(c1: any, c2: any): boolean {
+    return c1 && c2 ? c1.positionId === c2.positionId : c1 === c2;
+  }
+
+  compareFnG(c1: any, c2: any): boolean {
+    return c1 && c2 ? c1.genderId === c2.genderId : c1 === c2;
+  }
+  compareFnPro(c1: any, c2: any): boolean {
+    return c1 && c2 ? c1.provinceId === c2.provinceId : c1 === c2;
+  }
+  compareFnD(c1: any, c2: any): boolean {
+    return c1 && c2 ? c1.districtId === c2.districtId : c1 === c2;
+  }
+  compareFnC(c1: any, c2: any): boolean {
+    return c1 && c2 ? c1.communeId === c2.communeId : c1 === c2;
+  }
+
   ngOnInit(): void {
-    this.getPositionList();
     this.getGenderList();
+    this.getPositionList();
     this.getProvinceList();
-    this.getDistrictList();
-    this.getCommuneList();
   }
 
   getEmployee(id: number) {
@@ -94,6 +109,10 @@ export class EditEmployeeComponent implements OnInit {
       this.employeeForm.patchValue(data);
       this.image = this.employeeForm.value.image;
       this.valueConfirmPass = this.employeeForm.value.account.password;
+      this.provinceId = this.employeeForm.value.address.province.provinceId;
+      this.districtId = this.employeeForm.value.address.district.districtId;
+      this.getDistrictList(this.provinceId);
+      this.getCommuneList(this.districtId);
     });
   }
 
@@ -112,36 +131,42 @@ export class EditEmployeeComponent implements OnInit {
   getProvinceList() {
     this.addressService.getProvinceList().subscribe(data => {
       this.provinceList = data;
+      this.getEmployee(this.id);
     });
   }
 
-  getDistrictList() {
-    this.addressService.getDistrictList().subscribe(data => {
+  getDistrictList(id: number) {
+    this.addressService.getDistrictList(id).subscribe(data => {
       this.districtList = data;
     });
   }
 
-  getCommuneList() {
-    this.addressService.getCommuneList().subscribe(data => {
+  getCommuneList(id: number) {
+    this.addressService.getCommuneList(id).subscribe(data => {
       this.communeList = data;
-      this.getEmployee(this.id);
     });
   }
 
   editEmployee() {
     this.employeeForm.value.account.username = this.employeeForm.value.email;
     this.employeeService.edit(this.employeeForm.value).subscribe(data => {
+      // @ts-ignore
       if (data.status === false) {
+        // @ts-ignore
         this.msgEmail = data.msgEmail;
+        // @ts-ignore
+        this.msgPassword = data.msgPassword;
+        // @ts-ignore
         this.msgDateOfBirth = data.msgDateOfBirth;
+        // @ts-ignore
         this.msgStartWorkDate = data.msgStartWorkDate;
-        this.toasts.error('Edit employee fail, please check information input', 'Notify');
+        this.toasts.error('Edit employee fail, please check information input.', 'Notify');
       } else {
         this.router.navigateByUrl('/employee/list');
-        this.toasts.success('Edit employee successfully !', 'Notify');
+        this.toasts.success('Edit employee successfully.', 'Notify');
       }
     }, () => {
-      this.toasts.error('Edit employee fail, please check information input', 'Notify');
+      this.toasts.error('Edit employee fail, please check information input.', 'Notify');
     });
   }
 
@@ -154,6 +179,14 @@ export class EditEmployeeComponent implements OnInit {
     this.selectedImage = event.target.files[0];
     this.checkImageFile(this.selectedImage.name);
     if (this.msgImage === '') {
+      Swal.fire({
+        title: 'Sending data',
+        text: 'Please wait ...',
+        imageUrl: '../../../../../assets/image/spin.gif',
+        imageWidth: '100px',
+        showConfirmButton: false,
+        allowOutsideClick: false
+      });
       const nameImg = this.getCurrentDateTime() + this.selectedImage.name;
       const fileRef = this.storage.ref(nameImg);
       this.storage.upload(nameImg, this.selectedImage).snapshotChanges().pipe(
@@ -162,6 +195,7 @@ export class EditEmployeeComponent implements OnInit {
             this.employeeForm.value.image = url;
             this.image = url;
             this.isImage = true;
+            Swal.close();
           });
         })
       ).subscribe();
@@ -176,7 +210,7 @@ export class EditEmployeeComponent implements OnInit {
       }
     }
     if (this.positionDot === 0) {
-      return this.msgImage = 'Image not right format, please choose again image';
+      return this.msgImage = 'Image not right format, please choose again image.';
     }
     this.arrayFileExt = ['jpg', 'png', 'jpeg', 'gif', 'raw', 'tiff', 'psd', 'eps', 'pdf', 'ai'];
     const fileExtend = imageFile.substr(this.positionDot + 1);
@@ -186,14 +220,14 @@ export class EditEmployeeComponent implements OnInit {
         return this.msgImage = '';
       }
     }
-    return this.msgImage = 'Image not right format, please choose again image';
+    return this.msgImage = 'Image not right format, please choose again image.';
   }
 
   checkPassword(newPassword: string, confirmPassword: string) {
     if (newPassword !== confirmPassword) {
-      return this.msgConfirmPass = 'New password not match with confirm password';
+      return this.msgConfirmPass = 'New password not match with confirm password.';
     } else {
-      return  this.msgConfirmPass = '';
+      return this.msgConfirmPass = '';
     }
   }
 
@@ -202,7 +236,7 @@ export class EditEmployeeComponent implements OnInit {
   }
 
   checkYearOfExp(data: AbstractControl): any {
-    return data.value >= 0 ? null : {invalidYearOfExp: true};
+    return data.value >= 0 && data.value < 100 ? null : {invalidYearOfExp: true};
   }
 
   checkDateOfBirth(data: AbstractControl): any {
@@ -210,7 +244,9 @@ export class EditEmployeeComponent implements OnInit {
     const today = new Date();
     const dateOfBirth = new Date(date);
     const age = today.getFullYear() - dateOfBirth.getFullYear();
-    if (age >= 19 ) {
+    if (age > 100) {
+      return {invalidDateOfBirth: true};
+    } else if (age >= 19) {
       return null;
     } else if (age === 18) {
       const m = today.getMonth() - dateOfBirth.getMonth();
@@ -234,16 +270,18 @@ export class EditEmployeeComponent implements OnInit {
 
   resetEditForm() {
     Swal.fire({
-      title: 'Are you sure clear to information entered ?',
-      text: 'The task cannot be undone !',
+      title: 'Are you sure to reset?',
+      text: 'This action cannot be undone !',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#de992a',
       confirmButtonText: 'Yes',
       cancelButtonText: 'No',
-      allowOutsideClick: false
+      allowOutsideClick: false,
+      confirmButtonColor: '#DD6B55',
+      cancelButtonColor: '#768394'
     }).then((result) => {
       if (result.value) {
+        this.msgImage = '';
         this.getEmployee(this.id);
       }
     });
@@ -251,14 +289,15 @@ export class EditEmployeeComponent implements OnInit {
 
   backEmployeeList() {
     Swal.fire({
-      title: 'Are you sure back to employee list ?',
+      title: 'Are you sure back to employee list?',
       text: 'Changes will not be saved !',
       icon: 'info',
       showCancelButton: true,
-      confirmButtonColor: '#de992a',
       confirmButtonText: 'Yes',
       cancelButtonText: 'No',
-      allowOutsideClick: false
+      allowOutsideClick: false,
+      confirmButtonColor: '#DD6B55',
+      cancelButtonColor: '#768394'
     }).then((result) => {
       if (result.value) {
         this.router.navigateByUrl('/employee/list');
@@ -276,6 +315,16 @@ export class EditEmployeeComponent implements OnInit {
 
   resetMsgStartWorkDate() {
     this.msgStartWorkDate = '';
+  }
+
+  getProvince() {
+    this.provinceId = this.employeeForm.value.address.province.provinceId;
+    this.getDistrictList(this.provinceId);
+  }
+
+  getDistrict() {
+    this.districtId = this.employeeForm.value.address.district.districtId;
+    this.getCommuneList(this.districtId);
   }
 
 }

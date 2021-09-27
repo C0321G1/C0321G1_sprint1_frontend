@@ -22,12 +22,14 @@ import {Title} from '@angular/platform-browser';
 export class GameCreateComponent implements OnInit {
   public Editor = ClassicEditor;
   public gameForm: FormGroup;
-  public gameType: GameType[] = [];
+  public gameType: any;
   image: string;
   private selectedImage: any;
   public isImage = false;
   listError: any = '';
   public game: Game;
+  public changeGaming = '';
+
   @ViewChild('nameinput') private elementRef: ElementRef;
 
   public ngAfterViewInit(): void {
@@ -51,11 +53,11 @@ export class GameCreateComponent implements OnInit {
 
   initfrom() {
     this.gameForm = new FormGroup({
-      name: new FormControl('', [Validators.required]),
+      name: new FormControl('', [Validators.required, Validators.maxLength(40)]),
       trailer: new FormControl('', [Validators.required]),
       content: new FormControl('', [Validators.required, Validators.maxLength(2007)]),
       image: new FormControl('', [Validators.required]),
-      gaming: new FormControl('', [Validators.required, Validators.min(0), Validators.pattern("^\\d+$")]),
+      gaming: new FormControl('', [Validators.required, Validators.pattern("^\\d+$")]),
       gameType: new FormControl('', [Validators.required]),
     });
   }
@@ -68,9 +70,10 @@ export class GameCreateComponent implements OnInit {
 
   loadImg() {
     Swal.fire({
-      title: 'Please wait !',
-      imageUrl: '../../../../../assets/image/swal-nhung.gif',
-      imageWidth: '170px',
+      title: 'Sending data',
+      text: 'Please wait ...',
+      imageUrl: '../../../../../assets/image/spin.gif',
+      imageWidth: '100px',
       showConfirmButton: false,
       allowOutsideClick: false
     });
@@ -79,7 +82,6 @@ export class GameCreateComponent implements OnInit {
     this.storage.upload(nameImg, this.selectedImage).snapshotChanges().pipe(
       finalize(() => {
         fileRef.getDownloadURL().subscribe((url) => {
-          console.log(url);
           this.gameForm.value.image = url;
           this.image = url;
           this.isImage = true;
@@ -90,18 +92,17 @@ export class GameCreateComponent implements OnInit {
   }
 
   save() {
-    if (this.gameForm.valid) {
-      this.gameForm.value.image = this.image;
-      this.gameService.saveGame(this.gameForm.value).subscribe(data => {
-        this.router.navigateByUrl('');
-        this.toastr.success('Thanks!', 'Create new game successfully !');
-      }, error => {
-        if (error.status === 400) {
-          this.listError = error.error;
-        }
-        this.toastr.error('Warning!', 'Create new game fail !');
-      });
-    }
+    this.gameForm.value.image = this.image;
+    this.gameService.saveGame(this.gameForm.value).subscribe(data => {
+      this.router.navigateByUrl('');
+      this.toastr.success('Thanks!', 'Create new game successfully!');
+    }, error => {
+      if (error.status === 400) {
+        this.listError = error.error;
+        console.log(error);
+      }
+      this.toastr.error('Warning!', 'Create new game fail!');
+    });
   }
 
   getCurrentDateTime(): string {
@@ -121,21 +122,22 @@ export class GameCreateComponent implements OnInit {
 
   resetValue() {
     this.game = this.gameForm.value;
-    console.log(this.game);
     Swal.fire({
-      title: 'Are you sure to Reset?',
+      title: 'Are you sure to reset?',
       text: 'This action cannot be undone !',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Yes',
       cancelButtonText: 'No',
       allowOutsideClick: false,
-      confirmButtonColor: '#DD6B55'
+      confirmButtonColor: '#DD6B55',
+      cancelButtonColor: '#768394'
     }).then((result) => {
       if (result.value) {
         this.isImage = false;
         this.image = '';
         this.initfrom();
+        this.toastr.success('Thanks!', 'Reset game successfully!');
       }
     });
   }
@@ -143,18 +145,20 @@ export class GameCreateComponent implements OnInit {
   back() {
     this.game = this.gameForm.value;
     Swal.fire({
-      title: 'Are you sure back to Home?',
+      title: 'Are you sure back to home?',
       text: 'Changes will not be saved !',
-      icon: 'warning',
+      icon: 'info',
       showCancelButton: true,
       confirmButtonText: 'Yes',
       cancelButtonText: 'No',
       allowOutsideClick: false,
-      confirmButtonColor: '#DD6B55'
+      confirmButtonColor: '#DD6B55',
+      cancelButtonColor: '#768394'
     }).then((result) => {
       if (result.value) {
         this.router.navigateByUrl('');
       }
     });
   }
+
 }

@@ -6,6 +6,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {StatisticRoutingModule} from './statistic-routing.module';
 import {StatisticService} from '../../service/statistic/statistic.service';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {BrowserModule} from "@angular/platform-browser";
 
 
 
@@ -18,7 +20,7 @@ import {StatisticService} from '../../service/statistic/statistic.service';
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    StatisticRoutingModule
+    StatisticRoutingModule,
   ],
   exports: [RouterModule, StatisticComponent],
   providers: [DatePipe, StatisticService]

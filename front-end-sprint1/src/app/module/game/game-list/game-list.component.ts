@@ -9,7 +9,8 @@ import {FormControl, FormGroup} from '@angular/forms';
 import {ToastrService} from 'ngx-toastr';
 import {GameTrailerComponent} from '../game-trailer/game-trailer.component';
 import {GameDetailComponent} from '../game-detail/game-detail.component';
-import {Title} from "@angular/platform-browser";
+import {Title} from '@angular/platform-browser';
+import {TokenStorageService} from "../../../service/account/token-storage.service";
 
 @Component({
   selector: 'app-game-list',
@@ -32,12 +33,26 @@ export class GameListComponent implements OnInit {
   gameSearch: FormGroup;
   checkSearch: number;
 
-  constructor(private gameService: GameService, private dialog: MatDialog, private gameTypeService: GameTypeService,
+  private roles: string[];
+  isLogged = false;
+  showAdminBoard = false;
+
+  constructor(private tokenStorageService: TokenStorageService, private gameService: GameService, private dialog: MatDialog, private gameTypeService: GameTypeService,
               private toast: ToastrService, private titleService: Title) {
     this.titleService.setTitle('C03 Gaming');
   }
 
   ngOnInit(): void {
+    this.isLogged = !!this.tokenStorageService.getToken();
+
+    if (this.isLogged) {
+      const user = this.tokenStorageService.getUser();
+      this.roles = user.roles;
+      if (this.roles.includes('ROLE_ADMIN') || this.roles.includes('ROLE_MODERATOR')){
+        this.showAdminBoard = true;
+      }
+    }
+
     this.page = 0;
     this.checkSearch = 0;
     this.getAll();
@@ -58,6 +73,7 @@ export class GameListComponent implements OnInit {
 
   getTopGame() {
     this.gameService.getTopGame().subscribe(value => {
+      // @ts-ignore
       this.topGame = value;
       this.top1 = this.topGame[0].image;
       this.top2 = this.topGame[1].image;
@@ -68,14 +84,14 @@ export class GameListComponent implements OnInit {
   trailer(id: any): void {
     this.gameService.getById(id).subscribe(data => {
       const dialogRef = this.dialog.open(GameTrailerComponent, {
-        width: '500px',
-        height: '450px',
+        width: '1000px',
+        height: '600px',
         data: {game: data},
         disableClose: true
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        this.ngOnInit();
+        // this.ngOnInit();
       });
     });
   }
@@ -83,14 +99,14 @@ export class GameListComponent implements OnInit {
   detail(id: any): void {
     this.gameService.getById(id).subscribe(data => {
       const dialogRef = this.dialog.open(GameDetailComponent, {
-        width: '500px',
-        height: '450px',
+        width: '1000px',
+        height: '600px',
         data: {game: data},
         disableClose: true
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        this.ngOnInit();
+        // this.ngOnInit();
       });
     });
   }
@@ -108,23 +124,22 @@ export class GameListComponent implements OnInit {
         this.ngOnInit();
       });
     }, error => {
-      this.toast.success('Delete failed game.', 'Delete game');
+      this.toast.error('Delete failed game.', 'Delete game');
     });
   }
 
   searchGame(page: number) {
-    if (this.gameSearch.value.nameGame === '' && this.gameSearch.value.gameType === '') {
-      this.toast.error('Please enter the field you want to search!', 'Search game');
-    } else {
-      this.checkSearch = 1;
-      this.gameService.searchGame(page, this.gameSearch.value.nameGame, this.gameSearch.value.gameType).subscribe(value => {
-        this.games = value.content;
-        this.totalPage = value.totalPages;
-      }, error => {
-        this.checkSearch = 0;
-        this.toast.error('Game not found.', 'Search game');
-      });
-    }
+    this.checkSearch = 1;
+    this.gameService.searchGame(page, this.gameSearch.value.nameGame, this.gameSearch.value.gameType).subscribe(value => {
+      if (this.gameSearch.value.nameGame === '' && this.gameSearch.value.gameType === '') {
+        this.toast.error('Please enter Game name or Game type before searching!', 'Search game');
+      }
+      this.games = value.content;
+      this.totalPage = value.totalPages;
+    }, error => {
+      this.checkSearch = 0;
+      this.toast.error('Game not found.', 'Search game');
+    });
   }
 
   nextPage() {
@@ -179,7 +194,7 @@ export class GameListComponent implements OnInit {
       }
     } else {
       if (this.searchPageInput !== '') {
-        this.toast.error('please enter page number!', 'Search page');
+        this.toast.error('Please enter page number!', 'Search page');
       }
     }
   }

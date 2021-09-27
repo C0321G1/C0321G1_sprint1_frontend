@@ -19,7 +19,7 @@ import {Services} from '../../../model/service/services';
 export class ServicesEditComponent implements OnInit {
   editForm: FormGroup;
   id: number;
-  unitList: Unit[] = [];
+  unitList: any;
   selectedImage: any = null;
   services: Services;
   urlImage: any;
@@ -67,8 +67,8 @@ export class ServicesEditComponent implements OnInit {
 
   getService() {
     this.service.findById(this.id).subscribe(data => {
-      console.log(data);
       this.editForm.patchValue(data);
+      // @ts-ignore
       this.urlImage = data.image;
     });
   }
@@ -87,7 +87,6 @@ export class ServicesEditComponent implements OnInit {
     this.storage.upload(nameImg, this.selectedImage).snapshotChanges().pipe(
       finalize(() => {
         fileRef.getDownloadURL().subscribe((url) => {
-          console.log(url);
           this.editForm.value.image = url;
           this.urlImage = url;
           this.isImage = true;
@@ -106,9 +105,8 @@ export class ServicesEditComponent implements OnInit {
 
   edit() {
     this.services = this.editForm.value;
-    console.log(this.services);
     this.service.update(this.id, this.services).subscribe(() => {
-      this.route.navigateByUrl('').then(s => {
+      this.route.navigateByUrl('/services/list').then(s => {
         this.showSuccess(),
           Swal.close();
       });
@@ -149,11 +147,10 @@ export class ServicesEditComponent implements OnInit {
   }
 
   reset1() {
-    console.log('sdfsdfsd');
     this.serviceForm = this.editForm.value;
 
     Swal.fire({
-      title: 'Are you sure to Reset?',
+      title: 'Are you sure to reset?',
       text: 'This action cannot be undone !',
       icon: 'warning',
       showCancelButton: true,
@@ -169,8 +166,6 @@ export class ServicesEditComponent implements OnInit {
 
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         this.editForm.patchValue(this.serviceForm);
-        console.log(this.serviceForm);
-        console.log(this.editForm.value);
       }
     });
   }
@@ -178,7 +173,7 @@ export class ServicesEditComponent implements OnInit {
   back() {
     this.serviceForm = this.editForm.value;
     Swal2.fire({
-      title: 'Are you sure back to home ?',
+      title: 'Are you sure back to service list ?',
       text: 'Changes will not be saved !',
       icon: 'info',
       showCancelButton: true,
@@ -188,7 +183,7 @@ export class ServicesEditComponent implements OnInit {
       allowOutsideClick: false
     }).then((result) => {
       if (result.value) {
-        this.route.navigateByUrl('');
+        this.route.navigateByUrl('/services/list');
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         this.editForm.patchValue(this.serviceForm);
       }

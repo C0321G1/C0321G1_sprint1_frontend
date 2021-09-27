@@ -7,7 +7,7 @@ const routes: Routes = [
     loadChildren: () => import('./module/service/service.module').then(module => module.ServiceModule)
   },
   {
-    path: 'game',
+    path: '',
     loadChildren: () => import('./module/game/game.module').then(module => module.GameModule)
   },
   {
@@ -19,12 +19,24 @@ const routes: Routes = [
     loadChildren: () => import ('./module/client/client.module').then(module => module.ClientModule)
   },
   {
-  path: 'computer',
-  loadChildren: () => import('./module/computer/computer.module').then(module => module.ComputerModule)
+    path: 'computer',
+    loadChildren: () => import('./module/computer/computer.module').then(module => module.ComputerModule)
   },
   {
     path: 'statistic',
     loadChildren: () => import('./module/statistic/statistic.module').then(module => module.StatisticModule)
+  },
+  {
+    path: 'order',
+    loadChildren: () => import('./module/order/order.module').then(module => module.OrderModule)
+  },
+  {
+    path: 'order-detail',
+    loadChildren: () => import('./module/order-detail/order-detail.module').then(module => module.OrderDetailModule)
+  },
+  {
+    path: 'customer',
+    loadChildren: () => import('./module/customer/customer.module').then(module => module.CustomerModule)
   }
 ];
 

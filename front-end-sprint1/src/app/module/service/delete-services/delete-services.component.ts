@@ -2,6 +2,7 @@ import {Component, EventEmitter, Inject, OnInit, Output} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {ToastrService} from 'ngx-toastr';
 import {ServiceService} from '../../../service/service/service.service';
+import {Services} from "../../../model/service/services";
 
 class ServicesDeleteComponent {
 }
@@ -13,7 +14,7 @@ class ServicesDeleteComponent {
 })
 export class DeleteServicesComponent implements OnInit {
 
-
+  services : Services ;
   public code: string;
   public listCode: Array<String> = [];
   public id: number;
@@ -56,6 +57,8 @@ public check=false;
       this.serviceService.deleteServices(this.id).subscribe(dataDialog => {
         this.dialogRef.close();
         this.toast.success('delete success fully');
+      },error => {
+        this.toast.error('Services not found !!!')
       });
   }
   // phap
@@ -63,6 +66,12 @@ public check=false;
     for (let i = 0; i < this.listId.length; i++) {
       this.serviceService.deleteServices(this.listId[i]).subscribe(dataDialog => {
         this.dialogRef.close(true);
+      },error => {
+          this.serviceService.findById(this.listId[i]).subscribe(value => {
+            // @ts-ignore
+            this.services = value;
+            this.toast.error('Services not found ' + this.services.code);
+         })
       });
     }
     this.toast.success('delete success fully');
